@@ -1,0 +1,63 @@
+{
+  "schema_version": 3,
+  "instance_id": "django__django-11179",
+  "ground_truth": {
+    "files": [
+      "django/db/models/deletion.py"
+    ],
+    "symbols": [
+      "Collector.delete"
+    ],
+    "cause": "Collector.delete()'s fast-delete shortcut (single instance with no dependencies, can_fast_delete() true) returns immediately after DeleteQuery.delete_batch([instance.pk]) without clearing the instance's PK, whereas the regular path ends by setting setattr(instance, model._meta.pk.attname, None) on every collected instance. A fast-deleted instance therefore keeps its stale PK after .delete().",
+    "repair": "In the fast-delete branch, immediately after delete_batch() and before returning, set the instance's PK to None via setattr(instance, model._meta.pk.attname, None), matching the regular path; verified by FastDeleteTests.test_fast_delete_instance_set_pk_none asserting u.pk is None after u.delete() on a can_fast_delete() instance."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl-1",
+        "why_plausible": "instance.delete() resolves to Model.delete() in base.py, so a developer tracing why the caller's object is not updated after deletion would open this method first and inspect how it delegates to the deletion collector and manages instance state.",
+        "why_incorrect": "The PK-reset logic and the fast-delete shortcut both live in Collector.delete() in django/db/models/deletion.py — the file and lines the issue itself cites — and base.py's Model.delete() merely delegates to the collector with no PK-clearing code of its own to be broken.",
+        "files": [
+          "django/db/models/base.py"
+        ],
+        "symbols": [
+          "Model.delete"
+        ]
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc-1",
+        "why_plausible": "The symptom is specific to dependency-free (fast-deletable) models, and deletion.py really maintains both a fast_deletes holding area and a final setattr(instance, model._meta.pk.attname, None) loop over self.data, so an instance being mis-routed at collection time looks like the natural explanation for a skipped reset.",
+        "why_incorrect": "The instance is in fact stored in self.data (the fast shortcut reads it from there); the PK survives because that shortcut returns immediately after DeleteQuery.delete_batch([instance.pk]) without the setattr the regular path performs, not because of any collection-time mis-filing.",
+        "cause": "During collection, Collector.collect() classifies the dependency-free instance as fast-deletable and files it in Collector.fast_deletes instead of self.data, so the final instance-update loop in Collector.delete() — which resets PKs by iterating self.data — never reaches the instance and its PK is never cleared.",
+        "keywords": [
+          "fast_deletes",
+          "can_fast_delete",
+          "self.data",
+          "Collector.collect",
+          "setattr(instance, model._meta.pk.attname, None)"
+        ]
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr-1",
+        "why_plausible": "It reuses the exact setattr idiom already present in the regular path, removes duplicated reset logic, and superficially guarantees pk None on every code path, including the fast branch named in the issue.",
+        "why_incorrect": "The DELETE statements are issued using the instance's PK, so clearing it during collect() makes the fast branch call DeleteQuery.delete_batch([None]) (and breaks pk-based sorting and updates), silently deleting nothing; the confirmed fix is to set the PK to None inside the fast branch after delete_batch(), which this strategy never does.",
+        "repair": "Centralize the reset by clearing each instance's PK at registration time — in Collector.collect(), apply setattr(instance, model._meta.pk.attname, None) as instances are added to self.data — and drop the now-redundant reset loop at the end of Collector.delete(), so both the fast-delete shortcut and the regular path leave instances with pk None.",
+        "keywords": [
+          "Collector.collect",
+          "self.data",
+          "setattr(instance, model._meta.pk.attname, None)",
+          "fast-delete shortcut",
+          "Collector.delete"
+        ]
+      }
+    ]
+  },
+  "generated_by": {
+    "model": "glm-5.3",
+    "claude_code_version": "2.1.215 (Claude Code)"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": 3,
+  "instance_id": "astropy__astropy-14096",
+  "ground_truth": {
+    "files": [
+      "astropy/coordinates/sky_coordinate.py"
+    ],
+    "symbols": [
+      "SkyCoord.__getattr__"
+    ],
+    "cause": "SkyCoord.__getattr__'s failure path (sky_coordinate.py:897-900) unconditionally raises a fresh AttributeError naming whatever attr it was called with. Python falls back to __getattr__ not only for plain missing attributes but whenever __getattribute__ raises AttributeError — including when a subclass property getter fails on an inner lookup. The inner error for 'random_attr' is discarded, __getattr__('prop') fails its lookup chain, and the hardcoded raise mislabels the error with the property name.",
+    "repair": "Replace the manual raise with `return self.__getattribute__(attr)` so the default attribute lookup raises the canonical AttributeError naming the actually-missing attribute; the __getattr__ fallback hook sits outside __getattribute__, so this cannot recurse."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "WL-1",
+        "why_plausible": "SkyCoord.__getattr__ resolves unknown attributes by delegating to the wrapped frame object (`hasattr/getattr(self._sky_coord_frame, attr)`, sky_coordinate.py:889-890), and BaseCoordinateFrame defines its own dynamic __getattr__ (baseframe.py:1726) for representation/differential components — so a developer chasing a missing-attribute error through the delegation path would naturally open the frame's own __getattr__ first.",
+        "why_incorrect": "The confirmed defect is in SkyCoord.__getattr__'s failure path (sky_coordinate.py:897-900), whose unconditional raise discards the property getter's inner error; the frame-side __getattr__ raises a correctly-named AttributeError and is never the source of the 'prop'-labeled message.",
+        "files": [
+          "astropy/coordinates/baseframe.py"
+        ],
+        "symbols": [
+          "BaseCoordinateFrame.__getattr__"
+        ]
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "WC-1",
+        "why_plausible": "The traceback shows __getattr__ entered directly from `c.prop` with no property-getter frame in between, and the message names 'prop' — which reads exactly as if the property was never invoked and the frame-alias/attribute chain simply could not find it; SkyCoord's __getattr__ docstring even advertises that it 'overrides getattr' for frame aliases.",
+        "why_incorrect": "The confirmed cause is the opposite: the property getter does run, and Python invokes __getattr__('prop') only as a fallback after the getter's `self.random_attr` lookup raised AttributeError; the mislabeling comes from the unconditional fresh raise discarding that inner error, not from any shadowing of subclass properties.",
+        "cause": "SkyCoord's dynamic attribute lookup shadows subclass-defined properties: because SkyCoord defines __getattr__, accessing c.prop is routed into SkyCoord's lookup chain (frame-name aliases, frame_transform_graph.frame_attributes, the wrapped frame's namespace) instead of the normal class-namespace/descriptor protocol, so the property getter never executes and the chain is asked to resolve 'prop' itself and legitimately fails to find it.",
+        "keywords": [
+          "property shadowing",
+          "__getattr__ interception",
+          "descriptor protocol bypass",
+          "subclass attribute lookup chain",
+          "frame alias resolution"
+        ]
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "WR-1",
+        "why_plausible": "The reported symptom is purely a misleading message that hides 'random_attr', so the natural fix is to stop discarding the underlying exception and chain it into the raise — the standard remedy for lost error context.",
+        "why_incorrect": "The 'random_attr' AttributeError is raised inside the property getter and cleared by Python's attribute protocol before __getattr__('prop') is ever entered (the issue traceback shows no getter frame and no chained context), and the guarded lookups inside __getattr__ raise nothing for 'prop' — so no exception visible in that scope names 'random_attr', the message still names 'prop', and the confirmed mislabeling mechanism (the hardcoded fresh raise) is untouched.",
+        "repair": "Preserve the underlying exception in the failure path: wrap the lookup chain in SkyCoord.__getattr__ in `try: ... except AttributeError as exc:` and change the final `raise AttributeError(f\"'{self.__class__.__name__}' object has no attribute '{attr}'\")` to `raise ... from exc` (equivalently, capture `sys.exc_info()[1]` and append its text), so the chained traceback surfaces the actually-missing attribute name.",
+        "keywords": [
+          "exception chaining",
+          "raise from",
+          "try/except AttributeError",
+          "error message formatting",
+          "sys.exc_info"
+        ]
+      }
+    ]
+  },
+  "generated_by": {
+    "model": "glm-5.3",
+    "claude_code_version": "2.1.215 (Claude Code)"
+  }
+}

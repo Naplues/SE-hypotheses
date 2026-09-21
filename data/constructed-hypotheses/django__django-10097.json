@@ -1,0 +1,66 @@
+{
+  "schema_version": 3,
+  "instance_id": "django__django-10097",
+  "ground_truth": {
+    "files": [
+      "django/core/validators.py"
+    ],
+    "symbols": [
+      "URLValidator",
+      "URLValidator.regex"
+    ],
+    "cause": "URLValidator.regex's user:pass segment `(?:\\S+(?::\\S*)?@)?` (django/core/validators.py:97) matches any non-whitespace, so unencoded `:`, `@`, `/` are accepted in usernames/passwords, violating RFC 1738 §3.1: URLs like http://foo/bar@example.com and http://foo@bar@example.com pass, and the greedy `\\S+` also swallows host plus query (e.g. appending ?m=foo@example.com makes invalid hosts such as http://invalid-.com/?m=foo@example.com validate).",
+    "repair": "Tighten the authentication segment of URLValidator.regex to `(?:[^\\s:@/]+(?::[^\\s:@/]*)?@)?`, excluding whitespace, `:`, `@`, and `/` from username and password so those characters must be %-encoded and cannot swallow host/query text; update validator test data accordingly (add invalid URL cases; encode `:`/`/` in the valid credentials case)."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl-checks-urls-check-url-config",
+        "why_plausible": "The symptom is malformed URLs being accepted, and this module is the first hit when grepping for URL-related validation machinery, so a developer could reasonably expect the URL system checks to be where such URLs should be flagged.",
+        "why_incorrect": "check_url_config only runs startup checks on the URLconf resolver (namespace uniqueness, resolver wiring); it never inspects arbitrary URL strings, and string-level URL validation lives in URLValidator in django/core/validators.py, not in the checks framework.",
+        "files": [
+          "django/core/checks/urls.py"
+        ],
+        "symbols": [
+          "check_url_config"
+        ]
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc-search-backtracking-host-retry",
+        "why_plausible": "RegexValidator really does use search() rather than fullmatch, and the issue's observation that simply appending ?m=foo@example.com makes invalid URLs validate reads exactly like the engine finding a valid host inside the query string through unanchored, backtracking matching.",
+        "why_incorrect": "The pattern is anchored with ^ and \\Z, so Python's re engine can never restart the match at a later offset; `example.com` is reachable only because the userinfo group (?:\\S+(?::\\S*)?@)? accepts unencoded ':', '@', and '/' and greedily consumes host plus query — the confirmed cause.",
+        "cause": "RegexValidator.__call__ applies URLValidator's pattern with regex.search() rather than a full-string match, and because the port group and the resource-path group are both optional, the regex engine can abandon a failed host match and retry the host alternation at a later offset — matching the `example.com` substring inside http://foo/bar@example.com (or inside the ?m=foo@example.com query of an invalid URL) as the host while skipping the invalid leading text.",
+        "keywords": [
+          "regex.search",
+          "backtracking",
+          "optional groups",
+          "host alternation",
+          "match offset",
+          "query string"
+        ]
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr-urlsplit-userinfo-postcheck",
+        "why_plausible": "RFC 1738 §3.1 names the user and password fields specifically, so component-wise extraction of those fields with the stdlib parser and rejection of the three forbidden characters looks like a targeted fix that avoids the regex complexity Tim Graham was worried about.",
+        "why_incorrect": "urlsplit's netloc terminates at the first '/', so for http://foo/bar@example.com the userinfo never appears in .username/.password (netloc is just 'foo'), and for the ?m=foo@example.com cases the '@' lies in the query — the check never fires and the permissive \\S+ userinfo segment, the confirmed mechanism, continues to accept both.",
+        "repair": "Keep URLValidator.regex unchanged and add a supplementary step in URLValidator.__call__ that parses the value with urllib.parse.urlsplit and raises ValidationError when the extracted username or password contains ':', '@', or '/', on the rationale that those characters must be %-encoded in the userinfo.",
+        "keywords": [
+          "urllib.parse.urlsplit",
+          "username",
+          "password",
+          "userinfo",
+          "percent-encoding",
+          "supplementary check"
+        ]
+      }
+    ]
+  },
+  "generated_by": {
+    "model": "glm-5.3",
+    "claude_code_version": "2.1.215 (Claude Code)"
+  }
+}

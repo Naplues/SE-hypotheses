@@ -1,0 +1,71 @@
+{
+  "schema_version": 3,
+  "instance_id": "django__django-11095",
+  "ground_truth": {
+    "files": [
+      "django/contrib/admin/options.py"
+    ],
+    "symbols": [
+      "ModelAdmin.get_inline_instances",
+      "ModelAdmin.inlines",
+      "BaseModelAdmin.get_inlines"
+    ],
+    "cause": "ModelAdmin.get_inline_instances() iterates directly over the static `inlines` class attribute (options.py:585) with no get_inlines() hook, unlike sibling options (fieldsets, ordering, readonly_fields) which all have request/obj-aware get_* hooks. Varying inlines per request or object therefore requires overriding get_inline_instances() wholesale and duplicating its inline-instantiation and permission-filter loop.",
+    "repair": "Add BaseModelAdmin.get_inlines(request, obj) after get_fieldsets that returns self.inlines by default, and change ModelAdmin.get_inline_instances() to iterate over self.get_inlines(request, obj), so subclasses can vary inlines by request/obj (as verified by the new test that overrides get_inlines and checks get_inline_instances output)."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "helpers-inline-formset-wrappers",
+        "why_plausible": "InlineAdminFormSet and InlineAdminForm assemble the inline formsets rendered in the add/change templates, making them the most visible inline-related code outside options.py and a natural first stop when inline content fails to vary by request or model instance.",
+        "why_incorrect": "These wrapper classes only format inline instances that ModelAdmin.get_inline_instances() in django/contrib/admin/options.py (the ground-truth file) has already selected and constructed; they never see the raw inline class list or the request/obj pair, so the selection hook confirmed by the ground truth cannot live there.",
+        "files": [
+          "django/contrib/admin/helpers.py"
+        ],
+        "symbols": [
+          "InlineAdminFormSet",
+          "InlineAdminForm"
+        ]
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "permission-entanglement-in-get-inline-instances",
+        "why_plausible": "The issue's stated pain is that overriding get_inline_instances means 'a for loop should be copied to my code', and the only non-trivial content of that loop is the per-inline permission filtering, which makes those checks look like the reason the method must be duplicated wholesale.",
+        "why_incorrect": "The confirmed cause is that get_inline_instances() iterates directly over the static `inlines` attribute with no get_inlines() hook, and the accepted fix adds get_inlines(request, obj) while leaving the permission checks exactly where they are — proving the permission entanglement is not the obstacle.",
+        "cause": "ModelAdmin.get_inline_instances() interleaves per-inline permission checks (has_add_permission/has_change_permission/has_delete_permission with `continue`) with inline instantiation, and this entanglement — not the static `inlines` class attribute — is what forces developers who want dynamic inlines to copy the whole loop; the real gap is a missing permission-filtering seam, so merely supplying a dynamic list of inline classes would not remove the duplication.",
+        "keywords": [
+          "get_inline_instances",
+          "inlines",
+          "has_add_permission",
+          "has_change_permission",
+          "has_delete_permission",
+          "permission filtering",
+          "interleaved",
+          "loop duplication"
+        ]
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "no-arg-get-inlines-accessor",
+        "why_plausible": "It uses the exact hook name requested in the issue, mirrors Django's get_* accessor convention, and routes get_inline_instances through an overridable method, so it reads like a minimal faithful implementation of the feature request.",
+        "why_incorrect": "Without request and obj parameters the hook cannot vary inlines by request or model instance — the entire point of the feature — so the confirmed mechanism (feeding get_inline_instances from a request/obj-aware get_inlines(request, obj)) remains uncorrected and subclasses would still have to override get_inline_instances wholesale.",
+        "repair": "Add a no-argument ModelAdmin.get_inlines() method that simply returns self.inlines, and rewrite ModelAdmin.get_inline_instances() to iterate over self.get_inlines() (keeping the existing permission filtering), so the inline list is at least fetched through an overridable accessor as the issue requests.",
+        "keywords": [
+          "get_inlines",
+          "self.inlines",
+          "get_inline_instances",
+          "ModelAdmin",
+          "hook",
+          "accessor",
+          "iterate"
+        ]
+      }
+    ]
+  },
+  "generated_by": {
+    "model": "glm-5.3",
+    "claude_code_version": "2.1.215 (Claude Code)"
+  }
+}

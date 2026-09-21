@@ -1,0 +1,68 @@
+{
+  "schema_version": 3,
+  "instance_id": "django__django-10880",
+  "ground_truth": {
+    "files": [
+      "django/db/models/aggregates.py"
+    ],
+    "symbols": [
+      "Aggregate.as_sql",
+      "Aggregate.template",
+      "Count"
+    ],
+    "cause": "In Django 2.2's refactored Aggregate.as_sql (django/db/models/aggregates.py:71), the distinct marker is passed to the template as 'DISTINCT' with no trailing space, and Aggregate.template ('%(function)s(%(distinct)s%(expressions)s)', line 17) concatenates it directly with the compiled argument SQL via Func.as_sql's extra_context substitution. Field-reference arguments compile to a quoted identifier (e.g. \"book\".\"rating\"), so COUNT(DISTINCT\"book\".\"rating\") still parses; but a Case expression's SQL starts with the bare keyword CASE, fusing into the invalid token DISTINCTCASE — yielding COUNT(DISTINCTCASE WHEN ...) and a query syntax error on all backends.",
+    "repair": "Change the marker emitted by Aggregate.as_sql to 'DISTINCT ' (trailing space) when self.distinct, so the template renders COUNT(DISTINCT CASE WHEN ... END) correctly for keyword-led expressions; verified by the new aggregation test test_count_distinct_expression, which asserts Count(Case(When(pages__gt=300, then='rating')), distinct=True) returns 4."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wrong-location-expressions",
+        "why_plausible": "The malformed SQL appears only when a Case condition is the aggregate's argument, and expressions.py defines both the Case/When classes and the Func.as_sql template substitution that renders the %(distinct)s slot, making it the natural first file to inspect for a token-spacing defect.",
+        "why_incorrect": "The ground truth places the defect in django/db/models/aggregates.py, where Aggregate.as_sql emits 'DISTINCT' without a trailing space into Aggregate.template; Case's compiled SQL and Func.as_sql's substitution behave correctly, so expressions.py contains no fault.",
+        "files": [
+          "django/db/models/expressions.py"
+        ],
+        "symbols": [
+          "Case",
+          "Func.as_sql"
+        ]
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wrong-cause-case-no-leading-separator",
+        "why_plausible": "The error string shows the fusion exactly at the CASE boundary, the issue title blames the 'condition and distinct combination', and identical Count(distinct=True) queries over ordinary fields render fine, all pointing at the Case side of the junction.",
+        "why_incorrect": "The confirmed cause is on the other side of the junction: Aggregate.as_sql passes the distinct marker 'DISTINCT' with no trailing space, so any keyword-led expression would fuse; the Case expression's SQL is correct and unmodified.",
+        "cause": "The Case expression's compiled SQL begins with the bare keyword CASE and provides no leading whitespace separator, so when a Case is substituted after the DISTINCT marker inside the aggregate template the two tokens fuse into DISTINCTCASE; plain field arguments escape the error only because they compile to quoted identifiers.",
+        "keywords": [
+          "Case",
+          "as_sql",
+          "leading whitespace",
+          "DISTINCTCASE",
+          "DISTINCT",
+          "template"
+        ]
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wrong-repair-leading-space-in-marker",
+        "why_plausible": "The issue reports only that 'a space is missing' in COUNT(DISTINCTCASE WHEN ..., so inserting a space directly into the distinct marker at the reported junction looks like a minimal, targeted one-character fix.",
+        "why_incorrect": "The fusion is between DISTINCT and the following expression, so a leading space still renders COUNT( DISTINCTCASE WHEN ...); the invalid token and the syntax error persist, whereas the confirmed fix adds the trailing space after DISTINCT.",
+        "repair": "Emit the distinct marker with a leading space — pass ' DISTINCT' instead of 'DISTINCT' from the aggregate's as_sql into the %(distinct)s template slot — so the rendered SQL gains the missing whitespace around the keyword.",
+        "keywords": [
+          "DISTINCT",
+          "distinct marker",
+          "leading space",
+          "as_sql",
+          "extra_context",
+          "template"
+        ]
+      }
+    ]
+  },
+  "generated_by": {
+    "model": "glm-5.3",
+    "claude_code_version": "2.1.215 (Claude Code)"
+  }
+}

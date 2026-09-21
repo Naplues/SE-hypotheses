@@ -1,0 +1,73 @@
+{
+  "schema_version": 3,
+  "instance_id": "django__django-11087",
+  "ground_truth": {
+    "files": [
+      "django/db/models/deletion.py"
+    ],
+    "symbols": [
+      "Collector.collect",
+      "Collector.related_objects",
+      "Collector.can_fast_delete",
+      "Collector._has_signal_listeners"
+    ],
+    "cause": "Collector.collect() cascades via related_objects(), which builds an _base_manager queryset selecting every column of the related model, and passes those full sub_objs to on_delete handlers. Fields not required for deletion (non-FK columns like text_log_error.line containing undecodable bytes) are fetched and decoded, causing UnicodeDecodeError during .delete() and wasting query performance.",
+    "repair": "In Collector.collect(), when a related batch cannot be fast-deleted, defer unreferenced fields: unless sub_objs.query.select_related is set or pre_delete/post_delete receivers are connected to the related model, apply sub_objs.only(*referenced_fields), where referenced_fields is the union of FK attname values gathered from get_candidate_relations_to_delete(related_model._meta). Factor the pre/post_delete listener check into a new Collector._has_signal_listeners() reused by can_fast_delete() (dropping its m2m_changed check). Verified by DeletionTests.test_only_referenced_fields_selected, which asserts the cascade SELECT on Referrer only includes id/unique_field unless deletion signals are connected."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "loc-query-py-evaluation-machinery",
+        "why_plausible": "All ORM-side frames in the public traceback before the driver sit in query.py (QuerySet.delete, QuerySet.__bool__, _fetch_all, and the iterable __iter__ that triggers execute_sql), and query.py owns the .only()/.defer() deferred-loading API a developer would reach for to stop materializing columns like text_log_error.line.",
+        "why_incorrect": "The confirmed defect is in deletion.py's Collector — related_objects()/collect() build the full-column _base_manager queryset before query.py's evaluation machinery runs — and the accepted fix (applying .only(*referenced_fields) during collection) required no change to query.py.",
+        "files": [
+          "django/db/models/query.py"
+        ],
+        "symbols": [
+          "QuerySet.delete",
+          "QuerySet._fetch_all",
+          "ModelIterable.__iter__"
+        ]
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "cause-mysqlclient-use-unicode-default",
+        "why_plausible": "The traceback terminates in MySQLdb's connections.string_decoder doing s.decode(db.encoding), the failure appears only after the Python 2.7 to 3.6 upgrade against previously written data, and the reporter explicitly names the driver's version-dependent use_unicode default as a suspected cause.",
+        "why_incorrect": "The confirmed mechanism is ORM over-fetching in the deletion collector — related_objects() selects every column of the related model, so an unneeded non-FK field gets decoded at all — and the adopted fix (selecting only referenced fields) eliminates the crash without any change to connection decoding.",
+        "cause": "mysqlclient-python defaults use_unicode=True only on Python 3, so the driver's string_decoder strictly decodes every fetched character column with the connection charset; because no layer normalizes this option or applies an errors-tolerant decode, legacy non-UTF-8 bytes stored in text_log_error.line under Python 2 crash any fetch that touches that column, regardless of which fields the deletion collector actually requests.",
+        "keywords": [
+          "use_unicode",
+          "mysqlclient",
+          "string_decoder",
+          "Python 3",
+          "UnicodeDecodeError",
+          "connection charset",
+          "utf8mb4",
+          "invalid continuation byte"
+        ]
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "repair-tolerant-connection-decoding",
+        "why_plausible": "It mirrors the remedy the reporter proposes in the issue (set use_unicode to the same value on all Python versions and handle the unicode conversion in Django), it is implementable through the backend's connection parameters, and it makes the .delete() traceback disappear for the offending rows.",
+        "why_incorrect": "It acts at the connection/decoding layer and leaves the confirmed mechanism untouched — the deletion collector still SELECTs and transfers every column of every related model, so the over-fetching and .delete() performance problem persist and the junk values are silently mangled rather than never read; the accepted fix instead restricts cascade queries to referenced fields via sub_objs.only().",
+        "repair": "Normalize the mysqlclient connection across Python versions by passing use_unicode=False (or registering a custom character-column converter that decodes with errors='replace') through the MySQL connection options Django forwards to the driver, and perform the bytes-to-str conversion of character columns in the backend's cursor layer, so legacy invalid UTF-8 values such as text_log_error.line come back as replacement characters instead of raising UnicodeDecodeError.",
+        "keywords": [
+          "use_unicode",
+          "connection options",
+          "MySQL backend",
+          "converter",
+          "errors='replace'",
+          "decode",
+          "cursor layer"
+        ]
+      }
+    ]
+  },
+  "generated_by": {
+    "model": "glm-5.3",
+    "claude_code_version": "2.1.215 (Claude Code)"
+  }
+}

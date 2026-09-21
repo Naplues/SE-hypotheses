@@ -1,0 +1,64 @@
+{
+  "schema_version": 3,
+  "instance_id": "astropy__astropy-12907",
+  "ground_truth": {
+    "files": [
+      "astropy/modeling/separable.py"
+    ],
+    "symbols": [
+      "astropy.modeling.separable._cstack"
+    ],
+    "cause": "In `_cstack`, when the right operand of `&` is an already-computed separability matrix for a nested CompoundModel, the bottom-right block is filled with scalar `1` instead of copying that matrix. This discards the nested submodel's actual input/output dependencies and falsely marks all of its outputs and inputs as coupled.",
+    "repair": "Assign the recursively computed `right` matrix into the bottom-right block, mirroring the left-operand branch, so nested CompoundModel separability is preserved."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl-core-compoundmodel",
+        "why_plausible": "The symptom appears only when compound models are nested, so the natural first inspection is the CompoundModel class — how '&' builds and stores the nested left/right/op expression tree that separability_matrix walks.",
+        "why_incorrect": "CompoundModel (core.py:2894) builds and exposes the nested left/right/op tree correctly, and the nested submodel's own separability matrix computes correctly; the corruption happens later during matrix assembly in separable.py, so no defect lies in CompoundModel's nesting or tree-construction logic.",
+        "files": [
+          "astropy/modeling/core.py"
+        ],
+        "symbols": [
+          "astropy.modeling.core.CompoundModel"
+        ]
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc-nested-compound-not-decomposed",
+        "why_plausible": "A uniformly True block is exactly what the code's blanket non-separable fill produces, and the corruption appears only when a compound is nested, suggesting the nested object is not being broken down into its submodels.",
+        "why_incorrect": "The issue itself shows separability_matrix(cm) alone returns the correct diagonal, proving the nested compound is decomposed and its matrix computed; the confirmed cause is that this already-computed matrix is later overwritten with a scalar 1 when the '&' operands are stacked, not that decomposition is skipped.",
+        "cause": "The separability computation never decomposes a nested CompoundModel operand: the nested `cm` is handled as an atomic simple model, and because that atomic unit has multiple inputs/outputs it falls into the blanket non-separable handling, marking every input/output pair in the bottom-right block as mutually dependent instead of using the independence of its Linear1D submodels.",
+        "keywords": [
+          "nested CompoundModel",
+          "not decomposed",
+          "treated as atomic simple model",
+          "non-separable fallback",
+          "blanket fill",
+          "missing recursion"
+        ]
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr-identity-fill-bottom-right",
+        "why_plausible": "For the reported example the nested model's true matrix is the identity, so this change reproduces the exact expected output at the very line under suspicion and looks like a minimal fix.",
+        "why_incorrect": "It fabricates a diagonal instead of copying the recursively computed right matrix, so nested compounds whose true sub-matrix is not diagonal (e.g., a nested operand containing a projection like Pix2Sky_TAN) are still computed wrongly; it special-cases the reported symptom rather than preserving the nested model's actual dependencies.",
+        "repair": "In `_cstack`, when the right '&' operand is an already-computed separability matrix, fill the bottom-right block with an identity matrix instead of scalar 1 (e.g., `cright[-right.shape[0]:, -right.shape[1]:] = np.eye(right.shape[0], right.shape[1])`), so nested compound operands come out diagonal and separable.",
+        "keywords": [
+          "np.eye",
+          "identity matrix",
+          "diagonal fill",
+          "bottom-right block",
+          "_cstack"
+        ]
+      }
+    ]
+  },
+  "generated_by": {
+    "model": "glm-5.3",
+    "claude_code_version": "2.1.215 (Claude Code)"
+  }
+}

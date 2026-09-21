@@ -1,0 +1,68 @@
+{
+  "schema_version": 3,
+  "instance_id": "astropy__astropy-14309",
+  "ground_truth": {
+    "files": [
+      "astropy/io/fits/connect.py"
+    ],
+    "symbols": [
+      "is_fits"
+    ],
+    "cause": "In is_fits, when fileobj is None and filepath is a non-None string without a FITS extension, the elif branch does not return and falls through to `isinstance(args[0], (HDUList, TableHDU, BinTableHDU, GroupsHDU))`. identify_format invokes identifiers with `*args` (often empty, e.g. identify_format(\"write\", Table, \"bububu.ecsv\", None, [], {})), so args[0] raises IndexError: tuple index out of range.",
+    "repair": "Make the filepath branch terminal: `return filepath.lower().endswith((\".fits\", \".fits.gz\", \".fit\", \".fit.gz\", \".fts\", \".fts.gz\"))`, so a non-FITS filename returns False instead of reaching the `isinstance(args[0], ...)` fallback, which now applies only when data is passed via args (fileobj and filepath both None)."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "registry-base-identify-format",
+        "why_plausible": "The issue title names identify_format in io.registry, and the traceback's dispatch frame (astropy/io/registry/base.py:313) is the line that unpacks *args and forwards it into the identifier, making it the natural first place to suspect a broken argument-forwarding or identifier-selection bug.",
+        "why_incorrect": "The confirmed defect is in is_fits in astropy/io/fits/connect.py (the non-terminal filepath branch falling through to args[0]); the dispatcher at base.py:282-318 correctly forwards the caller's empty args and its identifier loop behaves as designed.",
+        "files": [
+          "astropy/io/registry/base.py"
+        ],
+        "symbols": [
+          "_UnifiedIORegistryBase.identify_format"
+        ]
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "empty-args-identifier-invocation",
+        "why_plausible": "The traceback shows the IndexError occurring exactly at the dispatch boundary (base.py:313 -> is_fits) where *args is expanded into the identifier, and the issue links the regression to commit 2a0c5c6, so it reads as if the refactor changed how identifiers are called and the data object identifiers expect in args no longer reaches them.",
+        "why_incorrect": "Per the confirmed cause, the empty args tuple is legitimate caller input — the repro passes [] explicitly and identifiers are declared with *args precisely because data may be absent — and nothing is dropped or mis-forwarded in dispatch; the IndexError arises solely because is_fits's filepath branch is non-terminal and falls through to args[0] for a non-FITS filename.",
+        "cause": "The identifier-dispatch path invokes registered identifiers without the data object they index as args[0]: when identify_format is called in write mode with only a path and no data (as in identify_format(\"write\", Table, \"bububu.ecsv\", None, [], {})), the registry forwards an empty positional args tuple into each identifier, so any identifier like the FITS one that accesses args[0] is invoked without a required argument and raises IndexError.",
+        "keywords": [
+          "identify_format",
+          "identifier dispatch",
+          "*args",
+          "args[0]",
+          "empty args",
+          "data object not passed",
+          "write mode",
+          "2a0c5c6"
+        ]
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "try-except-indexerror-in-dispatcher",
+        "why_plausible": "It stops the reported traceback at the exact dispatch frame shown in the issue, and identify_format(\"write\", Table, \"bububu.ecsv\", None, [], {}) would then return an empty format list — the same observable outcome as the pre-regression behavior where is_fits returned None — so it looks like a quick defensive fix at the registry level.",
+        "why_incorrect": "It does not correct the confirmed mechanism: is_fits still falls through to isinstance(args[0], ...) for every non-FITS filename and still raises IndexError internally; the dispatcher merely masks the error, silently swallowing genuine IndexErrors from any registered identifier (Table and CCDData identification via _get_valid_format) instead of making is_fits properly return False.",
+        "repair": "In _UnifiedIORegistryBase.identify_format (astropy/io/registry/base.py:313), wrap the identifier invocation in a try/except IndexError that skips the raising identifier and continues the loop (e.g. `try: identified = self._identifiers[(data_format, data_class)](origin, path, fileobj, *args, **kwargs) except IndexError: continue`), so an identifier that indexes into an empty args tuple can no longer crash format identification.",
+        "keywords": [
+          "identify_format",
+          "base.py",
+          "try/except IndexError",
+          "skip identifier",
+          "continue",
+          "suppress exception",
+          "dispatcher loop"
+        ]
+      }
+    ]
+  },
+  "generated_by": {
+    "model": "glm-5.3",
+    "claude_code_version": "2.1.215 (Claude Code)"
+  }
+}

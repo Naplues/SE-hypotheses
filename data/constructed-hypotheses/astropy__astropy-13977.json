@@ -1,0 +1,67 @@
+{
+  "schema_version": 3,
+  "instance_id": "astropy__astropy-13977",
+  "ground_truth": {
+    "files": [
+      "astropy/units/quantity.py"
+    ],
+    "symbols": [
+      "Quantity.__array_ufunc__"
+    ],
+    "cause": "Quantity.__array_ufunc__ claims every ufunc call itself instead of deferring to foreign operands. For a duck-typed operand that defines its own __array_ufunc__ and has an equivalent-but-different unit (e.g. (1*u.m) + DuckArray(1*u.mm)), converters_and_unit reads the operand's .unit and builds a unit-scale converter; line 670 then applies that converter to the raw duck object (line 669 only strips .value, which duck types lack), so the converter raises ValueError/TypeError ('Value not scalar compatible...'). The exception propagates out of __array_ufunc__ instead of returning NotImplemented, so NumPy never tries the duck type's __array_ufunc__ or the reflected operator, violating the NumPy subclassing protocol.",
+    "repair": "Wrap the entire ufunc evaluation (converters_and_unit, out/initial handling, input conversion, and the super().__array_ufunc__ call) in try/except (TypeError, ValueError). On exception, gather inputs plus the out tuple and return NotImplemented if any of them has a custom __array_ufunc__ (its type's __array_ufunc__ is not None, np.ndarray.__array_ufunc__, or Quantity's own), letting the duck type handle the operation; otherwise re-raise the original error so plain-Quantity failures (e.g. Quantity + dict, incompatible units) keep their existing errors. Also update the docstring return type to 'Quantity or NotImplemented'."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wrong-location-condition-arg",
+        "why_plausible": "The reported traceback's innermost frames are both in this file — the unit-scale converter lambda `lambda val: scale * _condition_arg(val)` (core.py:1073) and `_condition_arg` itself (core.py:2604), which raises the exact `ValueError` quoted in the issue — so a developer following the traceback lands on this validator first.",
+        "why_incorrect": "Ground truth locates the defect in Quantity.__array_ufunc__ in astropy/units/quantity.py; _condition_arg is a generic numeric-input check behaving as designed and is merely where Quantity's failure to defer surfaces, not where the deferral decision belongs.",
+        "files": [
+          "astropy/units/core.py"
+        ],
+        "symbols": [
+          "_condition_arg"
+        ]
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wrong-cause-dispatch-priority",
+        "why_plausible": "The issue's examples are strictly order-dependent (working with the duck type on the left, failing on the right) and cite NumPy's subclassing docs, which cover both __array_ufunc__ dispatch and the priority mechanism, so 'the duck type isn't winning dispatch' is a natural reading.",
+        "why_incorrect": "The confirmed cause is that Quantity.__array_ufunc__ itself claims the call and lets the converter exception propagate instead of returning NotImplemented, which is the protocol signal that would make NumPy try the duck type's handler; dispatch order among non-subclass operands is left-to-right and __array_priority__ does not govern __array_ufunc__ override selection, so precedence is not the failure mechanism.",
+        "cause": "NumPy selects the winning __array_ufunc__ by operand precedence, and a plain NDArrayOperatorsMixin duck type declares no __array_priority__ (and is not an ndarray subclass) while Quantity declares __array_priority__ = 10000, so Quantity's handler is always selected first whenever it is the left operand; since NumPy only falls back to the right operand's __array_ufunc__ or the reflected __radd__ after a NotImplemented return — never after an exception — the duck type loses control purely because of dispatch precedence, not because of how Quantity processes the inputs.",
+        "keywords": [
+          "__array_priority__",
+          "dispatch precedence",
+          "left operand",
+          "__radd__",
+          "NotImplemented",
+          "NDArrayOperatorsMixin",
+          "ufunc override"
+        ]
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wrong-repair-relax-condition-arg",
+        "why_plausible": "The traceback and error message point exactly at this type whitelist, so widening it looks like the minimal targeted change that eliminates the reported ValueError without touching Quantity's arithmetic.",
+        "why_incorrect": "The confirmed mechanism is Quantity's failure to return NotImplemented so the duck type's own __array_ufunc__ can take over; a relaxed validator leaves Quantity claiming the ufunc and feeds a unit-carrying object (or an object-dtype array) into a converter that expects a bare number, mis-scaling it or failing anew, so the protocol violation — and at best silently wrong results — remains.",
+        "repair": "Loosen the scalar-compatibility validation feeding the unit converters: in astropy/units/core.py's _condition_arg (line 2624), extend the isinstance whitelist and add a fallback that unwraps duck-typed operands — e.g., return `value.value` when present, else `np.asarray(value)` — instead of raising on non-numeric dtype kinds, so the scale converter `lambda val: scale * _condition_arg(val)` applied to a DuckArray input no longer raises ValueError.",
+        "keywords": [
+          "_condition_arg",
+          "scalar compatible",
+          "dtype.kind",
+          "whitelist",
+          "np.asarray",
+          "value.value",
+          "unit-scale converter"
+        ]
+      }
+    ]
+  },
+  "generated_by": {
+    "model": "glm-5.3",
+    "claude_code_version": "2.1.215 (Claude Code)"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "schema_version": 3,
+  "instance_id": "astropy__astropy-8707",
+  "ground_truth": {
+    "files": [
+      "astropy/io/fits/card.py",
+      "astropy/io/fits/header.py"
+    ],
+    "symbols": [
+      "astropy.io.fits.card.Card.fromstring",
+      "astropy.io.fits.header.Header.fromstring",
+      "astropy.io.fits.card._pad"
+    ],
+    "cause": "Python 2→3 str/bytes port gap: Card.fromstring and Header.fromstring are documented to accept a raw \"byte string\" header but on Python 3 handle only unicode str. Raw bytes (e.g. a binary-mode file read) hit str-only operations: _pad concatenates str spaces onto the input (TypeError in Card.fromstring), and Header.fromstring's card-splitting loop compares/joins str literals ('CONTINUE', 'END'/END_CARD, ''.join, str sep) with bytes, so the END card is never detected and assembly fails. The fromfile path masks this by decoding blocks to str before parsing.",
+    "repair": "Accept both str and bytes in both classmethods: Card.fromstring decodes bytes with latin-1 (1:1 byte mapping that preserves invalid bytes for later validation warnings) before _pad; Header.fromstring branches on isinstance(data, bytes) to compare/split with bytes counterparts (b'CONTINUE', b'END', END_CARD.encode('ascii'), sep.encode('latin1'), b'' join) and passes bytes through to Card.fromstring for decoding; docstrings updated to document str-or-bytes and Header doctest skips narrowed."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "WL-1",
+        "why_plausible": "The issue contrasts fromstring (rejects bytes) with fromfile (works on files opened in binary mode), and _File/_File.read are the mode-aware block-reading machinery behind file-based header loading, so a developer would naturally inspect there first for where binary data becomes the str that parsing needs.",
+        "why_incorrect": "Header.fromstring is a purely in-memory parse that never touches _File or any file I/O; the confirmed bytes/str failure occurs entirely inside the str-based card-padding and card-splitting logic of header.py/card.py, so file.py cannot be the defect location and no change there would make fromstring(b'...') work.",
+        "files": [
+          "astropy/io/fits/file.py"
+        ],
+        "symbols": [
+          "astropy.io.fits.file._File",
+          "astropy.io.fits.file._File.read"
+        ]
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "WC-1",
+        "why_plausible": "The issue text itself says the method \"assumes that the data can be ASCII-encoded\", FITS cards are ASCII by specification, and astropy ships package-wide ASCII encode/decode helpers, so an explicit ASCII-normalization step rejecting bytes is a natural reading that cleanly explains why unicode str works while bytes does not.",
+        "why_incorrect": "Per the confirmed cause there is no ASCII encode/validate step doing the rejecting: bytes die on implicit str-only operations — _pad concatenating str padding onto bytes, and the card-splitting loop comparing/joining str literals ('CONTINUE', 'END', str separator) with bytes so the END card is never detected. The confirmed fix decodes bytes with latin-1 and defers invalid bytes to later validation warnings, so no ASCII-encoding logic is involved in either the failure or the fix.",
+        "cause": "The fromstring classmethods enforce the FITS ASCII-only card format through an explicit input-normalization step that encodes/validates the header text as ASCII before parsing; on Python 3 this step cannot process bytes (bytes have no .encode, and byte values above 127 fail ASCII validation), so bytes are rejected up front by the ASCII normalization itself rather than by the card-parsing logic.",
+        "keywords": [
+          "ASCII",
+          "encode",
+          "decode_ascii",
+          "encode_ascii",
+          "UnicodeEncodeError",
+          "input validation",
+          "type check",
+          "bytes",
+          "str"
+        ]
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "WR-1",
+        "why_plausible": "This is the classic one-line Python 2→3 remedy: normalize the argument to str at the API boundary so the downstream str operations — exactly the ones implicated by the failure — appear satisfied, and the documented API now nominally accepts bytes.",
+        "why_incorrect": "On Python 3 str(b'...') yields the repr \"b'...'\", not the decoded contents, so 80-column card images are mangled and END detection and keyword parsing still fail; the confirmed mechanism — parsing the actual byte contents — requires decoding (e.g. latin-1), so this coercion cannot be an alternative valid fix.",
+        "repair": "Leave the parsing logic unchanged and special-case bytes at each entry point with a plain coercion — `if isinstance(data, bytes): data = str(data)` in Header.fromstring (and likewise Card.fromstring) — so every existing str-based operation (padding, 'CONTINUE'/'END' comparisons, separator joins) receives a str and stops raising.",
+        "keywords": [
+          "str()",
+          "isinstance",
+          "coercion",
+          "type conversion",
+          "special-case",
+          "bytes",
+          "repr"
+        ]
+      }
+    ]
+  },
+  "generated_by": {
+    "model": "glm-5.3",
+    "claude_code_version": "2.1.215 (Claude Code)"
+  }
+}

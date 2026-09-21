@@ -1,0 +1,66 @@
+{
+  "schema_version": 3,
+  "instance_id": "django__django-10973",
+  "ground_truth": {
+    "files": [
+      "django/db/backends/postgresql/client.py"
+    ],
+    "symbols": [
+      "DatabaseClient.runshell_db",
+      "_escape_pgpass"
+    ],
+    "cause": "runshell_db passes the password to psql via a temporary .pgpass file: fields are hand-escaped by _escape_pgpass, written to a NamedTemporaryFile, exposed by injecting PGPASSFILE into the process-global os.environ, and delivered by subprocess.check_call inheriting that mutated env. This legacy mechanism (predating subprocess.run's env= parameter, available since Python 3.5 / Django 2.1's minimum) mutates global interpreter state requiring manual cleanup and silently drops the password on UnicodeEncodeError under locales that cannot encode it — the fragile code path the new PGPASSWORD-based tests fail against.",
+    "repair": "Delete _escape_pgpass and the NamedTemporaryFile/pgpass machinery. Build subprocess_env = os.environ.copy(), set subprocess_env['PGPASSWORD'] = str(passwd) when a password exists, and call subprocess.run(args, check=True, env=subprocess_env) instead of check_call. Keep the SIGINT ignore/restore handling; rewrite tests to mock subprocess.run and assert the PGPASSWORD env value."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wrong-location-1",
+        "why_plausible": "The dbshell client's conn_params (host, port, database, user, password) are assembled by DatabaseWrapper.get_connection_params in base.py, so a developer tracing why the password never reaches psql would plausibly start where credentials are read from settings and packaged before client.py consumes them.",
+        "why_incorrect": "The confirmed defect and change site is runshell_db/_escape_pgpass in django/db/backends/postgresql/client.py; base.py only builds parameters for the in-process psycopg2 connection and contains no psql subprocess spawning or password-transport logic.",
+        "files": [
+          "django/db/backends/postgresql/base.py"
+        ],
+        "symbols": [
+          "DatabaseWrapper",
+          "DatabaseWrapper.get_connection_params"
+        ]
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wrong-cause-1",
+        "why_plausible": "The issue justifies the change by noting subprocess.run 'allows you to pass a custom environment for the subprocess' and that it 'makes it more reliable', which reads as if the current code has no working way to get an environment variable to the child psql process.",
+        "why_incorrect": "subprocess.check_call without an env= argument inherits the parent's current (mutated) os.environ, so PGPASSFILE does reach psql; the confirmed failure is the pgpass mechanism itself — hand-escaping, process-global env mutation with manual cleanup, and locale-dependent file writes — not lost environment inheritance.",
+        "cause": "psql is spawned by subprocess.check_call with a fresh/sanitized child environment that does not inherit the PGPASSFILE variable injected into os.environ just before the call, so psql never sees the generated password file and falls back to an interactive password prompt.",
+        "keywords": [
+          "subprocess.check_call",
+          "environment inheritance",
+          "PGPASSFILE",
+          "os.environ",
+          "psql password prompt"
+        ]
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wrong-repair-1",
+        "why_plausible": "The issue's motivation is reliability, and the visible weak points of the current code (manual cleanup, temp-file lifecycle, escaping edge cases, locale-dependent writes) can each be patched in place, which looks lower-risk than reworking how the password is delivered to psql.",
+        "why_incorrect": "The confirmed fix deletes the pgpass machinery entirely and passes PGPASSWORD in an explicit environment to subprocess.run; hardening keeps the hand-escaped temp file and the process-global os.environ mutation — the exact fragile mechanism at fault — so the rewritten tests that mock subprocess.run and assert the PGPASSWORD value would still fail.",
+        "repair": "Harden the existing delivery in runshell_db rather than replacing it: wrap the PGPASSFILE injection, subprocess.check_call, and cleanup in a single try/finally that always deletes the NamedTemporaryFile and restores os.environ and the SIGINT handler, open the temp file with an encoding-safe mode (e.g. UTF-8 with surrogateescape) so non-ASCII passwords don't fail, and extend _escape_pgpass to cover any remaining pgpass metacharacters.",
+        "keywords": [
+          "try/finally cleanup",
+          "NamedTemporaryFile",
+          "_escape_pgpass",
+          "UnicodeEncodeError",
+          "PGPASSFILE",
+          "subprocess.check_call"
+        ]
+      }
+    ]
+  },
+  "generated_by": {
+    "model": "glm-5.3",
+    "claude_code_version": "2.1.215 (Claude Code)"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": 3,
+  "instance_id": "astropy__astropy-13453",
+  "ground_truth": {
+    "files": [
+      "astropy/io/ascii/html.py"
+    ],
+    "symbols": [
+      "HTML.write",
+      "BaseData._set_col_formats",
+      "BaseData.str_vals"
+    ],
+    "cause": "The formats kwarg is stored on writer.data.formats (core.py:1727) and only applied to columns by BaseData._set_col_formats() (core.py:934-938), invoked solely from BaseData.str_vals() (core.py:908) in the generic writer path. HTML.write() bypasses that pipeline: it sets only self.data.header.cols and _set_fill_values(cols), never assigns self.data.cols or calls _set_col_formats(), then emits cells via col.info.iter_str_vals() (html.py:433-441) with default formatting — so the formats argument is silently ignored (unlike csv/rst, which use the generic path).",
+    "repair": "In HTML.write(), after self.data._set_fill_values(cols), assign self.data.cols = cols and call self.data._set_col_formats() so each column's info.format is populated from self.data.formats before iter_str_vals() produces cell strings; verified by new test test_write_table_formatted_columns."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "WL-pprint-pformat-col-iter",
+        "why_plausible": "`HTML.write()` produces every `<td>` cell through `col.info.iter_str_vals()` (html.py:434,440), which delegates to the formatter's `_pformat_col_iter` — the function that core.py's own `BaseData.str_vals` docstring (core.py:898-900) says 'does the real work of formatting' — making it the natural first place to ask why the formats dict is ignored for HTML cells.",
+        "why_incorrect": "`_pformat_col_iter` formats values from `col.info.format` — the same machinery that formats csv/rst output once formats are set on the columns — and the confirmed defect is that `HTML.write()` never populates `col.info.format` (it skips `_set_col_formats()` entirely), so the same call chain emits formatted cells once the writer applies the formats; the formatter is not the defect site.",
+        "files": [
+          "astropy/table/pprint.py"
+        ],
+        "symbols": [
+          "_pformat_col_iter"
+        ]
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "WC-kwarg-dropped-in-dispatch",
+        "why_plausible": "Only html fails while csv/rst work, and the dispatch code visibly strips `formats` from the writer constructor call while `HTML.__init__` takes only `htmldict`, so a natural reading of the issue title — html 'does not support' the supplied option — is that the kwarg is dropped en route to the html writer.",
+        "why_incorrect": "`_get_writer` re-attaches the kwarg at core.py:1726-1727 (`writer.data.formats = kwargs['formats']`) for every generic writer — html included, since no fast_html class exists — before `write()` runs; the confirmed cause is that `HTML.write()` never applies the stored mapping to the columns (no `_set_col_formats()` call), not that the mapping is missing.",
+        "cause": "The `formats` kwarg is silently discarded before it reaches the HTML writer: `formats` is a member of `extra_writer_pars` (ui.py:758) and is filtered out of the `Writer(**writer_kwargs)` constructor call in `_get_writer` (core.py:1714-1715), and since `HTML.__init__` accepts only `htmldict` (html.py:322), the mapping is never stored on the writer for html — `writer.data.formats` stays empty when `HTML.write()` stringifies the cells, unlike csv/rst whose fast-writer branch passes all kwargs directly to the writer constructor (core.py:1707-1712).",
+        "keywords": [
+          "formats",
+          "extra_writer_pars",
+          "kwargs",
+          "_get_writer",
+          "htmldict",
+          "writer construction",
+          "dropped"
+        ]
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "WR-store-formats-on-html-writer",
+        "why_plausible": "The issue is phrased as html 'not supporting' the formats option, and the HTML writer visibly neither declares nor stores it (`HTML.__init__` accepts only `htmldict`, and `formats` is filtered out of the constructor call), so explicitly capturing and storing the mapping looks like the minimal change that brings html in line with csv/rst.",
+        "why_incorrect": "The mapping is already stored on `writer.data.formats` before `HTML.write()` runs (core.py:1726-1727), so the assignment is a no-op; the confirmed mechanism requires applying the stored formats to the columns (`self.data.cols = cols` plus `self.data._set_col_formats()`) so `col.info.iter_str_vals()` sees a populated `col.info.format`, and this repair leaves that application step undone and the output unchanged.",
+        "repair": "In `astropy/io/ascii/html.py`, make the HTML writer explicitly retain the option: accept the supplied `formats` mapping and assign it onto the writer's data object (`self.data.formats = formats`) in `HTML.write()` before the table body is generated (equivalently, extend `HTML.__init__` to take and store `formats`), so the HTML writer holds the mapping the way the other writers do.",
+        "keywords": [
+          "formats",
+          "self.data.formats",
+          "HTML.write",
+          "HTML.__init__",
+          "store",
+          "htmldict"
+        ]
+      }
+    ]
+  },
+  "generated_by": {
+    "model": "glm-5.3",
+    "claude_code_version": "2.1.215 (Claude Code)"
+  }
+}

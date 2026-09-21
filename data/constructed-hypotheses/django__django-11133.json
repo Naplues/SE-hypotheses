@@ -1,0 +1,66 @@
+{
+  "schema_version": 3,
+  "instance_id": "django__django-11133",
+  "ground_truth": {
+    "files": [
+      "django/http/response.py"
+    ],
+    "symbols": [
+      "HttpResponse.make_bytes"
+    ],
+    "cause": "HttpResponse.make_bytes() only special-cases bytes and str; a memoryview (returned by PostgreSQL for BinaryField) falls through to the generic non-string branch str(value).encode(self.charset), so the response content becomes the repr b'<memory at 0x...>' instead of the buffer's bytes.",
+    "repair": "In make_bytes(), change the bytes branch from isinstance(value, bytes) to isinstance(value, (bytes, memoryview)) and keep return bytes(value), since bytes(memoryview) yields the underlying bytes. Covered by new HttpResponseTests.test_memoryview_content in tests/httpwrappers/tests.py, inserted after test_non_string_content (ends line 367), asserting HttpResponse(memoryview(b'memoryview')).content == b'memoryview'."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl-http-request-module",
+        "why_plausible": "The symptom is an HTTP payload rendered as a repr string, and django/http/request.py is the sibling module holding the http package's most visible bytes/charset logic (HttpRequest.body raw-body reads, QueryDict encoding), so a developer grepping django/http for 'encode'/'charset'/'bytes' while tracing payload coercion lands here before response.py's make_bytes.",
+        "why_incorrect": "The repro constructs an HttpResponse directly and never touches request handling; the repr is produced by HttpResponse.make_bytes in django/http/response.py, and nothing in request.py participates in building or serializing response content.",
+        "files": [
+          "django/http/request.py"
+        ],
+        "symbols": [
+          "HttpRequest",
+          "HttpRequest.body"
+        ]
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc-assignment-time-stringification",
+        "why_plausible": "The reported output b'<memory at 0x...>' proves str() ran on the buffer somewhere, and the setter is the first Django code the value passes through; since the repro constructs the response and only later reads .content, assignment-time and read-time coercion are indistinguishable from the report alone.",
+        "why_incorrect": "The confirmed behavior is lazy — the setter stores the memoryview unchanged in _container and the stringification happens in make_bytes()'s generic non-string branch str(value).encode(self.charset) when .content is read, so inspecting _container immediately after construction disproves eager coercion.",
+        "cause": "The memoryview is stringified eagerly when content is assigned: HttpResponse.__init__ routes the value through the content property setter, which coerces non-bytes values exposing __str__ with str(value) before storing them in _container, so the '<memory at 0x...>' repr is baked into the stored content at construction time and the content getter merely re-encodes the already-stringified chunk.",
+        "keywords": [
+          "content setter",
+          "__init__",
+          "str(value)",
+          "__str__",
+          "_container",
+          "assignment-time coercion"
+        ]
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr-force-text-pipeline",
+        "why_plausible": "Swapping the ad-hoc isinstance ladder for Django's own encoding utility looks like a principled generalization that should handle 'any' content type, and it preserves behavior for str, bytes, and scalar values like int, so existing tests would not expose the gap.",
+        "why_incorrect": "force_text() has no memoryview branch — like the current fallback it str()s non-str/bytes values — so HttpResponse(memoryview(b'My Content')).content still returns b'<memory at 0x...>'; the confirmed mechanism requires buffers to reach a bytes-returning path, which this never does.",
+        "repair": "In HttpResponse.make_bytes(), replace the isinstance dispatch with a text-first pipeline: coerce every value through django.utils.encoding.force_text(value) and then encode the result with self.charset, so all content types flow through Django's canonical text conversion before a single encode step.",
+        "keywords": [
+          "force_text",
+          "make_bytes",
+          "encode",
+          "charset",
+          "text-first",
+          "canonical encoding utility"
+        ]
+      }
+    ]
+  },
+  "generated_by": {
+    "model": "glm-5.3",
+    "claude_code_version": "2.1.215 (Claude Code)"
+  }
+}
