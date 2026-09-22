@@ -16,6 +16,7 @@ build/
 *.egg-info/
 runs/
 results/
+data/
 data/cache/
 data/construction-workspace/
 data/repo-archives/

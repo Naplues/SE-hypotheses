@@ -83,10 +83,12 @@ uv run python scripts/construct_hypotheses.py \
 `data/swebench_verified_test.jsonl`，私有工作目录为 `data/construction-workspace`，结果写入
 `data/constructed-hypotheses`，源码从 `data/repository-snapshots` 读取；需要时可通过
 `--input`、`--workspace`、`--output` 和 `--snapshots` 覆盖。运行环境固定使用 `claude`
-命令、单次调用 10 分钟超时和最多 4 个 turn。Ground Truth 仅允许 `Read`，且
-只读取 developer patch 和 test patch 涉及文件的局部范围；Prompt 不再包含冗长的
-`PASS_TO_PASS` 列表。Hypothesis 每类只生成一个候选，避免对与任务无关的模块做全库探索。
-为避免 Hypothesis 阶段反复探索仓库，脚本会先从 Ground Truth 文件周边收集最多 24 个真实
+命令、单次调用 10 分钟超时和最多 4 个 turn。脚本先在本地从 base commit 快照提取
+developer patch 和 test patch 各个 hunk 前后最多 40 行的源码，总计最多约 24,000 字符，
+再连同 issue 和 patch 交给模型。两次模型调用均不开放仓库工具，要求一次响应完成，
+避免模型反复探索；Prompt 也不再包含冗长的 `PASS_TO_PASS` 列表。
+Hypothesis 每类只生成一个候选，减少不必要的生成。
+为避免 Hypothesis 阶段反复探索仓库，脚本会先从 Ground Truth 文件周边收集最多 12 个真实
 源文件作为 Wrong Location 候选；第二次 Claude 调用禁用仓库工具，只根据 issue、精简
 Ground Truth 和候选路径一次性生成 WLH/WCH/WRH。
 超时针对每次 Claude 调用：超过 600 秒后终止子进程，并按 `ground_truth` 或
@@ -97,14 +99,15 @@ Ground Truth 和候选路径一次性生成 WLH/WCH/WRH。
 
 1. 读取已经下载的 `base_commit` 源码快照及其元数据；
 2. 校验任务、仓库、commit 和 archive SHA-256；
-3. 在源码快照中运行 Ground Truth Prompt；
+3. 本地提取 patch hunk 附近的 base-commit 源码并运行 Ground Truth Prompt；
 4. 校验 Ground Truth 文件属于 developer patch 且存在于 base commit；
 5. 组装并运行 Hypothesis Prompt；
 6. 校验 Wrong Location、Wrong Cause 和 Wrong Repair 候选，并确保错误位置不与真实位置重叠；
 7. 证据不足时记录跳过原因，否则输出一个任务 JSON。
 
-Ground Truth 阶段只能使用 `Read`，Hypothesis 阶段不提供仓库工具。脚本在调用前计算源码树 SHA-256，并在
-每次调用后重新计算；摘要不一致时任务失败。
+Ground Truth 和 Hypothesis 阶段都不提供仓库工具。脚本在调用前计算源码树 SHA-256，并在
+每次调用后重新计算；摘要不一致时任务失败。Ground Truth 仍由模型根据 issue、开发者 patch、
+测试 patch 和源码片段生成，并非由脚本硬编码推断。
 
 输出格式：
 
@@ -133,6 +136,10 @@ Ground Truth 阶段只能使用 `Read`，Hypothesis 阶段不提供仓库工具�
 结果只保存后续实验和人工校准需要的字段。原始 issue、仓库和 commit 不重复写入；需要时用
 `instance_id` 与 `data/swebench_verified_test.jsonl` 关联。Ground Truth 的证据仅在构造期间
 用于校验和生成误导假设，不写入最终结果。详细 Prompt 保存在私有 `workspace/prompts` 中。
+通过校验的 Ground Truth 原始响应还会以提示词和模型指纹为键保存在私有
+`workspace/checkpoints` 中；Hypothesis 阶段失败后使用 `--retry-failed`，可以直接复用它，
+无需再次支付 Ground Truth 的时间和费用。更换模型或提示词后旧 checkpoint 会自动失效；
+`--force` 会绕过 checkpoint 并重新生成两个阶段。
 
 `workspace` 包含 developer patch 和 Prompt，必须与被测 agent 隔离。源码快照同样不能
 提供给后续被测 agent；`output` 中的任务 JSON 才是后续实验使用的数据。
@@ -159,6 +166,9 @@ Ground Truth 无法从仓库证据中确认，或 WLH/WCH/WRH 任一类无法在
 不一致仍记入 `failures`，避免把系统故障伪装成数据不适用。
 Claude 达到 `max_turns` 但未产生结果时不会自动重试，而是按当前阶段记为正常跳过，
 例如 `ground_truth: max_turns`，避免重复消耗时间和模型费用。
+连接中断、DNS、限流或服务暂时不可用等瞬时错误会自动重试一次。600 秒硬超时不会在同一
+次运行中立即再等 600 秒；应使用 `--retry-failed` 重新执行，此时已有 Ground Truth checkpoint
+会被复用。
 
 运行时终端会在每个任务结束后显示 Ground Truth、Hypothesis 和任务总耗时。
 `construction-summary.json` 的 `timing` 保存每个实际执行任务的耗时，并提供
@@ -177,6 +187,7 @@ count、total、mean、median、min 和 max 汇总统计。因已有输出而直
         "instance_id": "owner__repo-1",
         "outcome": "completed",
         "ground_truth_seconds": 60.2,
+        "ground_truth_cached": false,
         "hypothesis_seconds": 61.8,
         "total_seconds": 123.1
       }
@@ -185,7 +196,26 @@ count、total、mean、median、min 和 max 汇总统计。因已有输出而直
 }
 ```
 
-## 2. 分析已有实验结果
+## 2. 生成实验提示词
+
+一条命令将每个构造结果转换为 CH、WLH、WCH 和 WRH 四组开发者假设 Prompt，
+并同时生成四个可直接运行的 SWE-bench JSONL 数据集：
+
+```bash
+uv run python scripts/generate_hypothesis_prompts.py
+```
+
+默认读取 `data/constructed-hypotheses/*.json`，并写入
+`data/hypothesis-prompts/{CH,WLH,WCH,WRH}/<instance_id>.txt`。每个文件只包含
+统一引导句和 `<developer_hypothesis>` 块，不暴露条件名、候选 ID、
+`why_plausible`、`why_incorrect` 或 `keywords`。
+同一次运行会将四组 Prompt 追加到原始 SWE-bench `problem_statement` 后，写入
+`data/hypothesis-datasets/swebench_verified_test_{CH,WLH,WCH,WRH}.jsonl`。
+每个版本只包含对应 Prompt 目录中出现的任务，保持原数据顺序，并且除
+`problem_statement` 外不改变任何字段值。
+如果只需要重建 JSONL，仍可单独运行 `scripts/build_hypothesis_datasets.py`。
+
+## 3. 分析已有实验结果
 
 ```bash
 uv run python scripts/analyze_results.py \
