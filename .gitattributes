@@ -1,1 +1,2 @@
+result/*.zip filter=lfs diff=lfs merge=lfs -text
 result/glm46_ORGI.zip filter=lfs diff=lfs merge=lfs -text
