@@ -1,0 +1,60 @@
+{
+  "schema_version": 4,
+  "instance_id": "django__django-16256",
+  "ground_truth": {
+    "files": [
+      "django/contrib/contenttypes/fields.py",
+      "django/db/models/fields/related_descriptors.py"
+    ],
+    "symbols": [
+      "GenericRelatedObjectManager",
+      "RelatedManager",
+      "ManyRelatedManager"
+    ],
+    "cause_type": "state",
+    "repair": "Update GenericRelatedObjectManager in django/contrib/contenttypes/fields.py to correct the affected state or data flow."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "django/contrib/contenttypes/fields.py"
+        ],
+        "symbols": [
+          "GenericForeignKey"
+        ],
+        "why_plausible": "GenericForeignKey in django/contrib/contenttypes/fields.py shares the issue identifier db_manager and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes GenericRelatedObjectManager in django/contrib/contenttypes/fields.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving db_manager.",
+        "keywords": [
+          "validation",
+          "db_manager"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates state, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's state repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

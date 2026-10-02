@@ -1,0 +1,59 @@
+{
+  "schema_version": 4,
+  "instance_id": "django__django-14315",
+  "ground_truth": {
+    "files": [
+      "django/db/backends/base/client.py",
+      "django/db/backends/postgresql/client.py"
+    ],
+    "symbols": [
+      "BaseDatabaseClient",
+      "settings_to_cmd_args_env"
+    ],
+    "cause_type": "condition",
+    "repair": "Update BaseDatabaseClient in django/db/backends/base/client.py to correct the condition or boundary decision."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "django/db/backends/base/client.py"
+        ],
+        "symbols": [
+          "settings_to_cmd_args_env"
+        ],
+        "why_plausible": "settings_to_cmd_args_env in django/db/backends/base/client.py shares the issue identifier runshell and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes BaseDatabaseClient in django/db/backends/base/client.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving runshell.",
+        "keywords": [
+          "validation",
+          "runshell"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates condition, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's condition repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

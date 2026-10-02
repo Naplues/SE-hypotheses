@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "sympy__sympy-15345",
+  "ground_truth": {
+    "files": [
+      "sympy/printing/mathematica.py"
+    ],
+    "symbols": [
+      "_print_Function"
+    ],
+    "cause_type": "state",
+    "repair": "Update _print_Function in sympy/printing/mathematica.py to correct the affected state or data flow."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "sympy/printing/mathematica.py"
+        ],
+        "symbols": [
+          "mathematica_code"
+        ],
+        "why_plausible": "mathematica_code in sympy/printing/mathematica.py shares the issue identifier mathematica_code and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes _print_Function in sympy/printing/mathematica.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "computation",
+        "cause": "The failure is likely caused by an incorrect computation or transformation involving mathematica_code.",
+        "keywords": [
+          "computation",
+          "mathematica_code"
+        ],
+        "why_plausible": "The reported symptom is compatible with an incorrect computation or transformation.",
+        "why_incorrect": "The developer patch indicates state, not computation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Adjust the computation used to produce the result.",
+        "keywords": [
+          "adjust computation"
+        ],
+        "why_plausible": "This repair follows from the alternative computation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's state repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

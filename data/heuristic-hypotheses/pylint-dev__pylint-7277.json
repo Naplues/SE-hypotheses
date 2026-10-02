@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "pylint-dev__pylint-7277",
+  "ground_truth": {
+    "files": [
+      "pylint/__init__.py"
+    ],
+    "symbols": [
+      "modify_sys_path"
+    ],
+    "cause_type": "condition",
+    "repair": "Update modify_sys_path in pylint/__init__.py to correct the condition or boundary decision."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "pylint/epylint.py"
+        ],
+        "symbols": [
+          "_get_env"
+        ],
+        "why_plausible": "_get_env in pylint/epylint.py shares the issue identifier environment and is related by same_module.",
+        "why_incorrect": "The developer patch instead changes modify_sys_path in pylint/__init__.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "lifecycle",
+        "cause": "The failure is likely caused by an incorrect initialization or execution order involving environment.",
+        "keywords": [
+          "lifecycle",
+          "environment"
+        ],
+        "why_plausible": "The reported symptom is compatible with an incorrect initialization or execution order.",
+        "why_incorrect": "The developer patch indicates condition, not lifecycle."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Change the initialization or execution order.",
+        "keywords": [
+          "initialization order"
+        ],
+        "why_plausible": "This repair follows from the alternative lifecycle mechanism.",
+        "why_incorrect": "It does not implement the developer patch's condition repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

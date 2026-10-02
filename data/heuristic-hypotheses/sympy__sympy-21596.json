@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "sympy__sympy-21596",
+  "ground_truth": {
+    "files": [
+      "sympy/sets/handlers/intersection.py"
+    ],
+    "symbols": [
+      "intersection_sets"
+    ],
+    "cause_type": "type",
+    "repair": "Update intersection_sets in sympy/sets/handlers/intersection.py to correct the type conversion or normalization."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "sympy/sets/handlers/intersection.py"
+        ],
+        "symbols": [
+          "_intlike_interval"
+        ],
+        "why_plausible": "_intlike_interval in sympy/sets/handlers/intersection.py shares the issue identifier integers and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes intersection_sets in sympy/sets/handlers/intersection.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "state",
+        "cause": "The failure is likely caused by incorrect state or data flow involving integers.",
+        "keywords": [
+          "state",
+          "integers"
+        ],
+        "why_plausible": "The reported symptom is compatible with incorrect state or data flow.",
+        "why_incorrect": "The developer patch indicates type, not state."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Reset or update the relevant state before the operation.",
+        "keywords": [
+          "reset state"
+        ],
+        "why_plausible": "This repair follows from the alternative state mechanism.",
+        "why_incorrect": "It does not implement the developer patch's type repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

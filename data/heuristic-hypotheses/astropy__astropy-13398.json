@@ -1,0 +1,62 @@
+{
+  "schema_version": 4,
+  "instance_id": "astropy__astropy-13398",
+  "ground_truth": {
+    "files": [
+      "astropy/coordinates/builtin_frames/__init__.py",
+      "astropy/coordinates/builtin_frames/intermediate_rotation_transforms.py",
+      "astropy/coordinates/builtin_frames/itrs.py",
+      "astropy/coordinates/builtin_frames/itrs_observed_transforms.py"
+    ],
+    "symbols": [
+      "tete_to_itrs_mat",
+      "itrs_to_tete",
+      "itrs_to_cirs"
+    ],
+    "cause_type": "type",
+    "repair": "Update tete_to_itrs_mat in astropy/coordinates/builtin_frames/intermediate_rotation_transforms.py to correct the type conversion or normalization."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "astropy/coordinates/builtin_frames/__init__.py"
+        ],
+        "symbols": [
+          "make_transform_graph_docs"
+        ],
+        "why_plausible": "make_transform_graph_docs in astropy/coordinates/builtin_frames/__init__.py shares the issue identifier transformations and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes tete_to_itrs_mat in astropy/coordinates/builtin_frames/intermediate_rotation_transforms.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving transformations.",
+        "keywords": [
+          "validation",
+          "transformations"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates type, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's type repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

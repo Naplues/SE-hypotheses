@@ -1,0 +1,68 @@
+{
+  "schema_version": 4,
+  "instance_id": "scikit-learn__scikit-learn-12682",
+  "ground_truth": {
+    "files": [
+      "sklearn/decomposition/dict_learning.py"
+    ],
+    "symbols": [
+      "_sparse_encode",
+      "sparse_encode",
+      "dict_learning",
+      "dict_learning_online",
+      "_set_sparse_coding_params",
+      "transform",
+      "SparseCoder",
+      "DictionaryLearning",
+      "__init__",
+      "fit",
+      "MiniBatchDictionaryLearning",
+      "partial_fit"
+    ],
+    "cause_type": "state",
+    "repair": "Update _sparse_encode in sklearn/decomposition/dict_learning.py to correct the affected state or data flow."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "sklearn/decomposition/base.py"
+        ],
+        "symbols": [
+          "_BasePCA"
+        ],
+        "why_plausible": "_BasePCA in sklearn/decomposition/base.py shares the issue identifier decomposition and is related by same_module.",
+        "why_incorrect": "The developer patch instead changes _sparse_encode in sklearn/decomposition/dict_learning.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "lifecycle",
+        "cause": "The failure is likely caused by an incorrect initialization or execution order involving decomposition.",
+        "keywords": [
+          "lifecycle",
+          "decomposition"
+        ],
+        "why_plausible": "The reported symptom is compatible with an incorrect initialization or execution order.",
+        "why_incorrect": "The developer patch indicates state, not lifecycle."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Change the initialization or execution order.",
+        "keywords": [
+          "initialization order"
+        ],
+        "why_plausible": "This repair follows from the alternative lifecycle mechanism.",
+        "why_incorrect": "It does not implement the developer patch's state repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

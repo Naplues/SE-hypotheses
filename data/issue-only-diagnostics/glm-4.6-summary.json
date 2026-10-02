@@ -1,0 +1,31 @@
+{
+  "diagnostic_version": "issue-only-v1",
+  "selected": 10,
+  "completed": 5,
+  "skipped_existing": 1,
+  "failures": [
+    {
+      "instance_id": "astropy__astropy-13398",
+      "error": "Model response does not contain a JSON object"
+    },
+    {
+      "instance_id": "astropy__astropy-13579",
+      "error": "Model response does not contain a JSON object"
+    },
+    {
+      "instance_id": "astropy__astropy-14096",
+      "error": "Model response does not contain a JSON object"
+    },
+    {
+      "instance_id": "astropy__astropy-14182",
+      "error": "Model response does not contain a JSON object"
+    },
+    {
+      "instance_id": "astropy__astropy-14598",
+      "error": "Model response does not contain a JSON object"
+    }
+  ],
+  "elapsed_seconds": 600.739,
+  "output": "/Users/gzq/Repo/FSE2027/data/issue-only-diagnostics/glm-4.6.jsonl",
+  "model": "glm-4.6"
+}

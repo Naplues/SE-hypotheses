@@ -1,0 +1,2706 @@
+{
+  "seed": 20261002,
+  "versions": {
+    "numpy": "2.3.5",
+    "scipy": "1.18.1"
+  },
+  "design": "Round0 selected tasks; round1/round2 additional independent executions. Repetitions clustered within task.",
+  "cohorts": {
+    "sensitive": {
+      "n_tasks": 34,
+      "condition_order": [
+        "ORIG",
+        "CH",
+        "WLH",
+        "WCH",
+        "WRH"
+      ],
+      "round_success_counts": [
+        [
+          16,
+          15,
+          16,
+          17,
+          15
+        ],
+        [
+          19,
+          17,
+          17,
+          15,
+          15
+        ],
+        [
+          14,
+          21,
+          22,
+          14,
+          12
+        ]
+      ],
+      "followup_success_counts": [
+        33,
+        38,
+        39,
+        29,
+        27
+      ],
+      "three_run_success_counts": [
+        49,
+        53,
+        55,
+        46,
+        42
+      ],
+      "excluded_for_balanced_clean": [
+        "psf__requests-5414",
+        "pylint-dev__pylint-8898"
+      ],
+      "clean_n": 32,
+      "global_condition_test_followup": {
+        "statistic": 28.200000000000003,
+        "p": 0.0962,
+        "permutations": 49999,
+        "seed": 20261002
+      },
+      "round_sensitive_task_counts": [
+        34,
+        24,
+        24
+      ],
+      "round_exact_signature_reproductions": [
+        34,
+        5,
+        6
+      ],
+      "both_followup_exact_signature_reproductions": 3,
+      "variable_task_condition_cells": 85,
+      "total_task_condition_cells": 170,
+      "tasks_with_same_condition_variability": 31,
+      "tasks_with_any_outcome_variability_all15": 34,
+      "pairwise_round_disagreement_counts": {
+        "0-1": 58,
+        "0-2": 58,
+        "1-2": 54
+      },
+      "followup_within_condition_disagreement": {
+        "mean": 0.3176470588235294,
+        "ci95": [
+          0.21764705882352942,
+          0.4235294117647059
+        ]
+      },
+      "followup_cross_condition_disagreement": {
+        "mean": 0.3647058823529412,
+        "ci95": [
+          0.28823529411764703,
+          0.43830882352940537
+        ]
+      },
+      "cross_minus_within_disagreement": {
+        "mean": 0.047058823529411764,
+        "ci95": [
+          -0.05882352941176472,
+          0.14705882352941177
+        ]
+      },
+      "clean_balanced": {
+        "round_success_counts": [
+          [
+            15,
+            15,
+            15,
+            15,
+            14
+          ],
+          [
+            18,
+            16,
+            17,
+            15,
+            15
+          ],
+          [
+            14,
+            21,
+            22,
+            13,
+            11
+          ]
+        ],
+        "variable_task_condition_cells": 78,
+        "tasks_with_variability_all15": 32,
+        "round_sensitive_task_counts": [
+          32,
+          23,
+          23
+        ]
+      },
+      "majority_sensitive_task_count": 27,
+      "majority_signature_matches_original": 15,
+      "original_flip_replication": [
+        {
+          "condition": "CH",
+          "original_gains": 9,
+          "original_losses": 10,
+          "gain_reproduced_in_both": 3,
+          "gain_reproduced_in_at_least_one": 6,
+          "loss_reproduced_in_both": 2,
+          "loss_reproduced_in_at_least_one": 6,
+          "gain_reproduction_observations": 9,
+          "gain_opposite_observations": 0,
+          "loss_reproduction_observations": 8,
+          "loss_opposite_observations": 1
+        },
+        {
+          "condition": "WLH",
+          "original_gains": 6,
+          "original_losses": 6,
+          "gain_reproduced_in_both": 2,
+          "gain_reproduced_in_at_least_one": 4,
+          "loss_reproduced_in_both": 1,
+          "loss_reproduced_in_at_least_one": 4,
+          "gain_reproduction_observations": 6,
+          "gain_opposite_observations": 3,
+          "loss_reproduction_observations": 5,
+          "loss_opposite_observations": 2
+        },
+        {
+          "condition": "WCH",
+          "original_gains": 8,
+          "original_losses": 7,
+          "gain_reproduced_in_both": 0,
+          "gain_reproduced_in_at_least_one": 1,
+          "loss_reproduced_in_both": 1,
+          "loss_reproduced_in_at_least_one": 3,
+          "gain_reproduction_observations": 1,
+          "gain_opposite_observations": 4,
+          "loss_reproduction_observations": 4,
+          "loss_opposite_observations": 1
+        },
+        {
+          "condition": "WRH",
+          "original_gains": 8,
+          "original_losses": 9,
+          "gain_reproduced_in_both": 0,
+          "gain_reproduced_in_at_least_one": 3,
+          "loss_reproduced_in_both": 2,
+          "loss_reproduced_in_at_least_one": 4,
+          "gain_reproduction_observations": 3,
+          "gain_opposite_observations": 3,
+          "loss_reproduction_observations": 6,
+          "loss_opposite_observations": 2
+        }
+      ]
+    },
+    "stable": {
+      "n_tasks": 50,
+      "condition_order": [
+        "ORIG",
+        "CH",
+        "WLH",
+        "WCH",
+        "WRH"
+      ],
+      "round_success_counts": [
+        [
+          41,
+          41,
+          41,
+          41,
+          41
+        ],
+        [
+          41,
+          41,
+          41,
+          41,
+          40
+        ],
+        [
+          36,
+          40,
+          39,
+          40,
+          41
+        ]
+      ],
+      "followup_success_counts": [
+        77,
+        81,
+        80,
+        81,
+        81
+      ],
+      "three_run_success_counts": [
+        118,
+        122,
+        121,
+        122,
+        122
+      ],
+      "excluded_for_balanced_clean": [
+        "matplotlib__matplotlib-23299"
+      ],
+      "clean_n": 49,
+      "global_condition_test_followup": {
+        "statistic": 3.0,
+        "p": 0.2822,
+        "permutations": 49999,
+        "seed": 20261002
+      },
+      "round_sensitive_task_counts": [
+        0,
+        5,
+        7
+      ],
+      "round_exact_signature_reproductions": [
+        50,
+        45,
+        43
+      ],
+      "both_followup_exact_signature_reproductions": 40,
+      "variable_task_condition_cells": 14,
+      "total_task_condition_cells": 250,
+      "tasks_with_same_condition_variability": 10,
+      "tasks_with_any_outcome_variability_all15": 10,
+      "pairwise_round_disagreement_counts": {
+        "0-1": 5,
+        "0-2": 9,
+        "1-2": 14
+      },
+      "followup_within_condition_disagreement": {
+        "mean": 0.055999999999999994,
+        "ci95": [
+          0.024000000000000004,
+          0.09200000000000001
+        ]
+      },
+      "followup_cross_condition_disagreement": {
+        "mean": 0.05,
+        "ci95": [
+          0.024,
+          0.08199999999999999
+        ]
+      },
+      "cross_minus_within_disagreement": {
+        "mean": -0.006,
+        "ci95": [
+          -0.018,
+          0.0
+        ]
+      },
+      "clean_balanced": {
+        "round_success_counts": [
+          [
+            41,
+            41,
+            41,
+            41,
+            41
+          ],
+          [
+            41,
+            41,
+            41,
+            41,
+            40
+          ],
+          [
+            36,
+            40,
+            39,
+            40,
+            41
+          ]
+        ],
+        "variable_task_condition_cells": 14,
+        "tasks_with_variability_all15": 10,
+        "round_sensitive_task_counts": [
+          0,
+          5,
+          7
+        ]
+      },
+      "majority_sensitive_task_count": 0,
+      "majority_signature_matches_original": 50,
+      "original_flip_replication": [
+        {
+          "condition": "CH",
+          "original_gains": 0,
+          "original_losses": 0,
+          "gain_reproduced_in_both": 0,
+          "gain_reproduced_in_at_least_one": 0,
+          "loss_reproduced_in_both": 0,
+          "loss_reproduced_in_at_least_one": 0,
+          "gain_reproduction_observations": 0,
+          "gain_opposite_observations": 0,
+          "loss_reproduction_observations": 0,
+          "loss_opposite_observations": 0
+        },
+        {
+          "condition": "WLH",
+          "original_gains": 0,
+          "original_losses": 0,
+          "gain_reproduced_in_both": 0,
+          "gain_reproduced_in_at_least_one": 0,
+          "loss_reproduced_in_both": 0,
+          "loss_reproduced_in_at_least_one": 0,
+          "gain_reproduction_observations": 0,
+          "gain_opposite_observations": 0,
+          "loss_reproduction_observations": 0,
+          "loss_opposite_observations": 0
+        },
+        {
+          "condition": "WCH",
+          "original_gains": 0,
+          "original_losses": 0,
+          "gain_reproduced_in_both": 0,
+          "gain_reproduced_in_at_least_one": 0,
+          "loss_reproduced_in_both": 0,
+          "loss_reproduced_in_at_least_one": 0,
+          "gain_reproduction_observations": 0,
+          "gain_opposite_observations": 0,
+          "loss_reproduction_observations": 0,
+          "loss_opposite_observations": 0
+        },
+        {
+          "condition": "WRH",
+          "original_gains": 0,
+          "original_losses": 0,
+          "gain_reproduced_in_both": 0,
+          "gain_reproduced_in_at_least_one": 0,
+          "loss_reproduced_in_both": 0,
+          "loss_reproduced_in_at_least_one": 0,
+          "gain_reproduction_observations": 0,
+          "gain_opposite_observations": 0,
+          "loss_reproduction_observations": 0,
+          "loss_opposite_observations": 0
+        }
+      ]
+    }
+  },
+  "followup_effects": [
+    {
+      "cohort": "sensitive",
+      "condition": "CH",
+      "n_tasks": 34,
+      "difference": 0.07352941176470588,
+      "ci95": [
+        -0.10294117647058823,
+        0.25
+      ],
+      "p_task_signflip": 0.527618408203125,
+      "favorable_tasks": 10,
+      "unfavorable_tasks": 8,
+      "tied_tasks": 16,
+      "p_holm_eight": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WLH",
+      "n_tasks": 34,
+      "difference": 0.08823529411764706,
+      "ci95": [
+        -0.07352941176470588,
+        0.25
+      ],
+      "p_task_signflip": 0.39656829833984375,
+      "favorable_tasks": 11,
+      "unfavorable_tasks": 8,
+      "tied_tasks": 15,
+      "p_holm_eight": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WCH",
+      "n_tasks": 34,
+      "difference": -0.058823529411764705,
+      "ci95": [
+        -0.17647058823529413,
+        0.058823529411764705
+      ],
+      "p_task_signflip": 0.4921875,
+      "favorable_tasks": 2,
+      "unfavorable_tasks": 7,
+      "tied_tasks": 25,
+      "p_holm_eight": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WRH",
+      "n_tasks": 34,
+      "difference": -0.08823529411764706,
+      "ci95": [
+        -0.22058823529411764,
+        0.04411764705882353
+      ],
+      "p_task_signflip": 0.3131103515625,
+      "favorable_tasks": 6,
+      "unfavorable_tasks": 9,
+      "tied_tasks": 19,
+      "p_holm_eight": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "CH",
+      "n_tasks": 50,
+      "difference": 0.04,
+      "ci95": [
+        0.0,
+        0.09
+      ],
+      "p_task_signflip": 0.21875,
+      "favorable_tasks": 5,
+      "unfavorable_tasks": 1,
+      "tied_tasks": 44,
+      "p_holm_eight": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WLH",
+      "n_tasks": 50,
+      "difference": 0.03,
+      "ci95": [
+        -0.01,
+        0.08
+      ],
+      "p_task_signflip": 0.375,
+      "favorable_tasks": 4,
+      "unfavorable_tasks": 1,
+      "tied_tasks": 45,
+      "p_holm_eight": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WCH",
+      "n_tasks": 50,
+      "difference": 0.04,
+      "ci95": [
+        0.0,
+        0.09
+      ],
+      "p_task_signflip": 0.21875,
+      "favorable_tasks": 5,
+      "unfavorable_tasks": 1,
+      "tied_tasks": 44,
+      "p_holm_eight": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WRH",
+      "n_tasks": 50,
+      "difference": 0.04,
+      "ci95": [
+        0.01,
+        0.08
+      ],
+      "p_task_signflip": 0.125,
+      "favorable_tasks": 4,
+      "unfavorable_tasks": 0,
+      "tied_tasks": 46,
+      "p_holm_eight": 1.0
+    }
+  ],
+  "clean_followup_effects": [
+    {
+      "cohort": "sensitive",
+      "condition": "CH",
+      "n_tasks": 32,
+      "difference": 0.078125,
+      "ci95": [
+        -0.109375,
+        0.265625
+      ],
+      "p_task_signflip": 0.527618408203125,
+      "favorable_tasks": 10,
+      "unfavorable_tasks": 8,
+      "tied_tasks": 14,
+      "p_holm_eight": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WLH",
+      "n_tasks": 32,
+      "difference": 0.109375,
+      "ci95": [
+        -0.0625,
+        0.28125
+      ],
+      "p_task_signflip": 0.3008575439453125,
+      "favorable_tasks": 11,
+      "unfavorable_tasks": 7,
+      "tied_tasks": 14,
+      "p_holm_eight": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WCH",
+      "n_tasks": 32,
+      "difference": -0.0625,
+      "ci95": [
+        -0.1875,
+        0.0625
+      ],
+      "p_task_signflip": 0.4921875,
+      "favorable_tasks": 2,
+      "unfavorable_tasks": 7,
+      "tied_tasks": 23,
+      "p_holm_eight": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WRH",
+      "n_tasks": 32,
+      "difference": -0.09375,
+      "ci95": [
+        -0.25,
+        0.046875
+      ],
+      "p_task_signflip": 0.3131103515625,
+      "favorable_tasks": 6,
+      "unfavorable_tasks": 9,
+      "tied_tasks": 17,
+      "p_holm_eight": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "CH",
+      "n_tasks": 49,
+      "difference": 0.04081632653061224,
+      "ci95": [
+        0.0,
+        0.09183673469387756
+      ],
+      "p_task_signflip": 0.21875,
+      "favorable_tasks": 5,
+      "unfavorable_tasks": 1,
+      "tied_tasks": 43,
+      "p_holm_eight": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WLH",
+      "n_tasks": 49,
+      "difference": 0.030612244897959183,
+      "ci95": [
+        -0.01020408163265306,
+        0.08163265306122448
+      ],
+      "p_task_signflip": 0.375,
+      "favorable_tasks": 4,
+      "unfavorable_tasks": 1,
+      "tied_tasks": 44,
+      "p_holm_eight": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WCH",
+      "n_tasks": 49,
+      "difference": 0.04081632653061224,
+      "ci95": [
+        0.0,
+        0.09183673469387756
+      ],
+      "p_task_signflip": 0.21875,
+      "favorable_tasks": 5,
+      "unfavorable_tasks": 1,
+      "tied_tasks": 43,
+      "p_holm_eight": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WRH",
+      "n_tasks": 49,
+      "difference": 0.04081632653061224,
+      "ci95": [
+        0.01020408163265306,
+        0.08163265306122448
+      ],
+      "p_task_signflip": 0.125,
+      "favorable_tasks": 4,
+      "unfavorable_tasks": 0,
+      "tied_tasks": 45,
+      "p_holm_eight": 1.0
+    }
+  ],
+  "case_replication": {
+    "sympy__sympy-20428": {
+      "outcomes": {
+        "ORIG": [
+          0,
+          0,
+          0
+        ],
+        "CH": [
+          1,
+          0,
+          1
+        ],
+        "WLH": [
+          0,
+          0,
+          0
+        ],
+        "WCH": [
+          0,
+          0,
+          0
+        ],
+        "WRH": [
+          0,
+          0,
+          0
+        ]
+      },
+      "modified_files": {
+        "ORIG": [
+          "sympy/polys/densetools.py",
+          "sympy/polys/densetools.py",
+          "sympy/polys/densetools.py"
+        ],
+        "CH": [
+          "sympy/polys/domains/expressiondomain.py",
+          "sympy/polys/densetools.py;sympy/polys/domains/expressiondomain.py",
+          "sympy/polys/domains/expressiondomain.py"
+        ],
+        "WLH": [
+          "sympy/polys/densetools.py",
+          "sympy/polys/densetools.py",
+          "sympy/polys/densearith.py"
+        ],
+        "WCH": [
+          "sympy/polys/densetools.py",
+          "sympy/polys/densetools.py",
+          "sympy/polys/densearith.py"
+        ],
+        "WRH": [
+          "sympy/polys/polyclasses.py",
+          "sympy/polys/densetools.py",
+          "sympy/polys/densetools.py"
+        ]
+      }
+    },
+    "django__django-17084": {
+      "outcomes": {
+        "ORIG": [
+          1,
+          1,
+          1
+        ],
+        "CH": [
+          1,
+          1,
+          1
+        ],
+        "WLH": [
+          1,
+          1,
+          1
+        ],
+        "WCH": [
+          1,
+          1,
+          1
+        ],
+        "WRH": [
+          0,
+          0,
+          0
+        ]
+      },
+      "modified_files": {
+        "ORIG": [
+          "django/db/models/sql/query.py",
+          "django/db/models/sql/query.py",
+          "django/db/models/sql/query.py"
+        ],
+        "CH": [
+          "django/db/models/sql/query.py",
+          "django/db/models/sql/query.py",
+          "django/db/models/sql/query.py"
+        ],
+        "WLH": [
+          "django/db/models/sql/query.py",
+          "django/db/models/sql/query.py",
+          "django/db/models/sql/query.py"
+        ],
+        "WCH": [
+          "django/db/models/sql/query.py",
+          "django/db/models/sql/query.py",
+          "django/db/models/sql/query.py"
+        ],
+        "WRH": [
+          "django/db/models/aggregates.py",
+          "django/db/models/aggregates.py",
+          "django/db/models/aggregates.py"
+        ]
+      }
+    },
+    "astropy__astropy-13033": {
+      "outcomes": {
+        "ORIG": [
+          0,
+          0,
+          0
+        ],
+        "CH": [
+          1,
+          1,
+          0
+        ],
+        "WLH": [
+          0,
+          1,
+          0
+        ],
+        "WCH": [
+          0,
+          0,
+          0
+        ],
+        "WRH": [
+          0,
+          1,
+          0
+        ]
+      },
+      "modified_files": {
+        "ORIG": [
+          "astropy/timeseries/core.py",
+          "astropy/timeseries/core.py;astropy/timeseries/tests/test_binned.py;astropy/timeseries/tests/test_sampled.py",
+          "astropy/timeseries/core.py"
+        ],
+        "CH": [
+          "astropy/timeseries/core.py",
+          "astropy/timeseries/core.py",
+          "astropy/timeseries/core.py"
+        ],
+        "WLH": [
+          "astropy/timeseries/core.py",
+          "astropy/timeseries/core.py",
+          "astropy/timeseries/core.py"
+        ],
+        "WCH": [
+          "astropy/timeseries/core.py",
+          "astropy/timeseries/core.py",
+          "astropy/timeseries/core.py"
+        ],
+        "WRH": [
+          "astropy/timeseries/core.py",
+          "astropy/timeseries/core.py",
+          "astropy/timeseries/core.py"
+        ]
+      }
+    },
+    "pylint-dev__pylint-7080": {
+      "outcomes": {
+        "ORIG": [
+          0,
+          0,
+          0
+        ],
+        "CH": [
+          0,
+          0,
+          0
+        ],
+        "WLH": [
+          0,
+          0,
+          1
+        ],
+        "WCH": [
+          1,
+          0,
+          0
+        ],
+        "WRH": [
+          1,
+          0,
+          0
+        ]
+      },
+      "modified_files": {
+        "ORIG": [
+          "pylint/lint/pylinter.py",
+          "pylint/lint/pylinter.py",
+          "pylint/lint/pylinter.py"
+        ],
+        "CH": [
+          "pylint/lint/pylinter.py",
+          "pylint/lint/pylinter.py",
+          "pylint/lint/pylinter.py"
+        ],
+        "WLH": [
+          "pylint/lint/pylinter.py",
+          "pylint/lint/pylinter.py",
+          "pylint/lint/expand_modules.py;pylint/lint/pylinter.py"
+        ],
+        "WCH": [
+          "pylint/lint/expand_modules.py;pylint/lint/pylinter.py",
+          "pylint/lint/pylinter.py",
+          "pylint/lint/pylinter.py"
+        ],
+        "WRH": [
+          "pylint/lint/expand_modules.py",
+          "pylint/lint/pylinter.py",
+          "pylint/lint/pylinter.py"
+        ]
+      }
+    },
+    "django__django-14765": {
+      "outcomes": {
+        "ORIG": [
+          0,
+          1,
+          1
+        ],
+        "CH": [
+          1,
+          1,
+          1
+        ],
+        "WLH": [
+          1,
+          1,
+          1
+        ],
+        "WCH": [
+          1,
+          1,
+          1
+        ],
+        "WRH": [
+          1,
+          1,
+          1
+        ]
+      },
+      "modified_files": {
+        "ORIG": [
+          "django/db/migrations/state.py",
+          "django/db/migrations/state.py",
+          "django/db/migrations/state.py"
+        ],
+        "CH": [
+          "django/db/migrations/state.py",
+          "django/db/migrations/state.py",
+          "django/db/migrations/state.py"
+        ],
+        "WLH": [
+          "django/db/migrations/state.py",
+          "django/db/migrations/state.py",
+          "django/db/migrations/state.py"
+        ],
+        "WCH": [
+          "django/db/migrations/state.py",
+          "django/db/migrations/state.py",
+          "django/db/migrations/state.py"
+        ],
+        "WRH": [
+          "django/db/migrations/state.py",
+          "django/db/migrations/state.py",
+          "django/db/migrations/state.py"
+        ]
+      }
+    },
+    "astropy__astropy-7606": {
+      "outcomes": {
+        "ORIG": [
+          1,
+          1,
+          1
+        ],
+        "CH": [
+          0,
+          0,
+          0
+        ],
+        "WLH": [
+          0,
+          0,
+          0
+        ],
+        "WCH": [
+          0,
+          0,
+          0
+        ],
+        "WRH": [
+          0,
+          0,
+          0
+        ]
+      },
+      "modified_files": {
+        "ORIG": [
+          "astropy/units/core.py",
+          "astropy/units/core.py",
+          "astropy/units/core.py"
+        ],
+        "CH": [
+          "astropy/units/core.py",
+          "astropy/units/core.py",
+          "astropy/units/core.py"
+        ],
+        "WLH": [
+          "astropy/units/core.py",
+          "astropy/units/core.py",
+          "astropy/units/core.py"
+        ],
+        "WCH": [
+          "astropy/units/core.py",
+          "astropy/units/core.py",
+          "astropy/units/core.py"
+        ],
+        "WRH": [
+          "astropy/units/core.py",
+          "astropy/units/core.py",
+          "astropy/units/core.py"
+        ]
+      }
+    },
+    "scikit-learn__scikit-learn-14629": {
+      "outcomes": {
+        "ORIG": [
+          1,
+          1,
+          0
+        ],
+        "CH": [
+          1,
+          1,
+          1
+        ],
+        "WLH": [
+          1,
+          1,
+          1
+        ],
+        "WCH": [
+          1,
+          0,
+          1
+        ],
+        "WRH": [
+          0,
+          0,
+          0
+        ]
+      },
+      "modified_files": {
+        "ORIG": [
+          "sklearn/multioutput.py",
+          "sklearn/multioutput.py",
+          "sklearn/model_selection/_validation.py"
+        ],
+        "CH": [
+          "sklearn/multioutput.py",
+          "sklearn/multioutput.py",
+          "sklearn/multioutput.py"
+        ],
+        "WLH": [
+          "sklearn/multioutput.py",
+          "sklearn/multioutput.py",
+          "sklearn/multioutput.py"
+        ],
+        "WCH": [
+          "sklearn/multioutput.py",
+          "sklearn/model_selection/_validation.py",
+          "sklearn/multioutput.py"
+        ],
+        "WRH": [
+          "sklearn/model_selection/_validation.py",
+          "sklearn/model_selection/_validation.py",
+          "sklearn/model_selection/_validation.py"
+        ]
+      }
+    },
+    "sympy__sympy-13877": {
+      "outcomes": {
+        "ORIG": [
+          1,
+          1,
+          1
+        ],
+        "CH": [
+          1,
+          1,
+          1
+        ],
+        "WLH": [
+          1,
+          1,
+          1
+        ],
+        "WCH": [
+          1,
+          1,
+          1
+        ],
+        "WRH": [
+          0,
+          1,
+          0
+        ]
+      },
+      "modified_files": {
+        "ORIG": [
+          "sympy/matrices/matrices.py",
+          "sympy/core/exprtools.py;sympy/matrices/matrices.py",
+          "sympy/matrices/matrices.py"
+        ],
+        "CH": [
+          "sympy/matrices/matrices.py",
+          "sympy/matrices/matrices.py",
+          "sympy/matrices/matrices.py"
+        ],
+        "WLH": [
+          "sympy/matrices/matrices.py",
+          "sympy/matrices/matrices.py",
+          "sympy/matrices/matrices.py"
+        ],
+        "WCH": [
+          "sympy/matrices/matrices.py",
+          "sympy/matrices/matrices.py",
+          "sympy/matrices/matrices.py"
+        ],
+        "WRH": [
+          "sympy/core/exprtools.py",
+          "sympy/matrices/matrices.py",
+          "sympy/core/exprtools.py"
+        ]
+      }
+    }
+  },
+  "process_effects": [
+    {
+      "cohort": "sensitive",
+      "condition": "CH",
+      "metric": "elapsed_seconds",
+      "n_tasks": 33,
+      "mean_difference": -84.34036363636363,
+      "median_difference": -94.00200000000001,
+      "median_relative_difference": -0.07845076627005221,
+      "median_ci95": [
+        -174.82650000000004,
+        -5.093999999999994
+      ],
+      "p_wilcoxon": 0.07542865828732438,
+      "W": 181.0,
+      "rank_biserial": -0.35472370766488415,
+      "normality_of_differences_p": 0.0064504369306787645,
+      "nonzero_n": 33,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WLH",
+      "metric": "elapsed_seconds",
+      "n_tasks": 32,
+      "mean_difference": -33.473765625000006,
+      "median_difference": -3.6255000000000237,
+      "median_relative_difference": 0.03385459375902236,
+      "median_ci95": [
+        -115.9225,
+        58.49574999999999
+      ],
+      "p_wilcoxon": 0.6005774332559537,
+      "W": 236.0,
+      "rank_biserial": -0.10606060606060606,
+      "normality_of_differences_p": 0.30371800950129013,
+      "nonzero_n": 32,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WCH",
+      "metric": "elapsed_seconds",
+      "n_tasks": 32,
+      "mean_difference": -53.9578125,
+      "median_difference": -82.24225000000001,
+      "median_relative_difference": -0.013027819834829563,
+      "median_ci95": [
+        -155.96249999999998,
+        17.590500000000006
+      ],
+      "p_wilcoxon": 0.12519873738274273,
+      "W": 182.0,
+      "rank_biserial": -0.3106060606060606,
+      "normality_of_differences_p": 0.16555955541770295,
+      "nonzero_n": 32,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WRH",
+      "metric": "elapsed_seconds",
+      "n_tasks": 32,
+      "mean_difference": 238.95703124999994,
+      "median_difference": -119.61875,
+      "median_relative_difference": -0.1287635806531562,
+      "median_ci95": [
+        -217.01399999999995,
+        -23.712499999999977
+      ],
+      "p_wilcoxon": 0.028685926073821776,
+      "W": 147.0,
+      "rank_biserial": -0.4431818181818182,
+      "normality_of_differences_p": 1.99544403354574e-11,
+      "nonzero_n": 32,
+      "p_holm_28": 0.7171481518455444
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "CH",
+      "metric": "time_to_first_successful_edit_seconds",
+      "n_tasks": 32,
+      "mean_difference": -8.900109375000003,
+      "median_difference": -23.355249999999998,
+      "median_relative_difference": -0.11448711556255378,
+      "median_ci95": [
+        -42.47700000000001,
+        4.262500000000003
+      ],
+      "p_wilcoxon": 0.2950347231665089,
+      "W": 208.0,
+      "rank_biserial": -0.21212121212121213,
+      "normality_of_differences_p": 0.020863955458514823,
+      "nonzero_n": 32,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WLH",
+      "metric": "time_to_first_successful_edit_seconds",
+      "n_tasks": 32,
+      "mean_difference": 21.786406250000002,
+      "median_difference": -15.667749999999995,
+      "median_relative_difference": -0.08494414826077393,
+      "median_ci95": [
+        -39.849,
+        29.8855
+      ],
+      "p_wilcoxon": 0.7791061247608694,
+      "W": 249.0,
+      "rank_biserial": -0.056818181818181816,
+      "normality_of_differences_p": 2.0681933721616258e-05,
+      "nonzero_n": 32,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WCH",
+      "metric": "time_to_first_successful_edit_seconds",
+      "n_tasks": 32,
+      "mean_difference": -13.188406250000002,
+      "median_difference": -8.43925,
+      "median_relative_difference": -0.019291661416959788,
+      "median_ci95": [
+        -44.95750000000001,
+        17.445749999999997
+      ],
+      "p_wilcoxon": 0.44328575442126184,
+      "W": 223.0,
+      "rank_biserial": -0.1553030303030303,
+      "normality_of_differences_p": 0.045860591275041586,
+      "nonzero_n": 32,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WRH",
+      "metric": "time_to_first_successful_edit_seconds",
+      "n_tasks": 32,
+      "mean_difference": -16.915078125000004,
+      "median_difference": -12.3525,
+      "median_relative_difference": -0.12362340883912945,
+      "median_ci95": [
+        -51.362000000000016,
+        -3.413500000000006
+      ],
+      "p_wilcoxon": 0.18430211202087188,
+      "W": 193.0,
+      "rank_biserial": -0.2689393939393939,
+      "normality_of_differences_p": 0.09548319777385061,
+      "nonzero_n": 32,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "CH",
+      "metric": "total_tokens",
+      "n_tasks": 33,
+      "mean_difference": -450409.24242424243,
+      "median_difference": -254063.0,
+      "median_relative_difference": -0.17017179777766234,
+      "median_ci95": [
+        -535309.5,
+        7092.5
+      ],
+      "p_wilcoxon": 0.08793778289576286,
+      "W": 185.0,
+      "rank_biserial": -0.3404634581105169,
+      "normality_of_differences_p": 0.005104002733168328,
+      "nonzero_n": 33,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WLH",
+      "metric": "total_tokens",
+      "n_tasks": 32,
+      "mean_difference": -323726.53125,
+      "median_difference": -64348.5,
+      "median_relative_difference": 0.023858337243863742,
+      "median_ci95": [
+        -528314.0,
+        72712.0
+      ],
+      "p_wilcoxon": 0.23878336784992327,
+      "W": 201.0,
+      "rank_biserial": -0.23863636363636365,
+      "normality_of_differences_p": 0.020668730024262706,
+      "nonzero_n": 32,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WCH",
+      "metric": "total_tokens",
+      "n_tasks": 32,
+      "mean_difference": -543844.078125,
+      "median_difference": -221822.0,
+      "median_relative_difference": -0.08025754236580801,
+      "median_ci95": [
+        -764268.5,
+        -8422.5
+      ],
+      "p_wilcoxon": 0.007924978037083185,
+      "W": 122.0,
+      "rank_biserial": -0.5378787878787878,
+      "normality_of_differences_p": 0.0008556087560653403,
+      "nonzero_n": 32,
+      "p_holm_28": 0.22189938503832918
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WRH",
+      "metric": "total_tokens",
+      "n_tasks": 32,
+      "mean_difference": -512972.921875,
+      "median_difference": -241013.25,
+      "median_relative_difference": -0.13104366318481242,
+      "median_ci95": [
+        -515058.0,
+        -37844.75
+      ],
+      "p_wilcoxon": 0.010414483083633751,
+      "W": 127.0,
+      "rank_biserial": -0.5189393939393939,
+      "normality_of_differences_p": 0.009429322217375838,
+      "nonzero_n": 32,
+      "p_holm_28": 0.2811910432581113
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "CH",
+      "metric": "tool_calls",
+      "n_tasks": 33,
+      "mean_difference": -9.93939393939394,
+      "median_difference": -6.0,
+      "median_relative_difference": -0.06646825396825395,
+      "median_ci95": [
+        -15.0,
+        4.5
+      ],
+      "p_wilcoxon": 0.1183982549937393,
+      "W": 180.5,
+      "rank_biserial": -0.3162878787878788,
+      "normality_of_differences_p": 0.0033311816356579255,
+      "nonzero_n": 32,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WLH",
+      "metric": "tool_calls",
+      "n_tasks": 32,
+      "mean_difference": -5.921875,
+      "median_difference": 1.0,
+      "median_relative_difference": 0.03369676221938048,
+      "median_ci95": [
+        -8.5,
+        4.0
+      ],
+      "p_wilcoxon": 0.47721267615434815,
+      "W": 226.0,
+      "rank_biserial": -0.14393939393939395,
+      "normality_of_differences_p": 0.0091586611119207,
+      "nonzero_n": 32,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WCH",
+      "metric": "tool_calls",
+      "n_tasks": 32,
+      "mean_difference": -7.203125,
+      "median_difference": -6.0,
+      "median_relative_difference": -0.02023161989841865,
+      "median_ci95": [
+        -13.0,
+        0.75
+      ],
+      "p_wilcoxon": 0.03686712809389056,
+      "W": 141.5,
+      "rank_biserial": -0.42943548387096775,
+      "normality_of_differences_p": 0.5233491786687086,
+      "nonzero_n": 31,
+      "p_holm_28": 0.8479439461594829
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WRH",
+      "metric": "tool_calls",
+      "n_tasks": 32,
+      "mean_difference": -10.328125,
+      "median_difference": -9.25,
+      "median_relative_difference": -0.06023284313725491,
+      "median_ci95": [
+        -18.0,
+        2.0
+      ],
+      "p_wilcoxon": 0.02886853995164246,
+      "W": 136.5,
+      "rank_biserial": -0.4495967741935484,
+      "normality_of_differences_p": 0.23050016773005427,
+      "nonzero_n": 31,
+      "p_holm_28": 0.7171481518455444
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "CH",
+      "metric": "search_read_calls",
+      "n_tasks": 33,
+      "mean_difference": -5.803030303030303,
+      "median_difference": -2.5,
+      "median_relative_difference": -0.024242424242424176,
+      "median_ci95": [
+        -7.5,
+        0.5
+      ],
+      "p_wilcoxon": 0.11451878585984195,
+      "W": 167.5,
+      "rank_biserial": -0.3245967741935484,
+      "normality_of_differences_p": 0.0012934818767719423,
+      "nonzero_n": 31,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WLH",
+      "metric": "search_read_calls",
+      "n_tasks": 32,
+      "mean_difference": -4.875,
+      "median_difference": 0.25,
+      "median_relative_difference": 0.06232638888888892,
+      "median_ci95": [
+        -7.5,
+        3.0
+      ],
+      "p_wilcoxon": 0.3672158195406956,
+      "W": 202.0,
+      "rank_biserial": -0.18548387096774194,
+      "normality_of_differences_p": 0.00015054385235561038,
+      "nonzero_n": 31,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WCH",
+      "metric": "search_read_calls",
+      "n_tasks": 32,
+      "mean_difference": -5.03125,
+      "median_difference": -3.0,
+      "median_relative_difference": -0.03362105711849961,
+      "median_ci95": [
+        -6.0,
+        -0.25
+      ],
+      "p_wilcoxon": 0.02240469947855928,
+      "W": 131.5,
+      "rank_biserial": -0.46975806451612906,
+      "normality_of_differences_p": 0.09415698573245834,
+      "nonzero_n": 31,
+      "p_holm_28": 0.5825221864425413
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WRH",
+      "metric": "search_read_calls",
+      "n_tasks": 32,
+      "mean_difference": -5.875,
+      "median_difference": -3.0,
+      "median_relative_difference": -0.03367446393762183,
+      "median_ci95": [
+        -8.0,
+        0.5
+      ],
+      "p_wilcoxon": 0.03965420327601513,
+      "W": 154.0,
+      "rank_biserial": -0.4166666666666667,
+      "normality_of_differences_p": 0.014037937152769405,
+      "nonzero_n": 32,
+      "p_holm_28": 0.872392472072333
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "CH",
+      "metric": "edit_calls",
+      "n_tasks": 33,
+      "mean_difference": -1.9090909090909092,
+      "median_difference": -1.0,
+      "median_relative_difference": -0.2,
+      "median_ci95": [
+        -2.5,
+        0.5
+      ],
+      "p_wilcoxon": 0.19545290944723703,
+      "W": 182.0,
+      "rank_biserial": -0.2661290322580645,
+      "normality_of_differences_p": 0.0017630504485890404,
+      "nonzero_n": 31,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WLH",
+      "metric": "edit_calls",
+      "n_tasks": 32,
+      "mean_difference": -0.625,
+      "median_difference": -0.5,
+      "median_relative_difference": 0.0,
+      "median_ci95": [
+        -1.5,
+        0.25
+      ],
+      "p_wilcoxon": 0.2837064409107408,
+      "W": 156.0,
+      "rank_biserial": -0.2315270935960591,
+      "normality_of_differences_p": 0.001350338772274191,
+      "nonzero_n": 28,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WCH",
+      "metric": "edit_calls",
+      "n_tasks": 32,
+      "mean_difference": 0.328125,
+      "median_difference": 0.0,
+      "median_relative_difference": 0.1268398268398268,
+      "median_ci95": [
+        -0.75,
+        0.75
+      ],
+      "p_wilcoxon": 0.8196527224654299,
+      "W": 207.0,
+      "rank_biserial": -0.04827586206896552,
+      "normality_of_differences_p": 3.484742165532028e-05,
+      "nonzero_n": 29,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WRH",
+      "metric": "edit_calls",
+      "n_tasks": 32,
+      "mean_difference": -1.140625,
+      "median_difference": 0.0,
+      "median_relative_difference": 0.06847890671420084,
+      "median_ci95": [
+        -1.0,
+        1.0
+      ],
+      "p_wilcoxon": 0.681166266823616,
+      "W": 185.0,
+      "rank_biserial": -0.08866995073891626,
+      "normality_of_differences_p": 3.536629383683611e-06,
+      "nonzero_n": 28,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "CH",
+      "metric": "test_calls",
+      "n_tasks": 33,
+      "mean_difference": -0.16666666666666666,
+      "median_difference": 0.0,
+      "median_relative_difference": 0.0,
+      "median_ci95": [
+        -0.5,
+        0.5
+      ],
+      "p_wilcoxon": 0.5660271029234465,
+      "W": 153.0,
+      "rank_biserial": -0.1282051282051282,
+      "normality_of_differences_p": 0.0023800227408197496,
+      "nonzero_n": 26,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WLH",
+      "metric": "test_calls",
+      "n_tasks": 32,
+      "mean_difference": -0.171875,
+      "median_difference": 0.0,
+      "median_relative_difference": 0.0,
+      "median_ci95": [
+        -0.5,
+        0.0
+      ],
+      "p_wilcoxon": 0.6665923673916174,
+      "W": 93.5,
+      "rank_biserial": -0.10952380952380952,
+      "normality_of_differences_p": 0.00023920224544577248,
+      "nonzero_n": 20,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WCH",
+      "metric": "test_calls",
+      "n_tasks": 32,
+      "mean_difference": -0.015625,
+      "median_difference": 0.0,
+      "median_relative_difference": 0.0,
+      "median_ci95": [
+        0.0,
+        0.5
+      ],
+      "p_wilcoxon": 0.7065315979148549,
+      "W": 115.0,
+      "rank_biserial": 0.09090909090909091,
+      "normality_of_differences_p": 0.0013168898914866598,
+      "nonzero_n": 22,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "sensitive",
+      "condition": "WRH",
+      "metric": "test_calls",
+      "n_tasks": 32,
+      "mean_difference": -0.625,
+      "median_difference": 0.0,
+      "median_relative_difference": 0.0,
+      "median_ci95": [
+        -0.5,
+        0.0
+      ],
+      "p_wilcoxon": 0.5258074321849526,
+      "W": 107.0,
+      "rank_biserial": -0.1541501976284585,
+      "normality_of_differences_p": 0.00433640505911446,
+      "nonzero_n": 22,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "CH",
+      "metric": "elapsed_seconds",
+      "n_tasks": 50,
+      "mean_difference": -59.67555,
+      "median_difference": -11.148249999999997,
+      "median_relative_difference": 0.026092662492653573,
+      "median_ci95": [
+        -111.243,
+        11.442999999999984
+      ],
+      "p_wilcoxon": 0.03172531549900326,
+      "W": 415.0,
+      "rank_biserial": -0.34901960784313724,
+      "normality_of_differences_p": 0.002681544233607466,
+      "nonzero_n": 50,
+      "p_holm_28": 0.6662316254790684
+    },
+    {
+      "cohort": "stable",
+      "condition": "WLH",
+      "metric": "elapsed_seconds",
+      "n_tasks": 50,
+      "mean_difference": -0.37484999999999785,
+      "median_difference": 1.2599999999999945,
+      "median_relative_difference": 0.039662726154104516,
+      "median_ci95": [
+        -69.90200000000002,
+        64.34525
+      ],
+      "p_wilcoxon": 0.9269315130521094,
+      "W": 628.0,
+      "rank_biserial": 0.014901960784313726,
+      "normality_of_differences_p": 0.3965165976084889,
+      "nonzero_n": 50,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WCH",
+      "metric": "elapsed_seconds",
+      "n_tasks": 50,
+      "mean_difference": -37.24833999999999,
+      "median_difference": -26.303250000000006,
+      "median_relative_difference": -0.06936799385661005,
+      "median_ci95": [
+        -93.69424999999998,
+        -4.363499999999995
+      ],
+      "p_wilcoxon": 0.030222575230003844,
+      "W": 413.0,
+      "rank_biserial": -0.35215686274509805,
+      "normality_of_differences_p": 0.005167163858062454,
+      "nonzero_n": 50,
+      "p_holm_28": 0.6648966550600846
+    },
+    {
+      "cohort": "stable",
+      "condition": "WRH",
+      "metric": "elapsed_seconds",
+      "n_tasks": 50,
+      "mean_difference": -21.104420000000005,
+      "median_difference": -13.52675,
+      "median_relative_difference": -0.05360120316380909,
+      "median_ci95": [
+        -48.923999999999985,
+        31.555999999999983
+      ],
+      "p_wilcoxon": 0.6327660147059379,
+      "W": 588.0,
+      "rank_biserial": -0.07764705882352942,
+      "normality_of_differences_p": 0.0005485693667247165,
+      "nonzero_n": 50,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "CH",
+      "metric": "time_to_first_successful_edit_seconds",
+      "n_tasks": 50,
+      "mean_difference": -7.933279999999999,
+      "median_difference": -8.617500000000001,
+      "median_relative_difference": -0.034994417412036544,
+      "median_ci95": [
+        -30.624,
+        3.9117499999999996
+      ],
+      "p_wilcoxon": 0.1689479194723542,
+      "W": 495.0,
+      "rank_biserial": -0.2235294117647059,
+      "normality_of_differences_p": 0.0020305117216087598,
+      "nonzero_n": 50,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WLH",
+      "metric": "time_to_first_successful_edit_seconds",
+      "n_tasks": 49,
+      "mean_difference": 21.989530612244895,
+      "median_difference": -1.8770000000000095,
+      "median_relative_difference": 0.021569869483833604,
+      "median_ci95": [
+        -7.5075,
+        23.340000000000003
+      ],
+      "p_wilcoxon": 0.3840882494738521,
+      "W": 525.0,
+      "rank_biserial": 0.14285714285714285,
+      "normality_of_differences_p": 4.895978914149109e-05,
+      "nonzero_n": 49,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WCH",
+      "metric": "time_to_first_successful_edit_seconds",
+      "n_tasks": 49,
+      "mean_difference": -11.934795918367346,
+      "median_difference": -11.171500000000002,
+      "median_relative_difference": -0.16746341130381182,
+      "median_ci95": [
+        -18.7215,
+        7.444999999999997
+      ],
+      "p_wilcoxon": 0.1148769563918179,
+      "W": 454.0,
+      "rank_biserial": -0.2587755102040816,
+      "normality_of_differences_p": 1.8875151258036901e-06,
+      "nonzero_n": 49,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WRH",
+      "metric": "time_to_first_successful_edit_seconds",
+      "n_tasks": 50,
+      "mean_difference": 8.464379999999998,
+      "median_difference": -8.931000000000003,
+      "median_relative_difference": -0.0603603259064798,
+      "median_ci95": [
+        -14.02975,
+        2.506499999999999
+      ],
+      "p_wilcoxon": 0.7391055127705244,
+      "W": 603.0,
+      "rank_biserial": -0.05411764705882353,
+      "normality_of_differences_p": 1.9791123729219674e-05,
+      "nonzero_n": 50,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "CH",
+      "metric": "total_tokens",
+      "n_tasks": 50,
+      "mean_difference": -260025.21,
+      "median_difference": -66372.5,
+      "median_relative_difference": -0.25964023541990044,
+      "median_ci95": [
+        -219010.0,
+        -6907.5
+      ],
+      "p_wilcoxon": 0.002901014625048907,
+      "W": 329.0,
+      "rank_biserial": -0.483921568627451,
+      "normality_of_differences_p": 1.1859542703906074e-08,
+      "nonzero_n": 50,
+      "p_holm_28": 0.06962435100117377
+    },
+    {
+      "cohort": "stable",
+      "condition": "WLH",
+      "metric": "total_tokens",
+      "n_tasks": 50,
+      "mean_difference": -227795.78,
+      "median_difference": -26654.75,
+      "median_relative_difference": -0.10459203598834563,
+      "median_ci95": [
+        -143141.0,
+        5873.5
+      ],
+      "p_wilcoxon": 0.05534272044447948,
+      "W": 439.0,
+      "rank_biserial": -0.31137254901960787,
+      "normality_of_differences_p": 6.069498093825486e-11,
+      "nonzero_n": 50,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WCH",
+      "metric": "total_tokens",
+      "n_tasks": 50,
+      "mean_difference": -58260.08,
+      "median_difference": -40440.5,
+      "median_relative_difference": -0.038631131901198296,
+      "median_ci95": [
+        -93550.5,
+        -2643.75
+      ],
+      "p_wilcoxon": 0.07180752515234808,
+      "W": 451.0,
+      "rank_biserial": -0.29254901960784313,
+      "normality_of_differences_p": 1.2998876181276067e-08,
+      "nonzero_n": 50,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WRH",
+      "metric": "total_tokens",
+      "n_tasks": 50,
+      "mean_difference": -266023.93,
+      "median_difference": -111690.0,
+      "median_relative_difference": -0.2252267385579103,
+      "median_ci95": [
+        -155774.5,
+        -21468.5
+      ],
+      "p_wilcoxon": 0.0006670378894178454,
+      "W": 285.0,
+      "rank_biserial": -0.5529411764705883,
+      "normality_of_differences_p": 1.0517959003205665e-11,
+      "nonzero_n": 50,
+      "p_holm_28": 0.01734298512486398
+    },
+    {
+      "cohort": "stable",
+      "condition": "CH",
+      "metric": "tool_calls",
+      "n_tasks": 50,
+      "mean_difference": -8.95,
+      "median_difference": -6.75,
+      "median_relative_difference": -0.1873468137254902,
+      "median_ci95": [
+        -13.0,
+        -1.5
+      ],
+      "p_wilcoxon": 0.00020327622847382643,
+      "W": 213.0,
+      "rank_biserial": -0.6223404255319149,
+      "normality_of_differences_p": 3.5073103354848376e-05,
+      "nonzero_n": 47,
+      "p_holm_28": 0.005488458168793313
+    },
+    {
+      "cohort": "stable",
+      "condition": "WLH",
+      "metric": "tool_calls",
+      "n_tasks": 50,
+      "mean_difference": -5.24,
+      "median_difference": -1.0,
+      "median_relative_difference": -0.032080200501253126,
+      "median_ci95": [
+        -8.5,
+        1.5
+      ],
+      "p_wilcoxon": 0.052268038388874206,
+      "W": 436.5,
+      "rank_biserial": -0.31529411764705884,
+      "normality_of_differences_p": 9.53661943132651e-08,
+      "nonzero_n": 50,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WCH",
+      "metric": "tool_calls",
+      "n_tasks": 50,
+      "mean_difference": -2.88,
+      "median_difference": -1.75,
+      "median_relative_difference": 0.022397360703812347,
+      "median_ci95": [
+        -4.25,
+        0.75
+      ],
+      "p_wilcoxon": 0.21256654559436317,
+      "W": 466.5,
+      "rank_biserial": -0.2066326530612245,
+      "normality_of_differences_p": 1.2045739976040943e-05,
+      "nonzero_n": 48,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WRH",
+      "metric": "tool_calls",
+      "n_tasks": 50,
+      "mean_difference": -6.95,
+      "median_difference": -3.75,
+      "median_relative_difference": -0.1185615714095086,
+      "median_ci95": [
+        -8.0,
+        -0.75
+      ],
+      "p_wilcoxon": 0.001166076599234874,
+      "W": 271.5,
+      "rank_biserial": -0.5382653061224489,
+      "normality_of_differences_p": 1.4478784121642646e-09,
+      "nonzero_n": 48,
+      "p_holm_28": 0.02915191498087185
+    },
+    {
+      "cohort": "stable",
+      "condition": "CH",
+      "metric": "search_read_calls",
+      "n_tasks": 50,
+      "mean_difference": -4.92,
+      "median_difference": -3.0,
+      "median_relative_difference": -0.15474782265827045,
+      "median_ci95": [
+        -7.75,
+        -1.5
+      ],
+      "p_wilcoxon": 0.0001529784473399527,
+      "W": 219.0,
+      "rank_biserial": -0.6275510204081632,
+      "normality_of_differences_p": 0.8279780133569142,
+      "nonzero_n": 48,
+      "p_holm_28": 0.0042833965255186755
+    },
+    {
+      "cohort": "stable",
+      "condition": "WLH",
+      "metric": "search_read_calls",
+      "n_tasks": 50,
+      "mean_difference": -2.66,
+      "median_difference": -1.0,
+      "median_relative_difference": -0.04581105169340466,
+      "median_ci95": [
+        -3.5,
+        0.5
+      ],
+      "p_wilcoxon": 0.06253006170387615,
+      "W": 406.5,
+      "rank_biserial": -0.3086734693877551,
+      "normality_of_differences_p": 0.00014747161445736337,
+      "nonzero_n": 48,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WCH",
+      "metric": "search_read_calls",
+      "n_tasks": 50,
+      "mean_difference": -1.55,
+      "median_difference": -1.25,
+      "median_relative_difference": -0.006562881562881567,
+      "median_ci95": [
+        -3.0,
+        0.25
+      ],
+      "p_wilcoxon": 0.08016879131500242,
+      "W": 417.5,
+      "rank_biserial": -0.28996598639455784,
+      "normality_of_differences_p": 0.0013466912780852405,
+      "nonzero_n": 48,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WRH",
+      "metric": "search_read_calls",
+      "n_tasks": 50,
+      "mean_difference": -3.01,
+      "median_difference": -1.5,
+      "median_relative_difference": -0.04772727272727276,
+      "median_ci95": [
+        -3.25,
+        0.0
+      ],
+      "p_wilcoxon": 0.008001099689626064,
+      "W": 253.5,
+      "rank_biserial": -0.46405919661733613,
+      "normality_of_differences_p": 1.409558396019408e-06,
+      "nonzero_n": 43,
+      "p_holm_28": 0.18402529286139946
+    },
+    {
+      "cohort": "stable",
+      "condition": "CH",
+      "metric": "edit_calls",
+      "n_tasks": 50,
+      "mean_difference": -0.61,
+      "median_difference": 0.0,
+      "median_relative_difference": 0.0,
+      "median_ci95": [
+        -0.5,
+        0.0
+      ],
+      "p_wilcoxon": 0.1278761646683974,
+      "W": 251.0,
+      "rank_biserial": -0.28591749644381226,
+      "normality_of_differences_p": 1.4986107072178547e-05,
+      "nonzero_n": 37,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WLH",
+      "metric": "edit_calls",
+      "n_tasks": 50,
+      "mean_difference": -0.88,
+      "median_difference": 0.0,
+      "median_relative_difference": 0.0,
+      "median_ci95": [
+        -1.0,
+        0.25
+      ],
+      "p_wilcoxon": 0.11546949263682478,
+      "W": 326.0,
+      "rank_biserial": -0.2779623477297896,
+      "normality_of_differences_p": 0.0010109414841970616,
+      "nonzero_n": 42,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WCH",
+      "metric": "edit_calls",
+      "n_tasks": 50,
+      "mean_difference": 0.01,
+      "median_difference": 0.0,
+      "median_relative_difference": 0.0,
+      "median_ci95": [
+        -0.5,
+        0.25
+      ],
+      "p_wilcoxon": 0.6563437087493096,
+      "W": 377.0,
+      "rank_biserial": -0.08048780487804878,
+      "normality_of_differences_p": 0.0010635641189326028,
+      "nonzero_n": 40,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WRH",
+      "metric": "edit_calls",
+      "n_tasks": 50,
+      "mean_difference": -0.77,
+      "median_difference": 0.0,
+      "median_relative_difference": 0.0,
+      "median_ci95": [
+        -0.5,
+        0.25
+      ],
+      "p_wilcoxon": 0.07004152274072172,
+      "W": 291.5,
+      "rank_biserial": -0.3228803716608595,
+      "normality_of_differences_p": 0.00011349538209207723,
+      "nonzero_n": 41,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "CH",
+      "metric": "test_calls",
+      "n_tasks": 50,
+      "mean_difference": -0.63,
+      "median_difference": 0.0,
+      "median_relative_difference": 0.0,
+      "median_ci95": [
+        -0.5,
+        0.5
+      ],
+      "p_wilcoxon": 0.41987622419747395,
+      "W": 350.5,
+      "rank_biserial": -0.14512195121951219,
+      "normality_of_differences_p": 2.9147063942137334e-06,
+      "nonzero_n": 40,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WLH",
+      "metric": "test_calls",
+      "n_tasks": 50,
+      "mean_difference": 0.03,
+      "median_difference": 0.0,
+      "median_relative_difference": 0.0,
+      "median_ci95": [
+        0.0,
+        0.5
+      ],
+      "p_wilcoxon": 0.9939473091044027,
+      "W": 351.0,
+      "rank_biserial": -0.001422475106685633,
+      "normality_of_differences_p": 7.692610361811879e-07,
+      "nonzero_n": 37,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WCH",
+      "metric": "test_calls",
+      "n_tasks": 50,
+      "mean_difference": -0.51,
+      "median_difference": 0.0,
+      "median_relative_difference": 0.0,
+      "median_ci95": [
+        0.0,
+        0.25
+      ],
+      "p_wilcoxon": 0.8154637031590668,
+      "W": 267.5,
+      "rank_biserial": 0.04634581105169341,
+      "normality_of_differences_p": 9.1460595114689e-10,
+      "nonzero_n": 33,
+      "p_holm_28": 1.0
+    },
+    {
+      "cohort": "stable",
+      "condition": "WRH",
+      "metric": "test_calls",
+      "n_tasks": 50,
+      "mean_difference": -0.52,
+      "median_difference": -0.25,
+      "median_relative_difference": -0.1628205128205128,
+      "median_ci95": [
+        -1.0,
+        0.0
+      ],
+      "p_wilcoxon": 0.10381482032886799,
+      "W": 289.5,
+      "rank_biserial": -0.2939024390243902,
+      "normality_of_differences_p": 0.00034127166115619466,
+      "nonzero_n": 40,
+      "p_holm_28": 1.0
+    }
+  ],
+  "identical_patch_outcome_conflicts": [
+    {
+      "instance_id": "sphinx-doc__sphinx-8475",
+      "patch_sha256": "8a9725217a4d60e5794753427717c89fa9dd4de3b5d3a743bb4e728ae7efa317",
+      "cells": [
+        {
+          "condition": "ORIG",
+          "round": 0,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/results/ORGI/trajectory-features.csv"
+        },
+        {
+          "condition": "ORIG",
+          "round": 1,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/ORIG/mini_run/sphinx-doc__sphinx-8475/sphinx-doc__sphinx-8475.traj.json"
+        },
+        {
+          "condition": "ORIG",
+          "round": 2,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/ORIG/mini_run/sphinx-doc__sphinx-8475/sphinx-doc__sphinx-8475.traj.json"
+        },
+        {
+          "condition": "CH",
+          "round": 0,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/results/CH/trajectory-features.csv"
+        },
+        {
+          "condition": "CH",
+          "round": 1,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/CH/mini_run/sphinx-doc__sphinx-8475/sphinx-doc__sphinx-8475.traj.json"
+        },
+        {
+          "condition": "CH",
+          "round": 2,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/CH/mini_run/sphinx-doc__sphinx-8475/sphinx-doc__sphinx-8475.traj.json"
+        },
+        {
+          "condition": "WLH",
+          "round": 0,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/results/WLH/trajectory-features.csv"
+        },
+        {
+          "condition": "WLH",
+          "round": 1,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WLH/mini_run/sphinx-doc__sphinx-8475/sphinx-doc__sphinx-8475.traj.json"
+        },
+        {
+          "condition": "WCH",
+          "round": 0,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/results/WCH/trajectory-features.csv"
+        },
+        {
+          "condition": "WCH",
+          "round": 1,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WCH/mini_run/sphinx-doc__sphinx-8475/sphinx-doc__sphinx-8475.traj.json"
+        },
+        {
+          "condition": "WRH",
+          "round": 0,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/results/WRH/trajectory-features.csv"
+        },
+        {
+          "condition": "WRH",
+          "round": 1,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WRH/mini_run/sphinx-doc__sphinx-8475/sphinx-doc__sphinx-8475.traj.json"
+        },
+        {
+          "condition": "WRH",
+          "round": 2,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/WRH/mini_run/sphinx-doc__sphinx-8475/sphinx-doc__sphinx-8475.traj.json"
+        }
+      ]
+    },
+    {
+      "instance_id": "astropy__astropy-7606",
+      "patch_sha256": "ff2893255010d27cbdf1698e6700ca6ea65c5284c96f99da58d30a2fff27b794",
+      "cells": [
+        {
+          "condition": "ORIG",
+          "round": 0,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/results/ORGI/trajectory-features.csv"
+        },
+        {
+          "condition": "ORIG",
+          "round": 1,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/ORIG/mini_run/astropy__astropy-7606/astropy__astropy-7606.traj.json"
+        },
+        {
+          "condition": "CH",
+          "round": 0,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/results/CH/trajectory-features.csv"
+        },
+        {
+          "condition": "CH",
+          "round": 1,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/CH/mini_run/astropy__astropy-7606/astropy__astropy-7606.traj.json"
+        },
+        {
+          "condition": "WLH",
+          "round": 0,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/results/WLH/trajectory-features.csv"
+        },
+        {
+          "condition": "WLH",
+          "round": 2,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/WLH/mini_run/astropy__astropy-7606/astropy__astropy-7606.traj.json"
+        },
+        {
+          "condition": "WCH",
+          "round": 1,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WCH/mini_run/astropy__astropy-7606/astropy__astropy-7606.traj.json"
+        },
+        {
+          "condition": "WCH",
+          "round": 2,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/WCH/mini_run/astropy__astropy-7606/astropy__astropy-7606.traj.json"
+        },
+        {
+          "condition": "WRH",
+          "round": 0,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/results/WRH/trajectory-features.csv"
+        },
+        {
+          "condition": "WRH",
+          "round": 1,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WRH/mini_run/astropy__astropy-7606/astropy__astropy-7606.traj.json"
+        }
+      ]
+    },
+    {
+      "instance_id": "astropy__astropy-7606",
+      "patch_sha256": "c5493fe1e50bf8859e2dcec8aa28cf941d35e6a4e640770ebba3476e2c5a189e",
+      "cells": [
+        {
+          "condition": "ORIG",
+          "round": 2,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/ORIG/mini_run/astropy__astropy-7606/astropy__astropy-7606.traj.json"
+        },
+        {
+          "condition": "WLH",
+          "round": 1,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WLH/mini_run/astropy__astropy-7606/astropy__astropy-7606.traj.json"
+        }
+      ]
+    },
+    {
+      "instance_id": "psf__requests-1724",
+      "patch_sha256": "63b438b41c949e25861b12527e77ce6bac28eee33a416c96d7264b746cc29180",
+      "cells": [
+        {
+          "condition": "ORIG",
+          "round": 0,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/results/ORGI/trajectory-features.csv"
+        },
+        {
+          "condition": "ORIG",
+          "round": 1,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_stable/round1/ORIG/mini_run/psf__requests-1724/psf__requests-1724.traj.json"
+        },
+        {
+          "condition": "ORIG",
+          "round": 2,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_stable/round2/ORIG/mini_run/psf__requests-1724/psf__requests-1724.traj.json"
+        },
+        {
+          "condition": "CH",
+          "round": 0,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/results/CH/trajectory-features.csv"
+        },
+        {
+          "condition": "CH",
+          "round": 2,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_stable/round2/CH/mini_run/psf__requests-1724/psf__requests-1724.traj.json"
+        },
+        {
+          "condition": "WLH",
+          "round": 0,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/results/WLH/trajectory-features.csv"
+        },
+        {
+          "condition": "WLH",
+          "round": 1,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_stable/round1/WLH/mini_run/psf__requests-1724/psf__requests-1724.traj.json"
+        },
+        {
+          "condition": "WLH",
+          "round": 2,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_stable/round2/WLH/mini_run/psf__requests-1724/psf__requests-1724.traj.json"
+        },
+        {
+          "condition": "WCH",
+          "round": 0,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/results/WCH/trajectory-features.csv"
+        },
+        {
+          "condition": "WCH",
+          "round": 1,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_stable/round1/WCH/mini_run/psf__requests-1724/psf__requests-1724.traj.json"
+        },
+        {
+          "condition": "WCH",
+          "round": 2,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_stable/round2/WCH/mini_run/psf__requests-1724/psf__requests-1724.traj.json"
+        },
+        {
+          "condition": "WRH",
+          "round": 0,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/results/WRH/trajectory-features.csv"
+        },
+        {
+          "condition": "WRH",
+          "round": 1,
+          "resolved": 0,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_stable/round1/WRH/mini_run/psf__requests-1724/psf__requests-1724.traj.json"
+        },
+        {
+          "condition": "WRH",
+          "round": 2,
+          "resolved": 1,
+          "uncertain": false,
+          "source": "/Users/gzq/Repo/FSE2027/result/glm46_stable/round2/WRH/mini_run/psf__requests-1724/psf__requests-1724.traj.json"
+        }
+      ]
+    }
+  ],
+  "evaluation_metadata_mismatches": [
+    {
+      "cohort": "sensitive",
+      "round": 1,
+      "condition": "CH",
+      "instance_id": "astropy__astropy-7606",
+      "field": "PASS_TO_PASS",
+      "only_original": [],
+      "only_condition": [
+        "astropy/units/tests/test_units.py::test_compose_roundtrip[]"
+      ]
+    },
+    {
+      "cohort": "sensitive",
+      "round": 1,
+      "condition": "WLH",
+      "instance_id": "astropy__astropy-7606",
+      "field": "PASS_TO_PASS",
+      "only_original": [],
+      "only_condition": [
+        "astropy/units/tests/test_units.py::test_compose_roundtrip[]"
+      ]
+    },
+    {
+      "cohort": "sensitive",
+      "round": 1,
+      "condition": "WCH",
+      "instance_id": "astropy__astropy-7606",
+      "field": "PASS_TO_PASS",
+      "only_original": [],
+      "only_condition": [
+        "astropy/units/tests/test_units.py::test_compose_roundtrip[]"
+      ]
+    },
+    {
+      "cohort": "sensitive",
+      "round": 1,
+      "condition": "WRH",
+      "instance_id": "astropy__astropy-7606",
+      "field": "PASS_TO_PASS",
+      "only_original": [],
+      "only_condition": [
+        "astropy/units/tests/test_units.py::test_compose_roundtrip[]"
+      ]
+    },
+    {
+      "cohort": "sensitive",
+      "round": 2,
+      "condition": "CH",
+      "instance_id": "astropy__astropy-7606",
+      "field": "PASS_TO_PASS",
+      "only_original": [],
+      "only_condition": [
+        "astropy/units/tests/test_units.py::test_compose_roundtrip[]"
+      ]
+    },
+    {
+      "cohort": "sensitive",
+      "round": 2,
+      "condition": "WLH",
+      "instance_id": "astropy__astropy-7606",
+      "field": "PASS_TO_PASS",
+      "only_original": [],
+      "only_condition": [
+        "astropy/units/tests/test_units.py::test_compose_roundtrip[]"
+      ]
+    },
+    {
+      "cohort": "sensitive",
+      "round": 2,
+      "condition": "WCH",
+      "instance_id": "astropy__astropy-7606",
+      "field": "PASS_TO_PASS",
+      "only_original": [],
+      "only_condition": [
+        "astropy/units/tests/test_units.py::test_compose_roundtrip[]"
+      ]
+    },
+    {
+      "cohort": "sensitive",
+      "round": 2,
+      "condition": "WRH",
+      "instance_id": "astropy__astropy-7606",
+      "field": "PASS_TO_PASS",
+      "only_original": [],
+      "only_condition": [
+        "astropy/units/tests/test_units.py::test_compose_roundtrip[]"
+      ]
+    }
+  ],
+  "strict_audit_sensitivity": {
+    "sensitive": {
+      "n_tasks": 30,
+      "excluded_tasks": [
+        "astropy__astropy-7606",
+        "psf__requests-5414",
+        "pylint-dev__pylint-8898",
+        "sphinx-doc__sphinx-8475"
+      ],
+      "round_success_counts": [
+        [
+          14,
+          15,
+          15,
+          15,
+          13
+        ],
+        [
+          16,
+          15,
+          17,
+          15,
+          15
+        ],
+        [
+          12,
+          20,
+          21,
+          12,
+          11
+        ]
+      ],
+      "within_condition_followup_disagreement": 0.32,
+      "effects": [
+        {
+          "condition": "CH",
+          "n_tasks": 30,
+          "difference": 0.11666666666666667,
+          "ci95": [
+            -0.06666666666666667,
+            0.3
+          ],
+          "p_task_signflip": 0.315582275390625,
+          "favorable_tasks": 10,
+          "unfavorable_tasks": 7,
+          "tied_tasks": 13
+        },
+        {
+          "condition": "WLH",
+          "n_tasks": 30,
+          "difference": 0.16666666666666666,
+          "ci95": [
+            0.016666666666666666,
+            0.3333333333333333
+          ],
+          "p_task_signflip": 0.0872802734375,
+          "favorable_tasks": 11,
+          "unfavorable_tasks": 5,
+          "tied_tasks": 14
+        },
+        {
+          "condition": "WCH",
+          "n_tasks": 30,
+          "difference": -0.016666666666666666,
+          "ci95": [
+            -0.13333333333333333,
+            0.11666666666666667
+          ],
+          "p_task_signflip": 1.0,
+          "favorable_tasks": 2,
+          "unfavorable_tasks": 5,
+          "tied_tasks": 23
+        },
+        {
+          "condition": "WRH",
+          "n_tasks": 30,
+          "difference": -0.03333333333333333,
+          "ci95": [
+            -0.16666666666666666,
+            0.1
+          ],
+          "p_task_signflip": 0.806640625,
+          "favorable_tasks": 6,
+          "unfavorable_tasks": 7,
+          "tied_tasks": 17
+        }
+      ]
+    },
+    "stable": {
+      "n_tasks": 48,
+      "excluded_tasks": [
+        "matplotlib__matplotlib-23299",
+        "psf__requests-1724"
+      ],
+      "round_success_counts": [
+        [
+          40,
+          40,
+          40,
+          40,
+          40
+        ],
+        [
+          40,
+          40,
+          40,
+          40,
+          40
+        ],
+        [
+          36,
+          39,
+          38,
+          39,
+          40
+        ]
+      ],
+      "within_condition_followup_disagreement": 0.05,
+      "effects": [
+        {
+          "condition": "CH",
+          "n_tasks": 48,
+          "difference": 0.03125,
+          "ci95": [
+            -0.010416666666666666,
+            0.08333333333333333
+          ],
+          "p_task_signflip": 0.375,
+          "favorable_tasks": 4,
+          "unfavorable_tasks": 1,
+          "tied_tasks": 43
+        },
+        {
+          "condition": "WLH",
+          "n_tasks": 48,
+          "difference": 0.020833333333333332,
+          "ci95": [
+            -0.020833333333333332,
+            0.0625
+          ],
+          "p_task_signflip": 0.625,
+          "favorable_tasks": 3,
+          "unfavorable_tasks": 1,
+          "tied_tasks": 44
+        },
+        {
+          "condition": "WCH",
+          "n_tasks": 48,
+          "difference": 0.03125,
+          "ci95": [
+            -0.010416666666666666,
+            0.07291666666666667
+          ],
+          "p_task_signflip": 0.375,
+          "favorable_tasks": 4,
+          "unfavorable_tasks": 1,
+          "tied_tasks": 43
+        },
+        {
+          "condition": "WRH",
+          "n_tasks": 48,
+          "difference": 0.041666666666666664,
+          "ci95": [
+            0.010416666666666666,
+            0.08333333333333333
+          ],
+          "p_task_signflip": 0.125,
+          "favorable_tasks": 4,
+          "unfavorable_tasks": 0,
+          "tied_tasks": 44
+        }
+      ]
+    }
+  }
+}

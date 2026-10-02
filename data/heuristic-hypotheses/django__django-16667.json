@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "django__django-16667",
+  "ground_truth": {
+    "files": [
+      "django/forms/widgets.py"
+    ],
+    "symbols": [
+      "value_from_datadict"
+    ],
+    "cause_type": "exception",
+    "repair": "Update value_from_datadict in django/forms/widgets.py to correct how the exception is raised, caught, or propagated."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "django/forms/widgets.py"
+        ],
+        "symbols": [
+          "DateTimeInput"
+        ],
+        "why_plausible": "DateTimeInput in django/forms/widgets.py shares the issue identifier datetime and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes value_from_datadict in django/forms/widgets.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving datetime.",
+        "keywords": [
+          "validation",
+          "datetime"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates exception, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's exception repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

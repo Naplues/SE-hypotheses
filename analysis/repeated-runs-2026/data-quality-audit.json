@@ -1,0 +1,326 @@
+{
+  "issues": [
+    {
+      "cohort": "sensitive",
+      "round": 1,
+      "condition": "ORIG",
+      "instance_id": "psf__requests-5414",
+      "exit_status": "Submitted",
+      "empty_patch": false,
+      "ambiguous": true,
+      "infra": false,
+      "reason": "missing_module",
+      "report_present": true,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/ORIG/openai__glm-4.6.glm46-sensitive-ORGI-01.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/ORIG/mini_run/psf__requests-5414/psf__requests-5414.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 1,
+      "condition": "CH",
+      "instance_id": "psf__requests-5414",
+      "exit_status": "Submitted",
+      "empty_patch": false,
+      "ambiguous": true,
+      "infra": false,
+      "reason": "missing_module",
+      "report_present": true,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/CH/openai__glm-4.6.glm46-sensitive-CH-01.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/CH/mini_run/psf__requests-5414/psf__requests-5414.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 1,
+      "condition": "CH",
+      "instance_id": "pytest-dev__pytest-6197",
+      "exit_status": "LimitsExceeded",
+      "empty_patch": true,
+      "ambiguous": false,
+      "infra": false,
+      "reason": "",
+      "report_present": false,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/CH/openai__glm-4.6.glm46-sensitive-CH-01.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/CH/mini_run/pytest-dev__pytest-6197/pytest-dev__pytest-6197.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 1,
+      "condition": "WLH",
+      "instance_id": "psf__requests-5414",
+      "exit_status": "Submitted",
+      "empty_patch": false,
+      "ambiguous": true,
+      "infra": false,
+      "reason": "missing_module",
+      "report_present": true,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WLH/openai__glm-4.6.glm46-sensitive-WLH-01.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WLH/mini_run/psf__requests-5414/psf__requests-5414.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 1,
+      "condition": "WLH",
+      "instance_id": "pylint-dev__pylint-8898",
+      "exit_status": "Submitted",
+      "empty_patch": false,
+      "ambiguous": true,
+      "infra": false,
+      "reason": "missing_module",
+      "report_present": true,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WLH/openai__glm-4.6.glm46-sensitive-WLH-01.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WLH/mini_run/pylint-dev__pylint-8898/pylint-dev__pylint-8898.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 1,
+      "condition": "WCH",
+      "instance_id": "psf__requests-5414",
+      "exit_status": "Submitted",
+      "empty_patch": false,
+      "ambiguous": true,
+      "infra": false,
+      "reason": "missing_module",
+      "report_present": true,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WCH/openai__glm-4.6.glm46-sensitive-WCH-01.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WCH/mini_run/psf__requests-5414/psf__requests-5414.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 1,
+      "condition": "WCH",
+      "instance_id": "pylint-dev__pylint-8898",
+      "exit_status": "Submitted",
+      "empty_patch": false,
+      "ambiguous": true,
+      "infra": false,
+      "reason": "missing_module",
+      "report_present": true,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WCH/openai__glm-4.6.glm46-sensitive-WCH-01.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WCH/mini_run/pylint-dev__pylint-8898/pylint-dev__pylint-8898.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 1,
+      "condition": "WRH",
+      "instance_id": "django__django-11964",
+      "exit_status": "TimeExceeded",
+      "empty_patch": true,
+      "ambiguous": false,
+      "infra": false,
+      "reason": "",
+      "report_present": false,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WRH/openai__glm-4.6.glm46-sensitive-WRH-01.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WRH/mini_run/django__django-11964/django__django-11964.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 1,
+      "condition": "WRH",
+      "instance_id": "psf__requests-5414",
+      "exit_status": "Submitted",
+      "empty_patch": false,
+      "ambiguous": true,
+      "infra": false,
+      "reason": "missing_module",
+      "report_present": true,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WRH/openai__glm-4.6.glm46-sensitive-WRH-01.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WRH/mini_run/psf__requests-5414/psf__requests-5414.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 1,
+      "condition": "WRH",
+      "instance_id": "pylint-dev__pylint-8898",
+      "exit_status": "Submitted",
+      "empty_patch": false,
+      "ambiguous": true,
+      "infra": false,
+      "reason": "missing_module",
+      "report_present": true,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WRH/openai__glm-4.6.glm46-sensitive-WRH-01.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WRH/mini_run/pylint-dev__pylint-8898/pylint-dev__pylint-8898.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 2,
+      "condition": "ORIG",
+      "instance_id": "psf__requests-5414",
+      "exit_status": "Submitted",
+      "empty_patch": false,
+      "ambiguous": true,
+      "infra": false,
+      "reason": "missing_module",
+      "report_present": true,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/ORIG/openai__glm-4.6.glm46-sensitive-ORGI-02.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/ORIG/mini_run/psf__requests-5414/psf__requests-5414.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 2,
+      "condition": "ORIG",
+      "instance_id": "pylint-dev__pylint-8898",
+      "exit_status": "Submitted",
+      "empty_patch": false,
+      "ambiguous": true,
+      "infra": false,
+      "reason": "missing_module",
+      "report_present": true,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/ORIG/openai__glm-4.6.glm46-sensitive-ORGI-02.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/ORIG/mini_run/pylint-dev__pylint-8898/pylint-dev__pylint-8898.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 2,
+      "condition": "CH",
+      "instance_id": "psf__requests-5414",
+      "exit_status": "Submitted",
+      "empty_patch": false,
+      "ambiguous": true,
+      "infra": false,
+      "reason": "missing_module",
+      "report_present": true,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/CH/openai__glm-4.6.glm46-sensitive-CH-02.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/CH/mini_run/psf__requests-5414/psf__requests-5414.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 2,
+      "condition": "CH",
+      "instance_id": "pylint-dev__pylint-8898",
+      "exit_status": "Submitted",
+      "empty_patch": false,
+      "ambiguous": true,
+      "infra": false,
+      "reason": "missing_module",
+      "report_present": true,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/CH/openai__glm-4.6.glm46-sensitive-CH-02.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/CH/mini_run/pylint-dev__pylint-8898/pylint-dev__pylint-8898.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 2,
+      "condition": "WLH",
+      "instance_id": "psf__requests-5414",
+      "exit_status": "Submitted",
+      "empty_patch": false,
+      "ambiguous": true,
+      "infra": false,
+      "reason": "missing_module",
+      "report_present": true,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/WLH/openai__glm-4.6.glm46-sensitive-WLH-02.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/WLH/mini_run/psf__requests-5414/psf__requests-5414.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 2,
+      "condition": "WLH",
+      "instance_id": "pylint-dev__pylint-8898",
+      "exit_status": "Submitted",
+      "empty_patch": false,
+      "ambiguous": true,
+      "infra": false,
+      "reason": "missing_module",
+      "report_present": true,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/WLH/openai__glm-4.6.glm46-sensitive-WLH-02.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/WLH/mini_run/pylint-dev__pylint-8898/pylint-dev__pylint-8898.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 2,
+      "condition": "WCH",
+      "instance_id": "psf__requests-5414",
+      "exit_status": "Submitted",
+      "empty_patch": false,
+      "ambiguous": true,
+      "infra": false,
+      "reason": "missing_module",
+      "report_present": true,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/WCH/openai__glm-4.6.glm46-sensitive-WCH-02.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/WCH/mini_run/psf__requests-5414/psf__requests-5414.traj.json"
+    },
+    {
+      "cohort": "sensitive",
+      "round": 2,
+      "condition": "WRH",
+      "instance_id": "psf__requests-5414",
+      "exit_status": "Submitted",
+      "empty_patch": false,
+      "ambiguous": true,
+      "infra": false,
+      "reason": "missing_module",
+      "report_present": true,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/WRH/openai__glm-4.6.glm46-sensitive-WRH-02.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/WRH/mini_run/psf__requests-5414/psf__requests-5414.traj.json"
+    },
+    {
+      "cohort": "stable",
+      "round": 1,
+      "condition": "WRH",
+      "instance_id": "matplotlib__matplotlib-23299",
+      "exit_status": "RateLimitError",
+      "empty_patch": true,
+      "ambiguous": false,
+      "infra": true,
+      "reason": "",
+      "report_present": false,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_stable/round1/WRH/openai__glm-4.6.glm46_round1_WRH_run01.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_stable/round1/WRH/mini_run/matplotlib__matplotlib-23299/matplotlib__matplotlib-23299.traj.json"
+    },
+    {
+      "cohort": "stable",
+      "round": 2,
+      "condition": "ORIG",
+      "instance_id": "mwaskom__seaborn-3187",
+      "exit_status": "LimitsExceeded",
+      "empty_patch": true,
+      "ambiguous": false,
+      "infra": false,
+      "reason": "",
+      "report_present": false,
+      "summary_path": "/Users/gzq/Repo/FSE2027/result/glm46_stable/round2/ORIG/openai__glm-4.6.glm46_round2_ORIG_run01.json",
+      "trajectory_path": "/Users/gzq/Repo/FSE2027/result/glm46_stable/round2/ORIG/mini_run/mwaskom__seaborn-3187/mwaskom__seaborn-3187.traj.json"
+    }
+  ],
+  "configurations": [
+    {
+      "values": [
+        "sensitive",
+        "2.4.6",
+        "openai/glm-4.6",
+        250,
+        3600,
+        "{\"api_base\": \"https://open.bigmodel.cn/api/paas/v4/\", \"drop_params\": true, \"parallel_tool_calls\": true}"
+      ],
+      "count": 340
+    },
+    {
+      "values": [
+        "stable",
+        "2.4.6",
+        "openai/glm-4.6",
+        250,
+        3600,
+        "{\"drop_params\": true, \"parallel_tool_calls\": true}"
+      ],
+      "count": 500
+    }
+  ],
+  "templates": [
+    {
+      "values": [
+        "sensitive",
+        "06f6dd6ea8671220762ff4a4916bd0aeb4fb2adfb084469a803e2fa841018efe",
+        "8826e3fbabc7733ad4d118654bbd392c2a4e0f1931d55f9c62235d33bd494196"
+      ],
+      "count": 340
+    },
+    {
+      "values": [
+        "stable",
+        "06f6dd6ea8671220762ff4a4916bd0aeb4fb2adfb084469a803e2fa841018efe",
+        "8826e3fbabc7733ad4d118654bbd392c2a4e0f1931d55f9c62235d33bd494196"
+      ],
+      "count": 500
+    }
+  ]
+}

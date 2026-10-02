@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "sphinx-doc__sphinx-7889",
+  "ground_truth": {
+    "files": [
+      "sphinx/ext/autodoc/mock.py"
+    ],
+    "symbols": [
+      "__mro_entries__"
+    ],
+    "cause_type": "type",
+    "repair": "Update __mro_entries__ in sphinx/ext/autodoc/mock.py to correct the type conversion or normalization."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "sphinx/ext/autodoc/mock.py"
+        ],
+        "symbols": [
+          "_make_subclass"
+        ],
+        "why_plausible": "_make_subclass in sphinx/ext/autodoc/mock.py shares the issue identifier _make_subclass and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes __mro_entries__ in sphinx/ext/autodoc/mock.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving _make_subclass.",
+        "keywords": [
+          "validation",
+          "_make_subclass"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates type, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's type repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

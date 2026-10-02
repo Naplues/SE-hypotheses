@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "sympy__sympy-21379",
+  "ground_truth": {
+    "files": [
+      "sympy/core/mod.py"
+    ],
+    "symbols": [
+      "eval"
+    ],
+    "cause_type": "exception",
+    "repair": "Update eval in sympy/core/mod.py to correct how the exception is raised, caught, or propagated."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "sympy/core/_print_helpers.py"
+        ],
+        "symbols": [
+          "Printable"
+        ],
+        "why_plausible": "Printable in sympy/core/_print_helpers.py shares the issue identifier expressions and is related by same_module.",
+        "why_incorrect": "The developer patch instead changes eval in sympy/core/mod.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "cache",
+        "cause": "The failure is likely caused by stale or incorrectly reused cached data involving expressions.",
+        "keywords": [
+          "cache",
+          "expressions"
+        ],
+        "why_plausible": "The reported symptom is compatible with stale or incorrectly reused cached data.",
+        "why_incorrect": "The developer patch indicates exception, not cache."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Reset or disable the relevant cache before the operation.",
+        "keywords": [
+          "reset cache"
+        ],
+        "why_plausible": "This repair follows from the alternative cache mechanism.",
+        "why_incorrect": "It does not implement the developer patch's exception repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

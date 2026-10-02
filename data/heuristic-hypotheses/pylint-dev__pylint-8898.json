@@ -1,0 +1,60 @@
+{
+  "schema_version": 4,
+  "instance_id": "pylint-dev__pylint-8898",
+  "ground_truth": {
+    "files": [
+      "pylint/config/argument.py",
+      "pylint/utils/__init__.py",
+      "pylint/utils/utils.py"
+    ],
+    "symbols": [
+      "_regexp_csv_transfomer",
+      "_check_csv"
+    ],
+    "cause_type": "type",
+    "repair": "Update _regexp_csv_transfomer in pylint/config/argument.py to correct the type conversion or normalization."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "pylint/config/argument.py"
+        ],
+        "symbols": [
+          "_confidence_transformer"
+        ],
+        "why_plausible": "_confidence_transformer in pylint/config/argument.py shares the issue identifier argparse and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes _regexp_csv_transfomer in pylint/config/argument.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "lifecycle",
+        "cause": "The failure is likely caused by an incorrect initialization or execution order involving argparse.",
+        "keywords": [
+          "lifecycle",
+          "argparse"
+        ],
+        "why_plausible": "The reported symptom is compatible with an incorrect initialization or execution order.",
+        "why_incorrect": "The developer patch indicates type, not lifecycle."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Change the initialization or execution order.",
+        "keywords": [
+          "initialization order"
+        ],
+        "why_plausible": "This repair follows from the alternative lifecycle mechanism.",
+        "why_incorrect": "It does not implement the developer patch's type repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

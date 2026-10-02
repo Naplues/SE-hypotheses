@@ -1,0 +1,38 @@
+{
+  "schema_version": 2,
+  "selected": 1360,
+  "completed": 1360,
+  "failures": [],
+  "output_dir": "/Users/gzq/Repo/FSE2027/results",
+  "normalized_runs_dir": "/Users/gzq/Repo/FSE2027/results",
+  "configurations": {
+    "glm46_CH": 272,
+    "glm46_ORGI": 272,
+    "glm46_WCH": 272,
+    "glm46_WLH": 272,
+    "glm46_WRH": 272
+  },
+  "conditions": {
+    "correct": 272,
+    "original": 272,
+    "wrong_cause": 272,
+    "wrong_location": 272,
+    "wrong_repair": 272
+  },
+  "statuses": {
+    "completed_no_patch": 1,
+    "completed_submitted": 1359
+  },
+  "evaluations": {
+    "resolved": 1039,
+    "unresolved": 317,
+    "missing": 4
+  },
+  "condition_outputs": {
+    "CH": "/Users/gzq/Repo/FSE2027/results/CH",
+    "ORGI": "/Users/gzq/Repo/FSE2027/results/ORGI",
+    "WCH": "/Users/gzq/Repo/FSE2027/results/WCH",
+    "WLH": "/Users/gzq/Repo/FSE2027/results/WLH",
+    "WRH": "/Users/gzq/Repo/FSE2027/results/WRH"
+  }
+}

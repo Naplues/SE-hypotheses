@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "sympy__sympy-21612",
+  "ground_truth": {
+    "files": [
+      "sympy/printing/str.py"
+    ],
+    "symbols": [
+      "_print_Mul"
+    ],
+    "cause_type": "type",
+    "repair": "Update _print_Mul in sympy/printing/str.py to correct the type conversion or normalization."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "sympy/printing/str.py"
+        ],
+        "symbols": [
+          "_print_Fraction"
+        ],
+        "why_plausible": "_print_Fraction in sympy/printing/str.py shares the issue identifier denominator and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes _print_Mul in sympy/printing/str.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "state",
+        "cause": "The failure is likely caused by incorrect state or data flow involving denominator.",
+        "keywords": [
+          "state",
+          "denominator"
+        ],
+        "why_plausible": "The reported symptom is compatible with incorrect state or data flow.",
+        "why_incorrect": "The developer patch indicates type, not state."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Reset or update the relevant state before the operation.",
+        "keywords": [
+          "reset state"
+        ],
+        "why_plausible": "This repair follows from the alternative state mechanism.",
+        "why_incorrect": "It does not implement the developer patch's type repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

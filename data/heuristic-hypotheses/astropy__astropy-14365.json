@@ -1,0 +1,58 @@
+{
+  "schema_version": 4,
+  "instance_id": "astropy__astropy-14365",
+  "ground_truth": {
+    "files": [
+      "astropy/io/ascii/qdp.py"
+    ],
+    "symbols": [
+      "_line_type",
+      "_get_tables_from_qdp_file"
+    ],
+    "cause_type": "condition",
+    "repair": "Update _line_type in astropy/io/ascii/qdp.py to correct the condition or boundary decision."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "astropy/io/ascii/qdp.py"
+        ],
+        "symbols": [
+          "_get_type_from_list_of_lines"
+        ],
+        "why_plausible": "_get_type_from_list_of_lines in astropy/io/ascii/qdp.py shares the issue identifier traceback and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes _line_type in astropy/io/ascii/qdp.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving traceback.",
+        "keywords": [
+          "validation",
+          "traceback"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates condition, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's condition repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

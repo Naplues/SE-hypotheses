@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "pydata__xarray-4075",
+  "ground_truth": {
+    "files": [
+      "xarray/core/weighted.py"
+    ],
+    "symbols": [
+      "_sum_of_weights"
+    ],
+    "cause_type": "validation",
+    "repair": "Update _sum_of_weights in xarray/core/weighted.py to add or correct the required input validation."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "xarray/core/weighted.py"
+        ],
+        "symbols": [
+          "_reduce"
+        ],
+        "why_plausible": "_reduce in xarray/core/weighted.py shares the issue identifier dataarray and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes _sum_of_weights in xarray/core/weighted.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "condition",
+        "cause": "The failure is likely caused by an incorrect condition or boundary decision involving dataarray.",
+        "keywords": [
+          "condition",
+          "dataarray"
+        ],
+        "why_plausible": "The reported symptom is compatible with an incorrect condition or boundary decision.",
+        "why_incorrect": "The developer patch indicates validation, not condition."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add a boundary check before the operation.",
+        "keywords": [
+          "boundary check"
+        ],
+        "why_plausible": "This repair follows from the alternative condition mechanism.",
+        "why_incorrect": "It does not implement the developer patch's validation repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

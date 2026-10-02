@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "django__django-11141",
+  "ground_truth": {
+    "files": [
+      "django/db/migrations/loader.py"
+    ],
+    "symbols": [
+      "load_disk"
+    ],
+    "cause_type": "condition",
+    "repair": "Update load_disk in django/db/migrations/loader.py to correct the condition or boundary decision."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "django/db/migrations/loader.py"
+        ],
+        "symbols": [
+          "migrations_module"
+        ],
+        "why_plausible": "migrations_module in django/db/migrations/loader.py shares the issue identifier migrations and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes load_disk in django/db/migrations/loader.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "lifecycle",
+        "cause": "The failure is likely caused by an incorrect initialization or execution order involving migrations.",
+        "keywords": [
+          "lifecycle",
+          "migrations"
+        ],
+        "why_plausible": "The reported symptom is compatible with an incorrect initialization or execution order.",
+        "why_incorrect": "The developer patch indicates condition, not lifecycle."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Change the initialization or execution order.",
+        "keywords": [
+          "initialization order"
+        ],
+        "why_plausible": "This repair follows from the alternative lifecycle mechanism.",
+        "why_incorrect": "It does not implement the developer patch's condition repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

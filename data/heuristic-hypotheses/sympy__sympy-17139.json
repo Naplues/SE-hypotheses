@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "sympy__sympy-17139",
+  "ground_truth": {
+    "files": [
+      "sympy/simplify/fu.py"
+    ],
+    "symbols": [
+      "_f"
+    ],
+    "cause_type": "validation",
+    "repair": "Update _f in sympy/simplify/fu.py to add or correct the required input validation."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "sympy/simplify/fu.py"
+        ],
+        "symbols": [
+          "TR0"
+        ],
+        "why_plausible": "TR0 in sympy/simplify/fu.py shares the issue identifier simplify and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes _f in sympy/simplify/fu.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "type",
+        "cause": "The failure is likely caused by incorrect type conversion or normalization involving simplify.",
+        "keywords": [
+          "type",
+          "simplify"
+        ],
+        "why_plausible": "The reported symptom is compatible with incorrect type conversion or normalization.",
+        "why_incorrect": "The developer patch indicates validation, not type."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Convert the affected value to the expected type before it is used.",
+        "keywords": [
+          "type conversion"
+        ],
+        "why_plausible": "This repair follows from the alternative type mechanism.",
+        "why_incorrect": "It does not implement the developer patch's validation repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

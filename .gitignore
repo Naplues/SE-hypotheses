@@ -15,9 +15,9 @@ dist/
 build/
 *.egg-info/
 runs/
-results/
-data/
-result/
+local/
+docs/
+figures/
 data/cache/
 data/repo-archives/
 data/repository-snapshots/

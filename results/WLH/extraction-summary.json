@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "selected": 272,
+  "completed": 272,
+  "failures": [],
+  "output_dir": "/Users/gzq/Repo/FSE2027/results/WLH",
+  "normalized_runs_dir": "/Users/gzq/Repo/FSE2027/results/WLH/runs",
+  "configurations": {
+    "glm46_WLH": 272
+  },
+  "conditions": {
+    "wrong_location": 272
+  },
+  "statuses": {
+    "completed_submitted": 272
+  },
+  "evaluations": {
+    "resolved": 209,
+    "unresolved": 63,
+    "missing": 0
+  }
+}

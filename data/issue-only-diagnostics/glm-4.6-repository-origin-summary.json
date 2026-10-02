@@ -1,0 +1,11 @@
+{
+  "diagnostic_version": "repository-origin-v1",
+  "selected": 10,
+  "completed": 10,
+  "skipped_existing": 0,
+  "failures": [],
+  "sample_seed": 20260929,
+  "elapsed_seconds": 90.595,
+  "output": "/Users/gzq/Repo/FSE2027/data/issue-only-diagnostics/glm-4.6-repository-origin.jsonl",
+  "model": "glm-4.6"
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "pydata__xarray-3677",
+  "ground_truth": {
+    "files": [
+      "xarray/core/dataset.py"
+    ],
+    "symbols": [
+      "merge"
+    ],
+    "cause_type": "type",
+    "repair": "Update merge in xarray/core/dataset.py to correct the type conversion or normalization."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "xarray/core/dataset.py"
+        ],
+        "symbols": [
+          "_get_virtual_variable"
+        ],
+        "why_plausible": "_get_virtual_variable in xarray/core/dataset.py shares the issue identifier variables and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes merge in xarray/core/dataset.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving variables.",
+        "keywords": [
+          "validation",
+          "variables"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates type, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's type repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

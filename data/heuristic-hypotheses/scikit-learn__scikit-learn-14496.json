@@ -1,0 +1,60 @@
+{
+  "schema_version": 4,
+  "instance_id": "scikit-learn__scikit-learn-14496",
+  "ground_truth": {
+    "files": [
+      "sklearn/cluster/optics_.py"
+    ],
+    "symbols": [
+      "OPTICS",
+      "compute_optics_graph",
+      "cluster_optics_xi",
+      "_xi_cluster"
+    ],
+    "cause_type": "type",
+    "repair": "Update OPTICS in sklearn/cluster/optics_.py to correct the type conversion or normalization."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "sklearn/cluster/optics_.py"
+        ],
+        "symbols": [
+          "fit"
+        ],
+        "why_plausible": "fit in sklearn/cluster/optics_.py shares the issue identifier compute_optics_graph and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes OPTICS in sklearn/cluster/optics_.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving compute_optics_graph.",
+        "keywords": [
+          "validation",
+          "compute_optics_graph"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates type, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's type repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

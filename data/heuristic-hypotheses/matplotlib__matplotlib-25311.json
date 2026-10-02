@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "matplotlib__matplotlib-25311",
+  "ground_truth": {
+    "files": [
+      "lib/matplotlib/offsetbox.py"
+    ],
+    "symbols": [
+      "__init__"
+    ],
+    "cause_type": "state",
+    "repair": "Update __init__ in lib/matplotlib/offsetbox.py to correct the affected state or data flow."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "lib/matplotlib/offsetbox.py"
+        ],
+        "symbols": [
+          "set_figure"
+        ],
+        "why_plausible": "set_figure in lib/matplotlib/offsetbox.py shares the issue identifier matplotlib and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes __init__ in lib/matplotlib/offsetbox.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "type",
+        "cause": "The failure is likely caused by incorrect type conversion or normalization involving matplotlib.",
+        "keywords": [
+          "type",
+          "matplotlib"
+        ],
+        "why_plausible": "The reported symptom is compatible with incorrect type conversion or normalization.",
+        "why_incorrect": "The developer patch indicates state, not type."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Convert the affected value to the expected type before it is used.",
+        "keywords": [
+          "type conversion"
+        ],
+        "why_plausible": "This repair follows from the alternative type mechanism.",
+        "why_incorrect": "It does not implement the developer patch's state repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

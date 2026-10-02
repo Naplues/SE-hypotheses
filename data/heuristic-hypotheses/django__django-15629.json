@@ -1,0 +1,62 @@
+{
+  "schema_version": 4,
+  "instance_id": "django__django-15629",
+  "ground_truth": {
+    "files": [
+      "django/db/backends/base/schema.py",
+      "django/db/backends/oracle/features.py",
+      "django/db/backends/sqlite3/schema.py",
+      "django/db/models/fields/related.py"
+    ],
+    "symbols": [
+      "_alter_field",
+      "DatabaseFeatures",
+      "db_type"
+    ],
+    "cause_type": "validation",
+    "repair": "Update _alter_field in django/db/backends/base/schema.py to add or correct the required input validation."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "django/db/backends/base/schema.py"
+        ],
+        "symbols": [
+          "_is_relevant_relation"
+        ],
+        "why_plausible": "_is_relevant_relation in django/db/backends/base/schema.py shares the issue identifier primary_key and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes _alter_field in django/db/backends/base/schema.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "condition",
+        "cause": "The failure is likely caused by an incorrect condition or boundary decision involving primary_key.",
+        "keywords": [
+          "condition",
+          "primary_key"
+        ],
+        "why_plausible": "The reported symptom is compatible with an incorrect condition or boundary decision.",
+        "why_incorrect": "The developer patch indicates validation, not condition."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add a boundary check before the operation.",
+        "keywords": [
+          "boundary check"
+        ],
+        "why_plausible": "This repair follows from the alternative condition mechanism.",
+        "why_incorrect": "It does not implement the developer patch's validation repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

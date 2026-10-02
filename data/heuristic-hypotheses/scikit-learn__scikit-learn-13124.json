@@ -1,0 +1,58 @@
+{
+  "schema_version": 4,
+  "instance_id": "scikit-learn__scikit-learn-13124",
+  "ground_truth": {
+    "files": [
+      "sklearn/model_selection/_split.py"
+    ],
+    "symbols": [
+      "StratifiedKFold",
+      "__init__"
+    ],
+    "cause_type": "lifecycle",
+    "repair": "Update StratifiedKFold in sklearn/model_selection/_split.py to correct the initialization or execution order."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "sklearn/model_selection/_split.py"
+        ],
+        "symbols": [
+          "BaseCrossValidator"
+        ],
+        "why_plausible": "BaseCrossValidator in sklearn/model_selection/_split.py shares the issue identifier splitting and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes StratifiedKFold in sklearn/model_selection/_split.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving splitting.",
+        "keywords": [
+          "validation",
+          "splitting"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates lifecycle, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's lifecycle repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

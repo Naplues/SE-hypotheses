@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "selected": 272,
+  "completed": 272,
+  "failures": [],
+  "output_dir": "/Users/gzq/Repo/FSE2027/results/ORGI",
+  "normalized_runs_dir": "/Users/gzq/Repo/FSE2027/results/ORGI/runs",
+  "configurations": {
+    "glm46_ORGI": 272
+  },
+  "conditions": {
+    "original": 272
+  },
+  "statuses": {
+    "completed_submitted": 272
+  },
+  "evaluations": {
+    "resolved": 207,
+    "unresolved": 64,
+    "missing": 1
+  }
+}

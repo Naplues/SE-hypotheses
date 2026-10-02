@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "pydata__xarray-3151",
+  "ground_truth": {
+    "files": [
+      "xarray/core/combine.py"
+    ],
+    "symbols": [
+      "combine_by_coords"
+    ],
+    "cause_type": "exception",
+    "repair": "Update combine_by_coords in xarray/core/combine.py to correct how the exception is raised, caught, or propagated."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "xarray/core/combine.py"
+        ],
+        "symbols": [
+          "_infer_concat_order_from_coords"
+        ],
+        "why_plausible": "_infer_concat_order_from_coords in xarray/core/combine.py shares the issue identifier coordinates and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes combine_by_coords in xarray/core/combine.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving coordinates.",
+        "keywords": [
+          "validation",
+          "coordinates"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates exception, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's exception repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

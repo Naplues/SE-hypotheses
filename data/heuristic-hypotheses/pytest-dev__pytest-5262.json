@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "pytest-dev__pytest-5262",
+  "ground_truth": {
+    "files": [
+      "src/_pytest/capture.py"
+    ],
+    "symbols": [
+      "name"
+    ],
+    "cause_type": "computation",
+    "repair": "Update name in src/_pytest/capture.py to correct the affected computation or transformation."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "src/_pytest/capture.py"
+        ],
+        "symbols": [
+          "CaptureManager"
+        ],
+        "why_plausible": "CaptureManager in src/_pytest/capture.py shares the issue identifier captured and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes name in src/_pytest/capture.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "type",
+        "cause": "The failure is likely caused by incorrect type conversion or normalization involving captured.",
+        "keywords": [
+          "type",
+          "captured"
+        ],
+        "why_plausible": "The reported symptom is compatible with incorrect type conversion or normalization.",
+        "why_incorrect": "The developer patch indicates computation, not type."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Convert the affected value to the expected type before it is used.",
+        "keywords": [
+          "type conversion"
+        ],
+        "why_plausible": "This repair follows from the alternative type mechanism.",
+        "why_incorrect": "It does not implement the developer patch's computation repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

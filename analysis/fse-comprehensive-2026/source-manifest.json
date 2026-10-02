@@ -1,0 +1,92 @@
+[
+  {
+    "evidence_id": "E_ORIG_ORIG",
+    "path": "/Users/gzq/Repo/FSE2027/results/ORGI/trajectory-features.csv",
+    "sha256": "5b4ef8a0bd38bfbf47b3f215c8ec417e3896678476c97565087798559a857650",
+    "verification": "machine_checked; human verification pending"
+  },
+  {
+    "evidence_id": "E_ORIG_CH",
+    "path": "/Users/gzq/Repo/FSE2027/results/CH/trajectory-features.csv",
+    "sha256": "1d1c25e04ac30f16708fbca4701a4aa6ca281cb9551925a16d7b5fb4b30a1e3a",
+    "verification": "machine_checked; human verification pending"
+  },
+  {
+    "evidence_id": "E_ORIG_WLH",
+    "path": "/Users/gzq/Repo/FSE2027/results/WLH/trajectory-features.csv",
+    "sha256": "49ff34caa7ab529a665f6dd175941119816b2b15161f67a726518cc5ebbb65d3",
+    "verification": "machine_checked; human verification pending"
+  },
+  {
+    "evidence_id": "E_ORIG_WCH",
+    "path": "/Users/gzq/Repo/FSE2027/results/WCH/trajectory-features.csv",
+    "sha256": "6e6c1833ea920e2fbfe7273df40322e1ca88b80e80fd78dc39506417f3828ff0",
+    "verification": "machine_checked; human verification pending"
+  },
+  {
+    "evidence_id": "E_ORIG_WRH",
+    "path": "/Users/gzq/Repo/FSE2027/results/WRH/trajectory-features.csv",
+    "sha256": "ab015fd3951d94bc8a1d486c70caec3711ecfdcd9c33269af22800cd476318d6",
+    "verification": "machine_checked; human verification pending"
+  },
+  {
+    "evidence_id": "E_REPEAT_SUMMARY",
+    "path": "/Users/gzq/Repo/FSE2027/analysis/repeated-runs-2026-10-02/summary.json",
+    "sha256": "49b506a1dc85cf971dc8529b095a70186aee0daa76d0c831e0290e5e243b19ff",
+    "verification": "machine_checked; human verification pending"
+  },
+  {
+    "evidence_id": "E_REPEAT_RUNS",
+    "path": "/Users/gzq/Repo/FSE2027/analysis/repeated-runs-2026-10-02/run-level.csv",
+    "sha256": "0aee27faad49f42413b84c3584db959562de01ebfe5c64b8f5f4b0fef6ab641d",
+    "verification": "machine_checked; human verification pending"
+  },
+  {
+    "evidence_id": "E_REPEAT_TASKS",
+    "path": "/Users/gzq/Repo/FSE2027/analysis/repeated-runs-2026-10-02/task-level.csv",
+    "sha256": "4fe542dc0fd2ba37fbd5f5af691aaabd89b09804e6ddfb4152205efd63b30efe",
+    "verification": "machine_checked; human verification pending"
+  },
+  {
+    "evidence_id": "E_VALIDITY",
+    "path": "/Users/gzq/Repo/FSE2027/docs/hypothesis-validity-audit.md",
+    "sha256": "e15586aa250f9aa665e61a2be799ad63cdb3d52f72626dbbf83252561a1b5750",
+    "verification": "machine_checked; human verification pending"
+  },
+  {
+    "evidence_id": "E_EXTRACTOR",
+    "path": "/Users/gzq/Repo/FSE2027/src/rfm/trajectory_extraction.py",
+    "sha256": "5f3d2664e1edcd7c58c873f8d200886de543e357bd16f933c1e8e70eaf3a7bf7",
+    "verification": "machine_checked; human verification pending"
+  },
+  {
+    "evidence_id": "E_PROTOCOL",
+    "path": "/Users/gzq/Repo/FSE2027/docs/protocol.md",
+    "sha256": "b02902b64f4d7d9e616d2a40298fc205b611842716ab2c9acf866a3e27de4b69",
+    "verification": "machine_checked; human verification pending"
+  },
+  {
+    "evidence_id": "E_ORIGIN",
+    "path": "/Users/gzq/Repo/FSE2027/data/issue-only-diagnostics/glm-4.6-repository-origin.jsonl",
+    "sha256": "822f42e6984411f1f859abe43e3ddcc870c3bbb613ce101971f5305db3b53d51",
+    "verification": "machine_checked; human verification pending"
+  },
+  {
+    "evidence_id": "E_DJANGO17084_WRH_R0",
+    "path": "/Users/gzq/Repo/FSE2027/result/glm46_WRH/mini_run/django__django-17084/django__django-17084.traj.json",
+    "sha256": "1b0df4b8492eb3f3ba2f102c7d235eb8aecbad9186141c340de64e06c7f96e38",
+    "verification": "machine_checked; mechanism adjudication pending"
+  },
+  {
+    "evidence_id": "E_DJANGO17084_WRH_R1",
+    "path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round1/WRH/mini_run/django__django-17084/django__django-17084.traj.json",
+    "sha256": "5d9b9d3aee4b9d131be10f7683ac6471b7a34c5cde33e94ca1d683f906d83979",
+    "verification": "machine_checked; mechanism adjudication pending"
+  },
+  {
+    "evidence_id": "E_DJANGO17084_WRH_R2",
+    "path": "/Users/gzq/Repo/FSE2027/result/glm46_sensitive/round2/WRH/mini_run/django__django-17084/django__django-17084.traj.json",
+    "sha256": "37dd3535d537bb3f042be0d1de409b4ec49f11b95d7369e6e2f04e8348fac4c3",
+    "verification": "machine_checked; mechanism adjudication pending"
+  }
+]

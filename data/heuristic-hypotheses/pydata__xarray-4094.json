@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "pydata__xarray-4094",
+  "ground_truth": {
+    "files": [
+      "xarray/core/dataarray.py"
+    ],
+    "symbols": [
+      "to_unstacked_dataset"
+    ],
+    "cause_type": "state",
+    "repair": "Update to_unstacked_dataset in xarray/core/dataarray.py to correct the affected state or data flow."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "xarray/core/dataarray.py"
+        ],
+        "symbols": [
+          "_infer_coords_and_dims"
+        ],
+        "why_plausible": "_infer_coords_and_dims in xarray/core/dataarray.py shares the issue identifier conflicting and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes to_unstacked_dataset in xarray/core/dataarray.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving conflicting.",
+        "keywords": [
+          "validation",
+          "conflicting"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates state, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's state repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 4,
+  "instance_id": "pytest-dev__pytest-5840",
+  "ground_truth": {
+    "files": [
+      "src/_pytest/config/__init__.py",
+      "src/_pytest/pathlib.py"
+    ],
+    "symbols": [
+      "_set_initial_conftests",
+      "_getconftestmodules",
+      "_rget_with_confmod",
+      "_importconftest",
+      "parts"
+    ],
+    "cause_type": "type",
+    "repair": "Update _set_initial_conftests in src/_pytest/config/__init__.py to correct the type conversion or normalization."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "src/_pytest/config/__init__.py"
+        ],
+        "symbols": [
+          "main"
+        ],
+        "why_plausible": "main in src/_pytest/config/__init__.py shares the issue identifier importerror and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes _set_initial_conftests in src/_pytest/config/__init__.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "lifecycle",
+        "cause": "The failure is likely caused by an incorrect initialization or execution order involving importerror.",
+        "keywords": [
+          "lifecycle",
+          "importerror"
+        ],
+        "why_plausible": "The reported symptom is compatible with an incorrect initialization or execution order.",
+        "why_incorrect": "The developer patch indicates type, not lifecycle."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Change the initialization or execution order.",
+        "keywords": [
+          "initialization order"
+        ],
+        "why_plausible": "This repair follows from the alternative lifecycle mechanism.",
+        "why_incorrect": "It does not implement the developer patch's type repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

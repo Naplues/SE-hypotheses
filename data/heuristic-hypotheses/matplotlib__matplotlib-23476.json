@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "matplotlib__matplotlib-23476",
+  "ground_truth": {
+    "files": [
+      "lib/matplotlib/figure.py"
+    ],
+    "symbols": [
+      "__getstate__"
+    ],
+    "cause_type": "state",
+    "repair": "Update __getstate__ in lib/matplotlib/figure.py to correct the affected state or data flow."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "lib/matplotlib/figure.py"
+        ],
+        "symbols": [
+          "FigureBase"
+        ],
+        "why_plausible": "FigureBase in lib/matplotlib/figure.py shares the issue identifier matplotlib and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes __getstate__ in lib/matplotlib/figure.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "lifecycle",
+        "cause": "The failure is likely caused by an incorrect initialization or execution order involving matplotlib.",
+        "keywords": [
+          "lifecycle",
+          "matplotlib"
+        ],
+        "why_plausible": "The reported symptom is compatible with an incorrect initialization or execution order.",
+        "why_incorrect": "The developer patch indicates state, not lifecycle."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Change the initialization or execution order.",
+        "keywords": [
+          "initialization order"
+        ],
+        "why_plausible": "This repair follows from the alternative lifecycle mechanism.",
+        "why_incorrect": "It does not implement the developer patch's state repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

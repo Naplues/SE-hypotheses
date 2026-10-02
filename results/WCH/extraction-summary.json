@@ -1,0 +1,23 @@
+{
+  "schema_version": 2,
+  "selected": 272,
+  "completed": 272,
+  "failures": [],
+  "output_dir": "/Users/gzq/Repo/FSE2027/results/WCH",
+  "normalized_runs_dir": "/Users/gzq/Repo/FSE2027/results/WCH/runs",
+  "configurations": {
+    "glm46_WCH": 272
+  },
+  "conditions": {
+    "wrong_cause": 272
+  },
+  "statuses": {
+    "completed_no_patch": 1,
+    "completed_submitted": 271
+  },
+  "evaluations": {
+    "resolved": 210,
+    "unresolved": 61,
+    "missing": 1
+  }
+}

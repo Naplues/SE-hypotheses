@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "pytest-dev__pytest-5631",
+  "ground_truth": {
+    "files": [
+      "src/_pytest/compat.py"
+    ],
+    "symbols": [
+      "num_mock_patch_args"
+    ],
+    "cause_type": "condition",
+    "repair": "Update num_mock_patch_args in src/_pytest/compat.py to correct the condition or boundary decision."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "src/_pytest/compat.py"
+        ],
+        "symbols": [
+          "getfuncargnames"
+        ],
+        "why_plausible": "getfuncargnames in src/_pytest/compat.py shares the issue identifier num_mock_patch_args and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes num_mock_patch_args in src/_pytest/compat.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "lifecycle",
+        "cause": "The failure is likely caused by an incorrect initialization or execution order involving num_mock_patch_args.",
+        "keywords": [
+          "lifecycle",
+          "num_mock_patch_args"
+        ],
+        "why_plausible": "The reported symptom is compatible with an incorrect initialization or execution order.",
+        "why_incorrect": "The developer patch indicates condition, not lifecycle."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Change the initialization or execution order.",
+        "keywords": [
+          "initialization order"
+        ],
+        "why_plausible": "This repair follows from the alternative lifecycle mechanism.",
+        "why_incorrect": "It does not implement the developer patch's condition repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

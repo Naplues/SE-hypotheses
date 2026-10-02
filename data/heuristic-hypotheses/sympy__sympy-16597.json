@@ -1,0 +1,67 @@
+{
+  "schema_version": 4,
+  "instance_id": "sympy__sympy-16597",
+  "ground_truth": {
+    "files": [
+      "sympy/assumptions/ask.py",
+      "sympy/assumptions/ask_generated.py",
+      "sympy/core/assumptions.py",
+      "sympy/core/power.py",
+      "sympy/printing/tree.py",
+      "sympy/tensor/indexed.py"
+    ],
+    "symbols": [
+      "get_known_facts",
+      "get_known_facts_cnf",
+      "get_known_facts_dict",
+      "_eval_is_polynomial",
+      "print_tree",
+      "__new__"
+    ],
+    "cause_type": "exception",
+    "repair": "Update get_known_facts in sympy/assumptions/ask.py to correct how the exception is raised, caught, or propagated."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "sympy/core/assumptions.py"
+        ],
+        "symbols": [
+          "ManagedProperties"
+        ],
+        "why_plausible": "ManagedProperties in sympy/core/assumptions.py shares the issue identifier is_even and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes get_known_facts in sympy/assumptions/ask.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving is_even.",
+        "keywords": [
+          "validation",
+          "is_even"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates exception, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's exception repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

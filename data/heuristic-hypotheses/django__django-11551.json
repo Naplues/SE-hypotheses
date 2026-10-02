@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "django__django-11551",
+  "ground_truth": {
+    "files": [
+      "django/contrib/admin/checks.py"
+    ],
+    "symbols": [
+      "_check_list_display_item"
+    ],
+    "cause_type": "exception",
+    "repair": "Update _check_list_display_item in django/contrib/admin/checks.py to correct how the exception is raised, caught, or propagated."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "django/contrib/admin/checks.py"
+        ],
+        "symbols": [
+          "check_dependencies"
+        ],
+        "why_plausible": "check_dependencies in django/contrib/admin/checks.py shares the issue identifier correctly and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes _check_list_display_item in django/contrib/admin/checks.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving correctly.",
+        "keywords": [
+          "validation",
+          "correctly"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates exception, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's exception repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

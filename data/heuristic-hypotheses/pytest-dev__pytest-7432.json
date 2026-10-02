@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "pytest-dev__pytest-7432",
+  "ground_truth": {
+    "files": [
+      "src/_pytest/skipping.py"
+    ],
+    "symbols": [
+      "pytest_runtest_makereport"
+    ],
+    "cause_type": "condition",
+    "repair": "Update pytest_runtest_makereport in src/_pytest/skipping.py to correct the condition or boundary decision."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "src/_pytest/skipping.py"
+        ],
+        "symbols": [
+          "pytest_addoption"
+        ],
+        "why_plausible": "pytest_addoption in src/_pytest/skipping.py shares the issue identifier runxfail and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes pytest_runtest_makereport in src/_pytest/skipping.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving runxfail.",
+        "keywords": [
+          "validation",
+          "runxfail"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates condition, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's condition repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

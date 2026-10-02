@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "scikit-learn__scikit-learn-13779",
+  "ground_truth": {
+    "files": [
+      "sklearn/ensemble/voting.py"
+    ],
+    "symbols": [
+      "fit"
+    ],
+    "cause_type": "validation",
+    "repair": "Update fit in sklearn/ensemble/voting.py to add or correct the required input validation."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "sklearn/ensemble/voting.py"
+        ],
+        "symbols": [
+          "_parallel_fit_estimator"
+        ],
+        "why_plausible": "_parallel_fit_estimator in sklearn/ensemble/voting.py shares the issue identifier sample_weight and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes fit in sklearn/ensemble/voting.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "condition",
+        "cause": "The failure is likely caused by an incorrect condition or boundary decision involving sample_weight.",
+        "keywords": [
+          "condition",
+          "sample_weight"
+        ],
+        "why_plausible": "The reported symptom is compatible with an incorrect condition or boundary decision.",
+        "why_incorrect": "The developer patch indicates validation, not condition."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add a boundary check before the operation.",
+        "keywords": [
+          "boundary check"
+        ],
+        "why_plausible": "This repair follows from the alternative condition mechanism.",
+        "why_incorrect": "It does not implement the developer patch's validation repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": 4,
+  "instance_id": "django__django-16032",
+  "ground_truth": {
+    "files": [
+      "django/db/models/fields/related_lookups.py",
+      "django/db/models/sql/query.py"
+    ],
+    "symbols": [
+      "get_prep_lookup",
+      "Query",
+      "output_field",
+      "set_values"
+    ],
+    "cause_type": "state",
+    "repair": "Update get_prep_lookup in django/db/models/fields/related_lookups.py to correct the affected state or data flow."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "django/db/models/sql/query.py"
+        ],
+        "symbols": [
+          "clone"
+        ],
+        "why_plausible": "clone in django/db/models/sql/query.py shares the issue identifier annotations and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes get_prep_lookup in django/db/models/fields/related_lookups.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving annotations.",
+        "keywords": [
+          "validation",
+          "annotations"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates state, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's state repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "sphinx-doc__sphinx-10466",
+  "ground_truth": {
+    "files": [
+      "sphinx/builders/gettext.py"
+    ],
+    "symbols": [
+      "Catalog"
+    ],
+    "cause_type": "type",
+    "repair": "Update Catalog in sphinx/builders/gettext.py to correct the type conversion or normalization."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "sphinx/builders/gettext.py"
+        ],
+        "symbols": [
+          "Message"
+        ],
+        "why_plausible": "Message in sphinx/builders/gettext.py shares the issue identifier locations and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes Catalog in sphinx/builders/gettext.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "cache",
+        "cause": "The failure is likely caused by stale or incorrectly reused cached data involving locations.",
+        "keywords": [
+          "cache",
+          "locations"
+        ],
+        "why_plausible": "The reported symptom is compatible with stale or incorrectly reused cached data.",
+        "why_incorrect": "The developer patch indicates type, not cache."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Reset or disable the relevant cache before the operation.",
+        "keywords": [
+          "reset cache"
+        ],
+        "why_plausible": "This repair follows from the alternative cache mechanism.",
+        "why_incorrect": "It does not implement the developer patch's type repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

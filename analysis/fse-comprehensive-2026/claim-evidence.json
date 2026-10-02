@@ -1,0 +1,181 @@
+[
+  {
+    "claim_id": "C01",
+    "scope": "Data coverage and denominators",
+    "evidence_ids": [
+      "E_ORIG_ORIG",
+      "E_REPEAT_RUNS"
+    ],
+    "summary_json_locators": [
+      "original",
+      "repetitions"
+    ],
+    "analysis_intent": "exploratory or descriptive; not preregistered",
+    "human_verified": false,
+    "human_verifier": null,
+    "status": "analysis draft; independent verification pending"
+  },
+  {
+    "claim_id": "C02",
+    "scope": "Exposure and construction limitations",
+    "evidence_ids": [
+      "E_VALIDITY"
+    ],
+    "summary_json_locators": [
+      "original_prompt_mismatches",
+      "construction_artifact_descriptives"
+    ],
+    "analysis_intent": "exploratory or descriptive; not preregistered",
+    "human_verified": false,
+    "human_verifier": null,
+    "status": "analysis draft; independent verification pending"
+  },
+  {
+    "claim_id": "C03",
+    "scope": "Initial outcome-stratified cohorts",
+    "evidence_ids": [
+      "E_ORIG_ORIG",
+      "E_REPEAT_TASKS"
+    ],
+    "summary_json_locators": [
+      "original_outcome_signatures",
+      "repetitions/cohorts"
+    ],
+    "analysis_intent": "exploratory or descriptive; not preregistered",
+    "human_verified": false,
+    "human_verifier": null,
+    "status": "analysis draft; independent verification pending"
+  },
+  {
+    "claim_id": "C04",
+    "scope": "Initial paired resolution outcomes",
+    "evidence_ids": [
+      "E_ORIG_ORIG",
+      "E_ORIG_CH",
+      "E_ORIG_WLH",
+      "E_ORIG_WCH",
+      "E_ORIG_WRH"
+    ],
+    "summary_json_locators": [
+      "original",
+      "focused_audit_original_outcomes",
+      "conservative_original_outcomes"
+    ],
+    "analysis_intent": "exploratory or descriptive; not preregistered",
+    "human_verified": false,
+    "human_verifier": null,
+    "status": "analysis draft; independent verification pending"
+  },
+  {
+    "claim_id": "C05",
+    "scope": "Original process effects and correction sensitivity",
+    "evidence_ids": [
+      "E_ORIG_ORIG",
+      "E_EXTRACTOR"
+    ],
+    "summary_json_locators": [
+      "original_process",
+      "focused_audit_original_process"
+    ],
+    "analysis_intent": "exploratory or descriptive; not preregistered",
+    "human_verified": false,
+    "human_verifier": null,
+    "status": "analysis draft; independent verification pending"
+  },
+  {
+    "claim_id": "C06",
+    "scope": "Repeated stable process differences",
+    "evidence_ids": [
+      "E_REPEAT_RUNS"
+    ],
+    "summary_json_locators": [
+      "strict_repeat_process"
+    ],
+    "analysis_intent": "exploratory or descriptive; not preregistered",
+    "human_verified": false,
+    "human_verifier": null,
+    "status": "analysis draft; independent verification pending"
+  },
+  {
+    "claim_id": "C07",
+    "scope": "Repeatability and held-out condition effects",
+    "evidence_ids": [
+      "E_REPEAT_SUMMARY",
+      "E_REPEAT_TASKS"
+    ],
+    "summary_json_locators": [
+      "repetitions/cohorts",
+      "repetitions/followup_effects",
+      "repetitions/strict_audit_sensitivity"
+    ],
+    "analysis_intent": "exploratory or descriptive; not preregistered",
+    "human_verified": false,
+    "human_verifier": null,
+    "status": "analysis draft; independent verification pending"
+  },
+  {
+    "claim_id": "C08",
+    "scope": "Submission/evaluator consistency audit",
+    "evidence_ids": [
+      "E_EXTRACTOR",
+      "E_REPEAT_SUMMARY"
+    ],
+    "summary_json_locators": [
+      "original_raw_submitted_counts",
+      "original_submission_export_disagreements",
+      "original_metadata_mismatches",
+      "stored_spec_vs_evaluator_report_disagreements",
+      "original_identical_patch_conflicts",
+      "repetitions/identical_patch_outcome_conflicts"
+    ],
+    "analysis_intent": "exploratory or descriptive; not preregistered",
+    "human_verified": false,
+    "human_verifier": null,
+    "status": "analysis draft; independent verification pending"
+  },
+  {
+    "claim_id": "C09",
+    "scope": "Case trajectories and reproduction boundary",
+    "evidence_ids": [
+      "E_REPEAT_TASKS",
+      "E_DJANGO17084_WRH_R0",
+      "E_DJANGO17084_WRH_R1",
+      "E_DJANGO17084_WRH_R2"
+    ],
+    "summary_json_locators": [
+      "repetitions/case_replication"
+    ],
+    "analysis_intent": "exploratory or descriptive; not preregistered",
+    "human_verified": false,
+    "human_verifier": null,
+    "status": "analysis draft; independent verification pending"
+  },
+  {
+    "claim_id": "C10",
+    "scope": "Exploratory success/failure contrasts",
+    "evidence_ids": [
+      "E_ORIG_ORIG"
+    ],
+    "summary_json_locators": [
+      "mixed_task_success_minus_failure_exploratory"
+    ],
+    "analysis_intent": "exploratory or descriptive; not preregistered",
+    "human_verified": false,
+    "human_verifier": null,
+    "status": "analysis draft; independent verification pending"
+  },
+  {
+    "claim_id": "C11",
+    "scope": "Repository recognition is not proof of contamination",
+    "evidence_ids": [
+      "E_ORIGIN"
+    ],
+    "summary_json_locators": [
+      "repository_origin_diagnostic"
+    ],
+    "analysis_intent": "exploratory or descriptive; not preregistered",
+    "human_verified": false,
+    "human_verifier": null,
+    "status": "analysis draft; independent verification pending"
+  }
+]

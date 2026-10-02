@@ -1,0 +1,60 @@
+{
+  "schema_version": 4,
+  "instance_id": "pytest-dev__pytest-7236",
+  "ground_truth": {
+    "files": [
+      "src/_pytest/unittest.py"
+    ],
+    "symbols": [
+      "collect",
+      "_make_xunit_fixture",
+      "runtest",
+      "check_testcase_implements_trial_reporter"
+    ],
+    "cause_type": "condition",
+    "repair": "Update collect in src/_pytest/unittest.py to correct the condition or boundary decision."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "src/_pytest/unittest.py"
+        ],
+        "symbols": [
+          "pytest_pycollect_makeitem"
+        ],
+        "why_plausible": "pytest_pycollect_makeitem in src/_pytest/unittest.py shares the issue identifier unittest and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes collect in src/_pytest/unittest.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving unittest.",
+        "keywords": [
+          "validation",
+          "unittest"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates condition, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's condition repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

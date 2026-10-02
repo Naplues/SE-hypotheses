@@ -1,0 +1,58 @@
+{
+  "schema_version": 4,
+  "instance_id": "django__django-13297",
+  "ground_truth": {
+    "files": [
+      "django/views/generic/base.py"
+    ],
+    "symbols": [
+      "_wrap_url_kwargs_with_deprecation_warning",
+      "access_value"
+    ],
+    "cause_type": "state",
+    "repair": "Update _wrap_url_kwargs_with_deprecation_warning in django/views/generic/base.py to correct the affected state or data flow."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "django/views/generic/base.py"
+        ],
+        "symbols": [
+          "ContextMixin"
+        ],
+        "why_plausible": "ContextMixin in django/views/generic/base.py shares the issue identifier get_context_data and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes _wrap_url_kwargs_with_deprecation_warning in django/views/generic/base.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving get_context_data.",
+        "keywords": [
+          "validation",
+          "get_context_data"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates state, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's state repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

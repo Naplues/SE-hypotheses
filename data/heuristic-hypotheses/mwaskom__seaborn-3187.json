@@ -1,0 +1,59 @@
+{
+  "schema_version": 4,
+  "instance_id": "mwaskom__seaborn-3187",
+  "ground_truth": {
+    "files": [
+      "seaborn/_core/scales.py",
+      "seaborn/utils.py"
+    ],
+    "symbols": [
+      "_setup",
+      "locator_to_legend_entries"
+    ],
+    "cause_type": "condition",
+    "repair": "Update _setup in seaborn/_core/scales.py to correct the condition or boundary decision."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "seaborn/_core/scales.py"
+        ],
+        "symbols": [
+          "label"
+        ],
+        "why_plausible": "label in seaborn/_core/scales.py shares the issue identifier formatter and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes _setup in seaborn/_core/scales.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "state",
+        "cause": "The failure is likely caused by incorrect state or data flow involving formatter.",
+        "keywords": [
+          "state",
+          "formatter"
+        ],
+        "why_plausible": "The reported symptom is compatible with incorrect state or data flow.",
+        "why_incorrect": "The developer patch indicates condition, not state."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Reset or update the relevant state before the operation.",
+        "keywords": [
+          "reset state"
+        ],
+        "why_plausible": "This repair follows from the alternative state mechanism.",
+        "why_incorrect": "It does not implement the developer patch's condition repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

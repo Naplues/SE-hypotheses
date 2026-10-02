@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "selected": 272,
+  "completed": 272,
+  "failures": [],
+  "output_dir": "/Users/gzq/Repo/FSE2027/results/CH",
+  "normalized_runs_dir": "/Users/gzq/Repo/FSE2027/results/CH/runs",
+  "configurations": {
+    "glm46_CH": 272
+  },
+  "conditions": {
+    "correct": 272
+  },
+  "statuses": {
+    "completed_submitted": 272
+  },
+  "evaluations": {
+    "resolved": 206,
+    "unresolved": 65,
+    "missing": 1
+  }
+}

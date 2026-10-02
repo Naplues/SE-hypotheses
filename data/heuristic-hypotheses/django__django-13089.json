@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "django__django-13089",
+  "ground_truth": {
+    "files": [
+      "django/core/cache/backends/db.py"
+    ],
+    "symbols": [
+      "_cull"
+    ],
+    "cause_type": "condition",
+    "repair": "Update _cull in django/core/cache/backends/db.py to correct the condition or boundary decision."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "django/core/cache/backends/db.py"
+        ],
+        "symbols": [
+          "get_many"
+        ],
+        "why_plausible": "get_many in django/core/cache/backends/db.py shares the issue identifier cache_key and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes _cull in django/core/cache/backends/db.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "cache",
+        "cause": "The failure is likely caused by stale or incorrectly reused cached data involving cache_key.",
+        "keywords": [
+          "cache",
+          "cache_key"
+        ],
+        "why_plausible": "The reported symptom is compatible with stale or incorrectly reused cached data.",
+        "why_incorrect": "The developer patch indicates condition, not cache."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Reset or disable the relevant cache before the operation.",
+        "keywords": [
+          "reset cache"
+        ],
+        "why_plausible": "This repair follows from the alternative cache mechanism.",
+        "why_incorrect": "It does not implement the developer patch's condition repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

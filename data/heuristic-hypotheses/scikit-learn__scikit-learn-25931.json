@@ -1,0 +1,58 @@
+{
+  "schema_version": 4,
+  "instance_id": "scikit-learn__scikit-learn-25931",
+  "ground_truth": {
+    "files": [
+      "sklearn/ensemble/_iforest.py"
+    ],
+    "symbols": [
+      "fit",
+      "score_samples"
+    ],
+    "cause_type": "condition",
+    "repair": "Update fit in sklearn/ensemble/_iforest.py to correct the condition or boundary decision."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "sklearn/ensemble/_iforest.py"
+        ],
+        "symbols": [
+          "decision_function"
+        ],
+        "why_plausible": "decision_function in sklearn/ensemble/_iforest.py shares the issue identifier offset_ and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes fit in sklearn/ensemble/_iforest.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving offset_.",
+        "keywords": [
+          "validation",
+          "offset_"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates condition, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's condition repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

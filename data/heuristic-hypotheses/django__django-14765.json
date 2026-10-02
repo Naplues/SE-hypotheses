@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "django__django-14765",
+  "ground_truth": {
+    "files": [
+      "django/db/migrations/state.py"
+    ],
+    "symbols": [
+      "__init__"
+    ],
+    "cause_type": "type",
+    "repair": "Update __init__ in django/db/migrations/state.py to correct the type conversion or normalization."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "django/db/migrations/state.py"
+        ],
+        "symbols": [
+          "resolve_fields_and_relations"
+        ],
+        "why_plausible": "resolve_fields_and_relations in django/db/migrations/state.py shares the issue identifier real_apps and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes __init__ in django/db/migrations/state.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving real_apps.",
+        "keywords": [
+          "validation",
+          "real_apps"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates type, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's type repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

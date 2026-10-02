@@ -1,0 +1,60 @@
+{
+  "schema_version": 4,
+  "instance_id": "sphinx-doc__sphinx-8548",
+  "ground_truth": {
+    "files": [
+      "sphinx/ext/autodoc/__init__.py",
+      "sphinx/ext/autodoc/importer.py"
+    ],
+    "symbols": [
+      "add_directive_header",
+      "__init__",
+      "get_class_members"
+    ],
+    "cause_type": "exception",
+    "repair": "Update add_directive_header in sphinx/ext/autodoc/__init__.py to correct how the exception is raised, caught, or propagated."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "sphinx/ext/autodoc/__init__.py"
+        ],
+        "symbols": [
+          "cut_lines"
+        ],
+        "why_plausible": "cut_lines in sphinx/ext/autodoc/__init__.py shares the issue identifier docstring and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes add_directive_header in sphinx/ext/autodoc/__init__.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "cache",
+        "cause": "The failure is likely caused by stale or incorrectly reused cached data involving docstring.",
+        "keywords": [
+          "cache",
+          "docstring"
+        ],
+        "why_plausible": "The reported symptom is compatible with stale or incorrectly reused cached data.",
+        "why_incorrect": "The developer patch indicates exception, not cache."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Reset or disable the relevant cache before the operation.",
+        "keywords": [
+          "reset cache"
+        ],
+        "why_plausible": "This repair follows from the alternative cache mechanism.",
+        "why_incorrect": "It does not implement the developer patch's exception repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 4,
+  "instance_id": "django__django-16631",
+  "ground_truth": {
+    "files": [
+      "django/contrib/auth/__init__.py",
+      "django/contrib/auth/base_user.py"
+    ],
+    "symbols": [
+      "get_user",
+      "get_session_auth_hash"
+    ],
+    "cause_type": "exception",
+    "repair": "Update get_user in django/contrib/auth/__init__.py to correct how the exception is raised, caught, or propagated."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "django/contrib/auth/__init__.py"
+        ],
+        "symbols": [
+          "_clean_credentials"
+        ],
+        "why_plausible": "_clean_credentials in django/contrib/auth/__init__.py shares the issue identifier password and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes get_user in django/contrib/auth/__init__.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "cache",
+        "cause": "The failure is likely caused by stale or incorrectly reused cached data involving password.",
+        "keywords": [
+          "cache",
+          "password"
+        ],
+        "why_plausible": "The reported symptom is compatible with stale or incorrectly reused cached data.",
+        "why_incorrect": "The developer patch indicates exception, not cache."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Reset or disable the relevant cache before the operation.",
+        "keywords": [
+          "reset cache"
+        ],
+        "why_plausible": "This repair follows from the alternative cache mechanism.",
+        "why_incorrect": "It does not implement the developer patch's exception repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

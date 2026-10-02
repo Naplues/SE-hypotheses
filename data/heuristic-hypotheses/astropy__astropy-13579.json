@@ -1,0 +1,58 @@
+{
+  "schema_version": 4,
+  "instance_id": "astropy__astropy-13579",
+  "ground_truth": {
+    "files": [
+      "astropy/wcs/wcsapi/wrappers/sliced_wcs.py"
+    ],
+    "symbols": [
+      "pixel_to_world_values",
+      "world_to_pixel_values"
+    ],
+    "cause_type": "state",
+    "repair": "Update pixel_to_world_values in astropy/wcs/wcsapi/wrappers/sliced_wcs.py to correct the affected state or data flow."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "astropy/wcs/wcsapi/wrappers/sliced_wcs.py"
+        ],
+        "symbols": [
+          "dropped_world_dimensions"
+        ],
+        "why_plausible": "dropped_world_dimensions in astropy/wcs/wcsapi/wrappers/sliced_wcs.py shares the issue identifier dimensions and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes pixel_to_world_values in astropy/wcs/wcsapi/wrappers/sliced_wcs.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "validation",
+        "cause": "The failure is likely caused by missing or incorrect input validation involving dimensions.",
+        "keywords": [
+          "validation",
+          "dimensions"
+        ],
+        "why_plausible": "The reported symptom is compatible with missing or incorrect input validation.",
+        "why_incorrect": "The developer patch indicates state, not validation."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Add input validation before the operation.",
+        "keywords": [
+          "input validation"
+        ],
+        "why_plausible": "This repair follows from the alternative validation mechanism.",
+        "why_incorrect": "It does not implement the developer patch's state repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}

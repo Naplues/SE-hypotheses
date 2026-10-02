@@ -1,0 +1,57 @@
+{
+  "schema_version": 4,
+  "instance_id": "matplotlib__matplotlib-20859",
+  "ground_truth": {
+    "files": [
+      "lib/matplotlib/legend.py"
+    ],
+    "symbols": [
+      "__init__"
+    ],
+    "cause_type": "exception",
+    "repair": "Update __init__ in lib/matplotlib/legend.py to correct how the exception is raised, caught, or propagated."
+  },
+  "hypotheses": {
+    "wrong_location": [
+      {
+        "id": "wl1",
+        "files": [
+          "lib/matplotlib/legend.py"
+        ],
+        "symbols": [
+          "_init_legend_box"
+        ],
+        "why_plausible": "_init_legend_box in lib/matplotlib/legend.py shares the issue identifier matplotlib and is related by same_file.",
+        "why_incorrect": "The developer patch instead changes __init__ in lib/matplotlib/legend.py."
+      }
+    ],
+    "wrong_cause": [
+      {
+        "id": "wc1",
+        "cause_type": "type",
+        "cause": "The failure is likely caused by incorrect type conversion or normalization involving matplotlib.",
+        "keywords": [
+          "type",
+          "matplotlib"
+        ],
+        "why_plausible": "The reported symptom is compatible with incorrect type conversion or normalization.",
+        "why_incorrect": "The developer patch indicates exception, not type."
+      }
+    ],
+    "wrong_repair": [
+      {
+        "id": "wr1",
+        "repair": "Convert the affected value to the expected type before it is used.",
+        "keywords": [
+          "type conversion"
+        ],
+        "why_plausible": "This repair follows from the alternative type mechanism.",
+        "why_incorrect": "It does not implement the developer patch's exception repair."
+      }
+    ]
+  },
+  "generated_by": {
+    "method": "patch-guided-heuristic",
+    "version": "5"
+  }
+}
