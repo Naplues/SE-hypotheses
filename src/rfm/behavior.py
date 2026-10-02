@@ -34,6 +34,14 @@ def extract_behavior(
 ) -> BehaviorFeatures:
     wrong = _wrong_target(task, condition, hypothesis_id)
     gold = task["ground_truth"]
+    if condition == Condition.WRONG_LOCATION and wrong:
+        gold_files = {normalize_path(value) for value in gold.get("files", [])}
+        wrong = {
+            **wrong,
+            "files": [
+                value for value in wrong.get("files", []) if normalize_path(value) not in gold_files
+            ],
+        }
     wrong_steps = [event.step for event in events if wrong and _hits(event, wrong)]
     wrong_edits = [event.step for event in events if wrong and _edits(event, wrong)]
     gold_steps = [event.step for event in events if _hits(event, gold)]

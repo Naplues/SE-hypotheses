@@ -10,10 +10,10 @@ from pathlib import Path
 from rfm.datasets import build_hypothesis_datasets
 from rfm.prompts import generate_hypothesis_prompts
 
-DEFAULT_INPUT = Path("data/constructed-hypotheses")
-DEFAULT_OUTPUT = Path("data/hypothesis-prompts")
+DEFAULT_INPUT = Path("data/heuristic-hypotheses")
+DEFAULT_OUTPUT = Path("data/heuristic-prompts")
 DEFAULT_SOURCE = Path("data/swebench_verified_test.jsonl")
-DEFAULT_DATASETS_OUTPUT = Path("data/hypothesis-datasets")
+DEFAULT_DATASETS_OUTPUT = Path("data/heuristic-datasets")
 
 
 def main() -> None:

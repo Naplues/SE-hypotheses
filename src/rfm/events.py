@@ -25,6 +25,7 @@ ALLOWED_EVENT_TYPES = {
 class Event:
     step: int
     event_type: str
+    timestamp: float | None = None
     text: str | None = None
     tool_name: str | None = None
     tool_arguments: dict[str, Any] = field(default_factory=dict)
@@ -53,6 +54,7 @@ class Event:
         return cls(
             step=step,
             event_type=event_type,
+            timestamp=_optional_float(raw.get("timestamp")),
             text=_optional_string(raw.get("text")),
             tool_name=_optional_string(raw.get("tool_name")),
             tool_arguments=tool_arguments,
@@ -71,6 +73,10 @@ def _optional_string(value: Any) -> str | None:
 
 def _optional_int(value: Any) -> int | None:
     return None if value is None else int(value)
+
+
+def _optional_float(value: Any) -> float | None:
+    return None if value is None else float(value)
 
 
 def load_events(path: str | Path) -> list[Event]:

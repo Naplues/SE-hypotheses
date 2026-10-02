@@ -49,152 +49,58 @@ uv run python scripts/download_commit_archive.py --all
 
 ## 1. 构造 Ground Truth 和 Hypotheses
 
-```bash
-uv run python scripts/construct_hypotheses.py \
-  --model YOUR_PINNED_CLAUDE_MODEL_ID \
-  --instance-ids-file data/instance-ids.txt
-```
-
-快速试运行一个任务：
+使用确定性的 patch-guided heuristic，不调用语言模型：
 
 ```bash
-uv run python scripts/construct_hypotheses.py \
-  --model YOUR_PINNED_CLAUDE_MODEL_ID \
-  --limit 1
+uv run python scripts/construct_hypotheses.py --all --workers 4
 ```
 
-并行构造多个任务：
+小规模检查：
 
 ```bash
-uv run python scripts/construct_hypotheses.py \
-  --model YOUR_PINNED_CLAUDE_MODEL_ID \
-  --all \
-  --workers 2
+uv run python scripts/construct_hypotheses.py --limit 20
 ```
 
-`--all` 显式选择 JSONL 中的全部任务，与 `--instance-id` 和 `--instance-ids-file` 互斥。
-它可以与 `--limit` 组合进行小规模试运行，也可以与 `--workers` 组合并行构造。
+默认输出到 `data/heuristic-hypotheses`。该方法对每个任务执行：
 
-`--workers` 默认为 1。每个 worker 启动独立的 Claude Code 子进程，主进程统一写入
-`construction-summary.json`。建议从 2 开始；并发过高可能触发模型服务限流，且费用会
-同时产生。并行模式不支持 `--fail-fast`。不要手工启动多份脚本并写同一输出目录。
+1. **Ground Truth**：从 developer patch 提取非测试源文件，并仅从 base commit 源码定位
+   所在函数/类；patch 新增的函数或类不作为 Ground Truth symbol，无法在原始源码定位时
+   保留文件并令 `symbols=[]`。随后
+   将修复机制归入 `condition`、`state`、`type`、`validation`、`exception`、
+   `cache`、`lifecycle` 或 `computation`，并生成一句修复摘要；
+2. **WLH**：不计算分数，依次寻找同文件其他函数、同目录/模块文件、
+   与真实文件存在 import/call 关系的文件，取第一个与 issue 共享关键
+   identifier 的真实 symbol；共享 identifier 必须至少 8 个字符，或具有
+   下划线/限定名这类明确代码形态；通用叙述词和异常类名不能单独作为
+   位置关联证据；
+3. **WCH/WRH**：根据 issue symptom 从小型替代机制表中选择与 Ground Truth
+   不同的 cause type，再一对一映射为错误修复。只接受明确的症状词，
+   不再将泛化的 `does not` / `cannot` / `missing` / `invalid` 等表述
+   单独当作机制证据；
+4. **Filter**：只执行 existence、incorrectness、plausibility 和 isolation 四类检查。
 
-请将 `YOUR_PINNED_CLAUDE_MODEL_ID` 替换为实际且固定的 Claude 模型标识。默认读取
-`data/swebench_verified_test.jsonl`，私有工作目录为 `data/construction-workspace`，结果写入
-`data/constructed-hypotheses`，源码从 `data/repository-snapshots` 读取；需要时可通过
-`--input`、`--workspace`、`--output` 和 `--snapshots` 覆盖。运行环境固定使用 `claude`
-命令、单次调用 10 分钟超时和最多 4 个 turn。脚本先在本地从 base commit 快照提取
-developer patch 和 test patch 各个 hunk 前后最多 40 行的源码，总计最多约 24,000 字符，
-再连同 issue 和 patch 交给模型。两次模型调用均不开放仓库工具，要求一次响应完成，
-避免模型反复探索；Prompt 也不再包含冗长的 `PASS_TO_PASS` 列表。
-Hypothesis 每类只生成一个候选，减少不必要的生成。
-为避免 Hypothesis 阶段反复探索仓库，脚本会先从 Ground Truth 文件周边收集最多 12 个真实
-源文件作为 Wrong Location 候选；第二次 Claude 调用禁用仓库工具，只根据 issue、精简
-Ground Truth 和候选路径一次性生成 WLH/WCH/WRH。
-超时针对每次 Claude 调用：超过 600 秒后终止子进程，并按 `ground_truth` 或
-`hypotheses` 阶段记入 `failures`。一个任务包含两次调用，因此任务级最长时间可接近
-20 分钟。
+无法可靠确定 Ground Truth、找不到相关错误位置、无法识别 symptom，或未通过
+四类过滤的任务直接跳过。WRH 仍需在正式实验前人工确认其不会明显构成
+另一种有效修复。
+每个 WLH/WCH/WRH 候选保留 `why_plausible` 和 `why_incorrect`，用于人工校准；
+这两个字段不会写入提供给被测 agent 的 Prompt。
 
-脚本对每个任务自动完成：
+输出仍保持原有 `ground_truth` 和 `wrong_location`/`wrong_cause`/`wrong_repair`
+JSON 结构，可直接供后续提示词和数据集脚本使用。`construction-summary.json`
+会统计覆盖率、跳过原因、真实/错误机制、WLH 优先级和耗时。默认跳过已有输出，
+`--force` 可重新生成。旧 schema 或旧启发式版本的输出会自动重建；若新规则
+判定该任务应跳过，不会保留旧结果。
+其中 `computation` 只在 patch 明确修改 `return` 或二元运算时识别，
+不再因为普通函数调用而命中。
 
-1. 读取已经下载的 `base_commit` 源码快照及其元数据；
-2. 校验任务、仓库、commit 和 archive SHA-256；
-3. 本地提取 patch hunk 附近的 base-commit 源码并运行 Ground Truth Prompt；
-4. 校验 Ground Truth 文件属于 developer patch 且存在于 base commit；
-5. 组装并运行 Hypothesis Prompt；
-6. 校验 Wrong Location、Wrong Cause 和 Wrong Repair 候选，并确保错误位置不与真实位置重叠；
-7. 证据不足时记录跳过原因，否则输出一个任务 JSON。
+`--all` 显式选择 JSONL 中的全部任务，与 `--instance-id` 和
+`--instance-ids-file` 互斥。`--workers` 控制并行任务数；并行模式不支持
+`--fail-fast`。不要同时启动多份脚本写入同一输出目录。
 
-Ground Truth 和 Hypothesis 阶段都不提供仓库工具。脚本在调用前计算源码树 SHA-256，并在
-每次调用后重新计算；摘要不一致时任务失败。Ground Truth 仍由模型根据 issue、开发者 patch、
-测试 patch 和源码片段生成，并非由脚本硬编码推断。
-
-输出格式：
-
-```json
-{
-  "schema_version": 3,
-  "instance_id": "owner__repo-1",
-  "ground_truth": {
-    "files": ["src/file.py"],
-    "symbols": ["function"],
-    "cause": "...",
-    "repair": "..."
-  },
-  "hypotheses": {
-    "wrong_location": [],
-    "wrong_cause": [],
-    "wrong_repair": []
-  },
-  "generated_by": {
-    "model": "...",
-    "claude_code_version": "..."
-  }
-}
-```
-
-结果只保存后续实验和人工校准需要的字段。原始 issue、仓库和 commit 不重复写入；需要时用
-`instance_id` 与 `data/swebench_verified_test.jsonl` 关联。Ground Truth 的证据仅在构造期间
-用于校验和生成误导假设，不写入最终结果。详细 Prompt 保存在私有 `workspace/prompts` 中。
-通过校验的 Ground Truth 原始响应还会以提示词和模型指纹为键保存在私有
-`workspace/checkpoints` 中；Hypothesis 阶段失败后使用 `--retry-failed`，可以直接复用它，
-无需再次支付 Ground Truth 的时间和费用。更换模型或提示词后旧 checkpoint 会自动失效；
-`--force` 会绕过 checkpoint 并重新生成两个阶段。
-
-`workspace` 包含 developer patch 和 Prompt，必须与被测 agent 隔离。源码快照同样不能
-提供给后续被测 agent；`output` 中的任务 JSON 才是后续实验使用的数据。
-
-默认跳过已经存在的输出，也跳过历史上已失败或已判定无法构造的任务；使用 `--force`
-才会重新尝试。这些历史状态按任务保存在 `output/.construction-state/`，并会从已有的
-`construction-summary.json` 自动迁移。批量运行时，其他任务仍继续执行；使用 `--fail-fast`
-可在首次失败时停止。
-批量重试历史失败任务时使用 `--retry-failed`；它不会重跑已完成结果，也不会重试
-已明确判定无法构造的 `skipped` 任务。此时显示的 `not_failed` 只是本次筛选结果，
-不会被保存为任务的历史跳过状态。
-
-Ground Truth 无法从仓库证据中确认，或 WLH/WCH/WRH 任一类无法在不编造证据的
-前提下生成时，该任务不会输出 JSON，而是记入 summary 的 `skipped`：
-
-```json
-{
-  "instance_id": "owner__repo-1",
-  "reason": "hypotheses: no plausible wrong location exists"
-}
-```
-
-正常跳过不计入 `failures`，不会导致批处理返回失败；Claude 调用错误、格式错误和校验
-不一致仍记入 `failures`，避免把系统故障伪装成数据不适用。
-Claude 达到 `max_turns` 但未产生结果时不会自动重试，而是按当前阶段记为正常跳过，
-例如 `ground_truth: max_turns`，避免重复消耗时间和模型费用。
-连接中断、DNS、限流或服务暂时不可用等瞬时错误会自动重试一次。600 秒硬超时不会在同一
-次运行中立即再等 600 秒；应使用 `--retry-failed` 重新执行，此时已有 Ground Truth checkpoint
-会被复用。
-
-运行时终端会在每个任务结束后显示 Ground Truth、Hypothesis 和任务总耗时。
-`construction-summary.json` 的 `timing` 保存每个实际执行任务的耗时，并提供
-count、total、mean、median、min 和 max 汇总统计。因已有输出而直接跳过的任务不计入
-耗时统计。Summary 会在每个任务结束后刷新，中途停止时已记录的耗时不会丢失。
-
-```json
-{
-  "timing": {
-    "wall_seconds": 123.456,
-    "task_seconds": {"count": 1, "mean": 123.1, "median": 123.1},
-    "ground_truth_seconds": {"count": 1, "mean": 60.2},
-    "hypothesis_seconds": {"count": 1, "mean": 61.8},
-    "tasks": [
-      {
-        "instance_id": "owner__repo-1",
-        "outcome": "completed",
-        "ground_truth_seconds": 60.2,
-        "ground_truth_cached": false,
-        "hypothesis_seconds": 61.8,
-        "total_seconds": 123.1
-      }
-    ]
-  }
-}
-```
+结果只保存后续实验和人工校准需要的字段。原始 issue、仓库和 commit 不重复写入；
+通过 `instance_id` 与 `data/swebench_verified_test.jsonl` 关联。证据不足的任务记入
+summary 的 `skipped`；脚本或数据错误记入 `failures`。终端会在每个任务完成后
+显示状态和耗时，summary 会同步刷新。
 
 ## 2. 生成实验提示词
 
@@ -205,21 +111,101 @@ count、total、mean、median、min 和 max 汇总统计。因已有输出而直
 uv run python scripts/generate_hypothesis_prompts.py
 ```
 
-默认读取 `data/constructed-hypotheses/*.json`，并写入
-`data/hypothesis-prompts/{CH,WLH,WCH,WRH}/<instance_id>.txt`。每个文件只包含
+默认读取 `data/heuristic-hypotheses/*.json`，并写入
+`data/heuristic-prompts/{CH,WLH,WCH,WRH}/<instance_id>.txt`。每个文件只包含
 统一引导句和 `<developer_hypothesis>` 块，不暴露条件名、候选 ID、
 `why_plausible`、`why_incorrect` 或 `keywords`。
 同一次运行会将四组 Prompt 追加到原始 SWE-bench `problem_statement` 后，写入
-`data/hypothesis-datasets/swebench_verified_test_{CH,WLH,WCH,WRH}.jsonl`。
+`data/heuristic-datasets/swebench_verified_test_{CH,WLH,WCH,WRH}.jsonl`。
 每个版本只包含对应 Prompt 目录中出现的任务，保持原数据顺序，并且除
 `problem_statement` 外不改变任何字段值。
 如果只需要重建 JSONL，仍可单独运行 `scripts/build_hypothesis_datasets.py`。
 
-## 3. 分析已有实验结果
+## 3. Issue-only 仓库来源诊断
+
+只将原始 `problem_statement` 提供给模型，检查模型在无法访问仓库、测试、工具和
+额外上下文时，能否判断 issue 来自哪个 GitHub 仓库。模型还可以在确实认得该公开任务时
+输出 issue/PR 编号；不确定时必须返回 `null`：
+
+```bash
+uv run python scripts/run_issue_only_diagnostic.py
+```
+
+脚本默认选择 `data/heuristic-hypotheses` 中出现的 272 个任务，调用 `glm-4.6`，
+从 `GLM_API_KEY` 读取密钥，并将结果写入
+`data/issue-only-diagnostics/glm-4.6-repository-origin.jsonl`。默认并发数为 4；可以先用
+`--limit 1` 检查 API 配置。重复执行会跳过已有成功结果，`--force` 会全部重跑。
+
+小规模复检应使用可复现的跨任务随机抽样，避免 `--limit 10` 只选择数据集开头的
+Astropy任务：
+
+```bash
+uv run python scripts/run_issue_only_diagnostic.py --sample 10 --seed 20260929
+```
+
+模型输入不包含 `repo`、`instance_id` 或 `hints_text`；`instance_id` 只在请求结束后
+作为本地关联键写入结果。其他 OpenAI-compatible 服务可通过 `--base-url`、`--model`
+和 `--api-key-env` 指定。
+
+仓库命中只能说明项目熟悉度；如果项目名称、import 或 traceback 已经出现在 issue 中，
+不能据此声称训练数据污染。模型在没有看到 ID 时准确给出对应 PR 编号，是更强但仍需
+进一步验证的任务级记忆信号。
+
+## 4. 分析已有实验结果
+
+对 mini-swe-agent / SWE-agent 的 `*.traj.json` 先执行特征提取和事件规范化：
+
+```bash
+uv run python scripts/extract_trajectories.py \
+  --input-root result \
+  --output results \
+  --tasks data/swebench_verified_test.jsonl
+```
+
+`--input-root` 会扫描 `result/<configuration>/mini_run/**/*.traj.json`。
+配置目录名后缀 `_ORIG`、`_CH`、`_WLH`、`_WCH`、`_WRH` 会分别映射到
+`original`、`correct`、`wrong_location`、`wrong_cause`、`wrong_repair`。
+现有实验目录中的 `_ORGI` 拼写也会兼容地映射为 `original`。
+如果只处理单个文件或目录，则改用 `--input`，并可用 `--condition` 明确指定条件。
+`--tasks` 可选，用于计算提交 patch 与 developer patch 的文件和行重合度。
+
+若已有 SWE-bench evaluator 输出，可通过 `--evaluations` 合并 `resolved` 结果：
+
+```bash
+uv run python scripts/extract_trajectories.py \
+  --input-root result \
+  --output results \
+  --tasks data/swebench_verified_test.jsonl \
+  --evaluations result
+```
+
+当`--evaluations`指向`result`目录时，脚本会自动扫描
+`<configuration>/logs/run_evaluation/**/report.json`并合并其中的`resolved`。
+缺少评测报告的任务保留为`null`，并计入汇总文件的`evaluations.missing`。
+
+输出包含：
+
+```text
+results/
+├── extraction-summary.json
+├── ORGI/
+├── CH/
+└── WCH/
+```
+
+每个条件目录均包含`trajectory-features.csv`、`trajectory-features.json`、
+`extraction-summary.json`和`runs/<instance-id>__<run-id>/`。例如：
+`runs/astropy__astropy-7336__run-xxxx/`。新增WLH、WRH实验后会自动生成对应目录。
+
+特征表只保留实验身份、修复结果、token/耗时、搜索/编辑/测试行为、提交 patch
+规模及 developer patch 重合度。`Submitted` 不等于 resolved；
+`evaluator_resolved` 必须从 SWE-bench evaluator 结果合并。RQ2/RQ3 人工标注所需的
+推理、命令、工具输出和文件路径只保留在每个 run 的 `trajectory.jsonl` 中。
+完整字段定义见 [docs/trajectory-features.md](docs/trajectory-features.md)。
 
 ```bash
 uv run python scripts/analyze_results.py \
-  --tasks data/constructed-hypotheses \
+  --tasks data/heuristic-hypotheses \
   --runs runs/rfm-main \
   --output results/rfm-main \
   --annotations data/adjudicated-annotations.csv \
@@ -230,7 +216,7 @@ uv run python scripts/analyze_results.py \
 
 ```bash
 uv run python scripts/analyze_results.py \
-  --tasks data/constructed-hypotheses \
+  --tasks data/heuristic-hypotheses \
   --runs runs/rfm-main \
   --output results/rfm-main-proxy \
   --use-proxies
@@ -292,3 +278,16 @@ results/rfm-main/
 
 轨迹字段和人工标注格式见 [docs/trajectory-schema.md](docs/trajectory-schema.md) 与
 [docs/protocol.md](docs/protocol.md)。
+
+
+```commandline
+mini-extra swebench-single --model zai/glm-4.6 -i 0 --split test
+```
+
+
+```commandline
+swebench eval verified --gold \
+    -i sympy__sympy-20590 \
+    --run-id validate-gold \
+    --task-repo ./swe-bench-tasks
+```

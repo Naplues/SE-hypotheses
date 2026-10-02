@@ -71,3 +71,22 @@ def test_extracts_wrong_repair_keyword_proxy() -> None:
     features = extract_behavior(Condition.WRONG_REPAIR, task, events)
     assert features.anchoring_proxy is True
     assert features.recovery_proxy is True
+
+
+def test_same_file_wrong_location_requires_symbol_evidence() -> None:
+    task = {
+        "ground_truth": {"files": ["src/gold.py"], "symbols": ["gold"]},
+        "hypotheses": {
+            "wrong_location": [
+                {"id": "wl1", "files": ["src/gold.py"], "symbols": ["normalize_gold"]}
+            ],
+            "wrong_cause": [{"id": "wc1", "cause": "cache", "keywords": ["cache"]}],
+            "wrong_repair": [{"id": "wr1", "repair": "clear cache", "keywords": ["clear"]}],
+        },
+    }
+
+    file_only = [Event(step=1, event_type="file_read", files_accessed=("src/gold.py",))]
+    symbol_read = [Event(step=1, event_type="reasoning", text="inspect normalize_gold")]
+
+    assert extract_behavior(Condition.WRONG_LOCATION, task, file_only).first_wrong_step is None
+    assert extract_behavior(Condition.WRONG_LOCATION, task, symbol_read).first_wrong_step == 1

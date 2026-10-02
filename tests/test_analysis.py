@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from rfm.analysis import analyze_results
+from rfm.analysis import NUMERIC_METRICS, analyze_results, discover_runs
 
 
 def _write_fixture(tmp_path: Path) -> tuple[Path, Path]:
@@ -13,7 +13,7 @@ def _write_fixture(tmp_path: Path) -> tuple[Path, Path]:
         "ground_truth": {
             "files": ["src/gold.py"],
             "symbols": ["gold"],
-            "cause": "real cause",
+            "cause_type": "state",
             "repair": "real repair",
         },
         "hypotheses": {
@@ -113,6 +113,7 @@ def _write_fixture(tmp_path: Path) -> tuple[Path, Path]:
 
 
 def test_analyzes_existing_results_with_proxies(tmp_path: Path) -> None:
+    assert NUMERIC_METRICS == ("tokens_total", "tool_calls", "runtime_seconds", "steps")
     tasks, runs = _write_fixture(tmp_path)
     output = tmp_path / "analysis"
     report = analyze_results(tasks, runs, output, use_proxies=True, seed=7)
@@ -145,3 +146,26 @@ def test_uses_human_annotations_for_confirmatory_report(tmp_path: Path) -> None:
     assert report["behavior_labels"] == "human_adjudication"
     assert report["rq3"]["recovery_rate"]["rate"] == 1 / 3
     assert report["rq3"]["median_recovery_latency_steps"] == 1.0
+
+
+def test_discovers_partitioned_runs_without_legacy_duplicates(tmp_path: Path) -> None:
+    run = {
+        "run_id": "run-one",
+        "instance_id": "owner__repo-1",
+        "agent_id": "agent",
+        "model_id": "model",
+        "condition": "original",
+    }
+    for directory in (
+        tmp_path / "ORGI" / "runs" / "owner__repo-1__run-one",
+        tmp_path / "trajectory-features" / "runs" / "run-one",
+    ):
+        directory.mkdir(parents=True)
+        (directory / "run.json").write_text(json.dumps(run), encoding="utf-8")
+        (directory / "result.json").write_text("{}", encoding="utf-8")
+        (directory / "trajectory.jsonl").write_text("", encoding="utf-8")
+
+    runs = discover_runs(tmp_path)
+
+    assert [run.run_id for run in runs] == ["run-one"]
+    assert "ORGI" in str(runs[0].directory)

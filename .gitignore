@@ -17,9 +17,7 @@ build/
 runs/
 results/
 data/
+result/
 data/cache/
-data/construction-workspace/
 data/repo-archives/
 data/repository-snapshots/
-data/constructed-hypotheses/.construction-state/
-data/constructed-hypotheses/construction-summary.json

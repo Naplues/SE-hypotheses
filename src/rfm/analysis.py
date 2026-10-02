@@ -23,6 +23,7 @@ from rfm.statistics import (
 )
 
 NUMERIC_METRICS = ("tokens_total", "tool_calls", "runtime_seconds", "steps")
+CONDITION_OUTPUT_DIRECTORIES = ("ORIG", "ORGI", "CH", "WLH", "WCH", "WRH")
 
 
 @dataclass(frozen=True)
@@ -76,7 +77,16 @@ def analyze_results(
 
 def discover_runs(directory: str | Path) -> list[Run]:
     root = Path(directory).resolve()
-    paths = sorted(root.glob("*/run.json"))
+    partitioned_roots = [
+        root / condition / "runs"
+        for condition in CONDITION_OUTPUT_DIRECTORIES
+        if (root / condition / "runs").is_dir()
+    ]
+    paths = sorted(
+        path
+        for search_root in partitioned_roots or [root]
+        for path in search_root.rglob("run.json")
+    )
     if not paths:
         raise ValueError(f"No run.json files found in {root}")
     runs: list[Run] = []

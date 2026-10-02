@@ -42,7 +42,7 @@ def load_tasks(directory: str | Path) -> dict[str, dict[str, Any]]:
             raise ValueError(f"{instance_id} requires ground_truth and hypotheses objects")
         _strings(ground.get("files"), f"{instance_id}.ground_truth.files", required=True)
         _strings(ground.get("symbols", []), f"{instance_id}.ground_truth.symbols")
-        _text(ground.get("cause"), f"{instance_id}.ground_truth.cause")
+        _text(ground.get("cause_type"), f"{instance_id}.ground_truth.cause_type")
         _text(ground.get("repair"), f"{instance_id}.ground_truth.repair")
         for condition in MISLEADING_CONDITIONS:
             values = hypotheses.get(condition.value)

@@ -53,7 +53,7 @@ def render_task_prompts(task: dict[str, Any]) -> dict[str, str]:
 
     ground_files = _strings(ground.get("files"), f"{instance_id}.ground_truth.files", True)
     ground_symbols = _strings(ground.get("symbols", []), f"{instance_id}.ground_truth.symbols")
-    ground_cause = _text(ground.get("cause"), f"{instance_id}.ground_truth.cause")
+    ground_cause_type = _text(ground.get("cause_type"), f"{instance_id}.ground_truth.cause_type")
     ground_repair = _text(ground.get("repair"), f"{instance_id}.ground_truth.repair")
 
     wrong_location = _single_candidate(hypotheses, "wrong_location", instance_id)
@@ -66,18 +66,17 @@ def render_task_prompts(task: dict[str, Any]) -> dict[str, str]:
     location_symbols = _strings(
         wrong_location.get("symbols", []), f"{instance_id}.wrong_location.symbols"
     )
+    if len(location_files) != 1 or len(location_symbols) != 1:
+        raise ValueError(f"{instance_id}.wrong_location requires one file and one symbol")
 
     blocks = {
         "CH": _sections(
             ("Suspected defect files", _bullets(ground_files)),
             ("Suspected symbols", _bullets(ground_symbols)),
-            ("Suspected root cause", ground_cause),
+            ("Suspected defect mechanism", ground_cause_type),
             ("Suggested repair strategy", ground_repair),
         ),
-        "WLH": _sections(
-            ("Suspected defect files", _bullets(location_files)),
-            ("Suspected symbols", _bullets(location_symbols)),
-        ),
+        "WLH": (f"The defect is likely located in {location_symbols[0]} in {location_files[0]}."),
         "WCH": _sections(
             (
                 "Suspected root cause",

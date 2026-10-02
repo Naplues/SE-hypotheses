@@ -14,7 +14,7 @@ def _task() -> dict[str, object]:
         "ground_truth": {
             "files": ["src/gold.py"],
             "symbols": ["gold"],
-            "cause": "The operation uses the wrong value.",
+            "cause_type": "state",
             "repair": "Use the correct value.",
         },
         "hypotheses": {
@@ -23,8 +23,8 @@ def _task() -> dict[str, object]:
                     "id": "wl1",
                     "files": ["src/wrong.py"],
                     "symbols": ["wrong"],
-                    "why_plausible": "Nearby code.",
-                    "why_incorrect": "The defect is elsewhere.",
+                    "why_plausible": "Nearby related code.",
+                    "why_incorrect": "The patch changes another symbol.",
                 }
             ],
             "wrong_cause": [
@@ -32,8 +32,8 @@ def _task() -> dict[str, object]:
                     "id": "wc1",
                     "cause": "The cache is stale.",
                     "keywords": ["cache"],
-                    "why_plausible": "Caching is involved.",
-                    "why_incorrect": "The cache is current.",
+                    "why_plausible": "The symptom resembles stale data.",
+                    "why_incorrect": "The patch changes state propagation.",
                 }
             ],
             "wrong_repair": [
@@ -41,8 +41,8 @@ def _task() -> dict[str, object]:
                     "id": "wr1",
                     "repair": "Clear the cache.",
                     "keywords": ["clear"],
-                    "why_plausible": "It refreshes state.",
-                    "why_incorrect": "It does not fix the operation.",
+                    "why_plausible": "It follows from the cache hypothesis.",
+                    "why_incorrect": "It does not implement the developer repair.",
                 }
             ],
         },
@@ -62,8 +62,8 @@ def test_render_task_prompts_exposes_only_selected_hypothesis_fields() -> None:
     )
     assert all("<developer_hypothesis>" in prompt for prompt in prompts.values())
     assert "src/gold.py" in prompts["CH"]
-    assert "The operation uses the wrong value." in prompts["CH"]
-    assert "src/wrong.py" in prompts["WLH"]
+    assert "state" in prompts["CH"]
+    assert "The defect is likely located in wrong in src/wrong.py." in prompts["WLH"]
     assert "The cache is stale." in prompts["WCH"]
     assert "Clear the cache." in prompts["WRH"]
     combined = "\n".join(prompts.values())
